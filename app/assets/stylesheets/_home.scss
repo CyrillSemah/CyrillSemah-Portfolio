@@ -1,0 +1,391 @@
+// Import des variables pour s'assurer qu'elles sont disponibles
+@import 'variables';
+
+// Keyframes pour les animations
+@keyframes wordDance {
+  0% {
+    transform: translateZ(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateZ(10px) rotate(3deg) scale(1.1);
+  }
+  50% {
+    transform: translateZ(15px) rotate(-2deg) scale(1.15);
+  }
+  75% {
+    transform: translateZ(10px) rotate(1deg) scale(1.1);
+  }
+  100% {
+    transform: translateZ(5px) rotate(0deg) scale(1.05);
+  }
+}
+
+.section-home {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: $color-blue;
+  padding: 0;
+  
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    
+    @media (max-width: $breakpoint-lg) {
+      flex-direction: column-reverse;
+      text-align: center;
+    }
+  }
+  
+  &__text {
+    flex: 1;
+    min-width: 300px;
+    padding-right: $spacing-xl;
+    perspective: 1000px; // Ajoute une perspective pour l'effet 3D
+    transform-style: preserve-3d;
+    
+    @media (max-width: $breakpoint-lg) {
+      padding-right: 0;
+      margin-top: $spacing-xl;
+    }
+    
+    .animated-container {
+      position: relative;
+      padding: $spacing-md $spacing-lg;
+      margin-bottom: $spacing-lg;
+      transition: all $transition-normal;
+      transform-style: preserve-3d;
+      background-color: transparent;
+      
+      &.setup-done {
+        // Cette classe sera ajoutée par JavaScript une fois l'initialisation terminée
+        // pour éviter des problèmes d'affichage pendant le chargement
+        transition: transform 0.2s ease-out;
+      }
+      
+      &:hover {
+        .animated-title {
+          transform: translateZ(25px) rotateX(2deg) rotateY(3deg);
+          text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+          
+          span {
+            margin-right: 15px; // Augmentation de l'espacement en hover
+            
+            &:last-child {
+              margin-right: 0; // Pas de marge pour le dernier élément
+            }
+          }
+        }
+        
+        .animated-title span,
+        .animated-text span {
+          display: inline-block;
+          animation: wordDance 0.8s ease-in-out forwards;
+        }
+        
+        .animated-title span {
+          &:nth-child(1) {
+            animation-delay: 0.05s;
+            transform-origin: top left;
+            transform: translateZ(30px) rotate(-3deg) scale(1.1);
+          }
+          
+          &:nth-child(2) {
+            animation-delay: 0.12s;
+            transform-origin: top center;
+            transform: translateZ(25px) rotate(2deg) scale(1.08);
+          }
+          
+          &:nth-child(3) {
+            animation-delay: 0.18s;
+            transform-origin: center;
+            transform: translateZ(35px) rotate(-1deg) scale(1.12);
+          }
+          
+          &:nth-child(4) {
+            animation-delay: 0.24s;
+            transform-origin: bottom right;
+            transform: translateZ(28px) rotate(4deg) scale(1.1);
+          }
+        }
+        
+        .animated-text span {
+          margin-right: 10px; // Augmentation de l'espacement en hover
+          
+          // Espacement spécifique pour les paires de mots mentionnées
+          &:nth-child(15), // Passionné
+          &:nth-child(21), // qualité
+          &:nth-child(25) { // agilité
+            margin-right: 15px; // Plus d'espace après ces mots spécifiques
+          }
+          
+          &:nth-child(2n) {
+            animation-delay: 0.1s;
+            transform-origin: bottom left;
+          }
+          
+          &:nth-child(3n) {
+            animation-delay: 0.2s;
+            transform-origin: top right;
+          }
+          
+          &:nth-child(5n) {
+            animation-delay: 0.15s;
+            transform-origin: center;
+          }
+        }
+        
+        .animated-buttons {
+          transform: translateZ(20px);
+          margin-top: $spacing-xl;
+          margin-bottom: $spacing-md;
+          
+          .btn {
+            // Déstructuration des boutons uniquement au survol du conteneur
+            &:first-child {
+              transform: translateZ(15px) rotate(-8deg) scale(1.1);
+            }
+            
+            &:last-child {
+              transform: translateZ(12px) rotate(8deg) scale(1.12) translateX(15px); // Décalé plus à droite
+            }
+          }
+        }
+      }
+    }
+    
+    .animated-title {
+      color: $color-light;
+      font-size: 3rem;
+      margin-bottom: $spacing-md;
+      font-weight: 700;
+      line-height: 1.2;
+      transition: all $transition-normal;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      
+      span {
+        display: inline-block;
+        margin-right: 5px; // Espacement normal (sans hover)
+        transition: all $transition-normal;
+        transform-style: preserve-3d;
+        
+        &:last-child {
+          margin-right: 0; // Pas de marge pour le dernier élément
+        }
+      }
+      
+      @media (max-width: $breakpoint-md) {
+        font-size: 2.5rem;
+      }
+      
+      @media (max-width: $breakpoint-sm) {
+        font-size: 2rem;
+      }
+    }
+    
+    .bracket {
+      position: absolute;
+      border: 18px solid $color-red; // Triple épaisseur
+      transition: all $transition-slow;
+      z-index: 1;
+      transform-style: preserve-3d;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+      
+      // Classe pour les crochets temporairement visibles en vert pour débogage
+      &.invisible {
+        opacity: 0; // Rendu visible pour débogage
+        border-color: #00ff00; // Vert vif pour débogage
+        filter: none;
+        pointer-events: none; // Permet de cliquer à travers
+      }
+      
+      &-top-left {
+        top: -45px; // Décalé plus en haut
+        left: -50px; // Décalé plus à gauche
+        width: 70px;
+        height: 90px;
+        border-right: none;
+        border-bottom: none;
+        transform-origin: top left;
+        transform: rotate(0deg); // Parfaitement droit en mode normal
+      }
+      
+      &-top-right {
+        top: -45px;
+        right: -50px;
+        width: 70px;
+        height: 90px;
+        border-left: none;
+        border-bottom: none;
+        transform-origin: top right;
+        transform: rotate(0deg);
+      }
+      
+      &-bottom-left {
+        bottom: -25px;
+        left: -50px;
+        width: 90px;
+        height: 70px;
+        border-right: none;
+        border-top: none;
+        transform-origin: bottom left;
+        transform: rotate(0deg);
+      }
+      
+      &-bottom-right {
+        bottom: -25px;
+        right: -20px;
+        width: 90px;
+        height: 70px;
+        border-left: none;
+        border-top: none;
+        transform-origin: bottom right;
+        transform: rotate(0deg); // Parfaitement droit en mode normal
+      }
+    }
+    
+    .animated-text {
+      color: $color-light;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 600px;
+      transition: all $transition-normal;
+      position: relative;
+      z-index: 2;
+      margin-bottom: $spacing-lg;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+      
+      span {
+        display: inline-block;
+        transition: all $transition-normal;
+        margin-right: 4px; // Espacement uniforme entre les mots (mode normal)
+      }
+      
+      @media (max-width: $breakpoint-lg) {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      @media (max-width: $breakpoint-sm) {
+        font-size: 1.1rem;
+      }
+    }
+  }
+  
+  &__image {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: calc(100vh - 200px); // Réduction de la hauteur pour diminuer l'espace
+    max-height: 600px; // Ajout d'une hauteur maximale
+    overflow: hidden;
+    
+    img {
+      width: auto;
+      height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      box-shadow: none;
+      border: none;
+      transition: $transition-normal;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      
+      &:hover {
+        transform: scale(1.02);
+      }
+      
+      @media (max-width: $breakpoint-md) {
+        width: 300px;
+        height: 300px;
+      }
+      
+      @media (max-width: $breakpoint-sm) {
+        width: 250px;
+        height: 250px;
+      }
+    }
+  }
+  
+  &__buttons {
+    display: flex;
+    gap: $spacing-xl; // Augmentation de l'écart entre les boutons
+    margin-top: $spacing-lg;
+    position: relative;
+    z-index: 2;
+    
+    &.animated-buttons {
+      .btn {
+        transition: all $transition-slow;
+        transform-style: preserve-3d;
+        
+        // Animation au survol des boutons individuels
+        &:hover {
+          transform: translateZ(20px) scale(1.08);
+        }
+      }
+    }
+    
+    @media (max-width: $breakpoint-lg) {
+      justify-content: center;
+    }
+    
+    @media (max-width: $breakpoint-sm) {
+      flex-direction: column;
+      width: 100%;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .btn {
+      padding: $spacing-sm $spacing-lg;
+      font-weight: 500;
+      font-size: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all $transition-normal;
+      transform-style: preserve-3d;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      
+      i {
+        margin-right: $spacing-xs;
+      }
+      
+      &-talk {
+        background-color: $color-red;
+        color: white;
+        
+        &:hover {
+          background-color: darken($color-red, 15%);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+          transform: translateZ(10px);
+        }
+      }
+      
+      &-download {
+        background-color: $color-light;
+        color: $color-blue;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          background-color: $color-blue;
+          color: $color-light;
+          border-color: $color-red;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+          transform: translateZ(10px);
+        }
+      }
+    }
+  }
+}

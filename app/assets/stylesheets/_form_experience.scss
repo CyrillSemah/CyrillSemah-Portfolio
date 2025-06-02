@@ -1,0 +1,297 @@
+// Import des variables
+@import 'variables';
+
+.admin-form {
+  background-color: white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-medium;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-xl;
+  
+  &__header {
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid rgba($color-dark, 0.1);
+    
+    h2 {
+      color: $color-dark;
+      margin-bottom: $spacing-xs;
+    }
+    
+    p {
+      color: rgba($color-dark, 0.7);
+    }
+  }
+  
+  &__form {
+    .form-group {
+      margin-bottom: $spacing-lg;
+      
+      label {
+        display: block;
+        margin-bottom: $spacing-xs;
+        font-weight: 500;
+        color: $color-dark;
+      }
+      
+      .hint {
+        display: block;
+        font-size: 0.85rem;
+        color: rgba($color-dark, 0.6);
+        margin-top: $spacing-xs;
+      }
+      
+      input[type="text"],
+      input[type="date"],
+      select,
+      textarea {
+        width: 100%;
+        padding: $spacing-sm $spacing-md;
+        border: 1px solid #ddd;
+        border-radius: $border-radius-sm;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: $transition-fast;
+        
+        &:focus {
+          outline: none;
+          border-color: $color-blue;
+          box-shadow: 0 0 0 2px rgba($color-blue, 0.2);
+        }
+        
+        &:disabled {
+          background-color: #f5f5f5;
+          cursor: not-allowed;
+        }
+      }
+      
+      textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+      
+      .checkbox-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: $spacing-md 0;
+        
+        input[type="checkbox"] {
+          margin-right: $spacing-xs;
+        }
+        
+        label {
+          display: inline-block;
+          margin-bottom: 0;
+        }
+      }
+      
+      .date-group {
+        display: flex;
+        gap: $spacing-md;
+        
+        .date-field {
+          flex: 1;
+        }
+      }
+      
+      .logo-preview {
+        margin-top: $spacing-md;
+        
+        img {
+          max-width: 120px;
+          max-height: 120px;
+          border: 1px solid #ddd;
+          border-radius: $border-radius-sm;
+          padding: $spacing-xs;
+        }
+        
+        .no-logo {
+          width: 120px;
+          height: 120px;
+          border: 1px dashed #ddd;
+          border-radius: $border-radius-sm;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: rgba($color-dark, 0.5);
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+  
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: $spacing-xl;
+    padding-top: $spacing-lg;
+    border-top: 1px solid rgba($color-dark, 0.1);
+    
+    .btn-cancel {
+      background-color: #f5f5f5;
+      color: $color-dark;
+      
+      &:hover {
+        background-color: #eee;
+      }
+    }
+  }
+}
+
+// Styles spécifiques pour la liste des expériences
+.experience-list {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+    
+    h2 {
+      margin-bottom: 0;
+    }
+    
+    .header-actions {
+      display: flex;
+      gap: $spacing-sm;
+    }
+  }
+  
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+  
+  &__item {
+    background-color: white;
+    border-radius: $border-radius-md;
+    box-shadow: $shadow-small;
+    overflow: hidden;
+    transition: $transition-normal;
+    
+    &:hover {
+      box-shadow: $shadow-medium;
+      transform: translateY(-3px);
+    }
+    
+    &-header {
+      display: flex;
+      align-items: center;
+      padding: $spacing-md;
+      background-color: rgba($color-blue, 0.05);
+      border-bottom: 1px solid rgba($color-dark, 0.1);
+      
+      .logo {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: $spacing-md;
+        
+        img {
+          max-width: 100%;
+          max-height: 100%;
+        }
+        
+        .no-logo {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          background-color: rgba($color-dark, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: $color-dark;
+          font-weight: 700;
+          font-size: 1.2rem;
+        }
+      }
+      
+      .company {
+        flex: 1;
+        
+        h3 {
+          margin-bottom: 0;
+          font-size: 1.2rem;
+        }
+      }
+    }
+    
+    &-body {
+      padding: $spacing-md;
+      
+      .position {
+        font-weight: 500;
+        margin-bottom: $spacing-xs;
+      }
+      
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-md;
+        margin-bottom: $spacing-sm;
+        font-size: 0.9rem;
+        color: rgba($color-dark, 0.7);
+      }
+      
+      .description {
+        color: rgba($color-dark, 0.9);
+        margin-bottom: 0;
+      }
+    }
+    
+    &-actions {
+      display: flex;
+      padding: $spacing-sm $spacing-md;
+      border-top: 1px solid rgba($color-dark, 0.1);
+      background-color: #f9f9f9;
+      
+      a {
+        margin-right: $spacing-md;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        
+        i {
+          margin-right: $spacing-xs;
+        }
+      }
+    }
+  }
+  
+  // Groupement des expériences par entreprise
+  &__group {
+    margin-bottom: $spacing-lg;
+    
+    &-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: $spacing-sm;
+      
+      .logo {
+        width: 40px;
+        height: 40px;
+        margin-right: $spacing-md;
+        
+        img {
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+      
+      h3 {
+        margin-bottom: 0;
+        font-size: 1.3rem;
+      }
+    }
+    
+    &-items {
+      margin-left: calc(40px + #{$spacing-md});
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+    }
+  }
+}

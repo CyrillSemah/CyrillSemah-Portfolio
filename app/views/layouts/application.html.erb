@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Cyrill Semah - Portfolio" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="Portfolio professionnel de Cyrill Semah, développeur web">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    
+    <%# Includes all JavaScript files %>
+    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "grid_background_effect", "data-turbo-track": "reload" %>
+    
+    <!-- Scripts JavaScript inlines pour éviter les problèmes de chargement -->
+    <script>
+      // Correctif pour les erreurs de sécurité CSS
+      window.addEventListener('error', function(e) {
+        // Ignorer les erreurs liées aux règles CSS
+        if (e.message && e.message.includes('cssRules')) {
+          e.stopImmediatePropagation();
+          e.stopPropagation();
+          e.preventDefault();
+          return false;
+        }
+      }, true);
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        // Gestion de la navbar
+        const navbarBurger = document.querySelector('.navbar__burger');
+        const navbarMobile = document.querySelector('.navbar__mobile');
+        
+        if (navbarBurger) {
+          navbarBurger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navbarMobile.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+          });
+        }
+        
+        // Fermer le menu mobile lors du clic sur un lien
+        document.querySelectorAll('.navbar__mobile a').forEach(link => {
+          link.addEventListener('click', function() {
+            navbarBurger.classList.remove('active');
+            navbarMobile.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+          });
+        });
+        
+        // Gestion de la modal de contact
+        const modal = document.getElementById('contactModal');
+        const openButtons = document.querySelectorAll('.js-contact-modal');
+        
+        if (modal) {
+          const closeButton = modal.querySelector('.modal-close');
+          const contactForm = document.getElementById('contactForm');
+          
+          // Ouvrir la modal
+          openButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+              e.preventDefault();
+              modal.classList.add('active');
+              document.body.style.overflow = 'hidden';
+            });
+          });
+          
+          // Fermer la modal
+          if (closeButton) {
+            closeButton.addEventListener('click', function() {
+              modal.classList.remove('active');
+              document.body.style.overflow = '';
+            });
+          }
+          
+          // Fermer la modal en cliquant en dehors
+          modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+              modal.classList.remove('active');
+              document.body.style.overflow = '';
+            }
+          });
+          
+          // Fermer la modal avec la touche Escape
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+              modal.classList.remove('active');
+              document.body.style.overflow = '';
+            }
+          });
+        }
+        
+        console.log('Scripts chargés avec succès');
+      });
+    </script>
+    <!-- Script direct pour les cartes de compétences avec effet 3D -->
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+          console.log("Script pour les cartes de compétences avec effet 3D");
+          
+          // Trouver toutes les cartes
+          const cards = document.querySelectorAll('.skill-item');
+          console.log(`Cartes trouvées: ${cards.length}`);
+          
+          // Variable pour la carte active
+          let activeCard = null;
+          
+          // Préparer un placeholder pour maintenir la hauteur
+          let placeholderElement = null;
+          
+          // Configurer chaque carte
+          cards.forEach(function(card, index) {
+            // Stocker les dimensions d'origine pour chaque carte
+            card.origStyles = {
+              width: null,
+              height: null
+            };
+            
+            // Initialiser les variables pour l'effet 3D
+            let bounds;
+            const mousePosition = { x: 0, y: 0 };
+            let isHovering = false;
+            
+            // Force de l'effet 3D
+            const rotationStrength = 15; // Intensité de l'effet de rotation
+            const perspective = 800;     // La perspective CSS
+            
+            // Configurer le style initial
+            card.style.transformStyle = 'preserve-3d';
+            card.style.transition = 'transform 0.1s ease, box-shadow 0.3s ease';
+
+            // Vérifier si la carte a déjà une description et l'initialiser
+            let description = card.querySelector('.skill-description');
+            if (description && !card.classList.contains('setup-done')) {
+              description.style.display = 'none';
+              
+              // Ajouter l'image fantôme en arrière-plan basée sur le logo de la compétence
+              const logoImg = card.querySelector('.skill-logo img');
+              if (logoImg && logoImg.src) {
+                // Utiliser l'URL de l'image du logo pour l'image fantôme
+                card.style.setProperty('--ghost-image', `url(${logoImg.src})`);
+              }
+              
+              card.classList.add('setup-done');
+            }
+            
+            // Effet 3D au survol
+            card.addEventListener('mouseenter', function() {
+              isHovering = true;
+              bounds = this.getBoundingClientRect();
+              
+              // Stocker les dimensions d'origine si pas encore fait
+              if (!this.origStyles.width) {
+                this.origStyles.width = this.offsetWidth;
+                this.origStyles.height = this.offsetHeight;
+              }
+              
+              // On garde toujours le z-index et l'ombre
+              if (!this.classList.contains('active')) {
+                this.style.zIndex = '10';
+                this.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)';
+              }
+            });
+            
+            // Désactiver l'effet quand la souris quitte la carte
+            card.addEventListener('mouseleave', function() {
+              isHovering = false;
+              
+              // Réinitialiser aussi les transformations des éléments internes
+              const logoContainer = this.querySelector('.skill-logo');
+              const logoImg = logoContainer ? logoContainer.querySelector('img') : null;
+              const name = this.querySelector('.skill-name');
+              
+              if (logoImg) {
+                logoImg.style.transform = '';
+                logoImg.style.filter = '';
+              }
+              
+              if (name) {
+                name.style.transform = '';
+                name.style.textShadow = '';
+              }
+              
+              if (this.classList.contains('active')) {
+                // Si la carte est active, maintenir une légère élévation mais sans rotation
+                this.style.transform = `perspective(${perspective}px) translateY(-5px)`;
+              } else {
+                // Sinon, revenir à l'état normal
+                this.style.transform = '';
+                this.style.boxShadow = '';
+                this.style.zIndex = '';
+              }
+            });
+            
+            // Effet 3D - suivre le mouvement de la souris
+            card.addEventListener('mousemove', function(e) {
+              if (!isHovering) return;
+              
+              // Calculer la position relative de la souris (-1 à 1)
+              const rect = this.getBoundingClientRect();
+              mousePosition.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+              mousePosition.y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+              
+              // Calculer les rotations
+              const rotationY = mousePosition.x * rotationStrength;
+              const rotationX = -mousePosition.y * rotationStrength;
+              
+              // Récupérer le logo et le nom pour l'effet de parallaxe
+              const logoContainer = this.querySelector('.skill-logo');
+              const logoImg = logoContainer ? logoContainer.querySelector('img') : null;
+              const name = this.querySelector('.skill-name');
+              
+              // Effet de parallaxe subtil et délicat pour les éléments internes
+              // Avec une légère translation inversée pour une impression de profondeur
+              if (logoImg) {
+                const logoTranslateX = -mousePosition.x * 5; // Mouvement beaucoup plus subtil
+                const logoTranslateY = -mousePosition.y * 5;
+                logoImg.style.transform = `
+                  translateX(${logoTranslateX}px)
+                  translateY(${logoTranslateY}px)
+                  scale(1.02)
+                `;
+                logoImg.style.transition = 'transform 0.15s ease, filter 0.15s ease';
+                logoImg.style.filter = 'drop-shadow(0 4px 5px rgba(0, 0, 0, 0.35))';
+              }
+              
+              if (name) {
+                const nameTranslateX = -mousePosition.x * 3; // Mouvement très subtil
+                const nameTranslateY = -mousePosition.y * 2;
+                name.style.transform = `
+                  translateX(${nameTranslateX}px)
+                  translateY(${nameTranslateY}px)
+                  scale(1.01)
+                `;
+                name.style.transition = 'transform 0.2s ease';
+                name.style.textShadow = '0 2px 4px rgba(0, 0, 0, 0.25)';
+              }
+              
+              // Appliquer la transformation 3D appropriée à la carte
+              if (this.classList.contains('active')) {
+                // Carte active - rotation moins prononcée
+                this.style.transform = `
+                  perspective(${perspective}px)
+                  translateY(-5px)
+                  rotateX(${rotationX/2}deg)
+                  rotateY(${rotationY/2}deg)
+                `;
+              } else {
+                // Carte normale - pleine rotation
+                this.style.transform = `
+                  perspective(${perspective}px)
+                  translateY(-10px)
+                  rotateX(${rotationX}deg)
+                  rotateY(${rotationY}deg)
+                `;
+              }
+            });
+            
+            // Gestion du clic
+            card.addEventListener('click', function(e) {
+              console.log(`Clic sur la carte ${index}`);
+              e.preventDefault();
+              e.stopPropagation();
+              
+              // Stocker les dimensions d'origine si pas encore fait
+              if (!this.origStyles.width) {
+                this.origStyles.width = this.offsetWidth;
+                this.origStyles.height = this.offsetHeight;
+              }
+              
+              // Si cette carte est déjà active, la fermer
+              if (activeCard === this) {
+                // Supprimer l'élément placeholder
+                if (placeholderElement && placeholderElement.parentNode) {
+                  placeholderElement.parentNode.removeChild(placeholderElement);
+                  placeholderElement = null;
+                }
+                
+                this.classList.remove('active');
+                isHovering = false;
+                
+                // Réinitialiser la position absolue et TOUS les styles
+                this.style.position = '';
+                this.style.top = '';
+                this.style.left = '';
+                this.style.width = '';
+                this.style.height = '';
+                this.style.transform = '';
+                this.style.boxShadow = '';
+                this.style.zIndex = '';
+                
+                // Masquer la description
+                if (description) {
+                  description.style.display = 'none';
+                }
+                
+                activeCard = null;
+                return;
+              }
+              
+              // Si une autre carte est active, la fermer
+              if (activeCard) {
+                // Supprimer l'élément placeholder existant
+                if (placeholderElement && placeholderElement.parentNode) {
+                  placeholderElement.parentNode.removeChild(placeholderElement);
+                  placeholderElement = null;
+                }
+                
+                activeCard.classList.remove('active');
+                activeCard.style.position = '';
+                activeCard.style.top = '';
+                activeCard.style.left = '';
+                activeCard.style.width = '';
+                activeCard.style.height = '';
+                activeCard.style.transform = '';
+                activeCard.style.boxShadow = '';
+                activeCard.style.zIndex = '';
+                
+                const prevDescription = activeCard.querySelector('.skill-description');
+                if (prevDescription) {
+                  prevDescription.style.display = 'none';
+                }
+              }
+              
+              // 1. Calculer la position exacte actuelle
+              const rect = this.getBoundingClientRect();
+              const parentRect = this.parentElement.getBoundingClientRect();
+              
+              // 2. Créer un élément placeholder pour maintenir l'espace
+              placeholderElement = document.createElement('div');
+              placeholderElement.style.width = rect.width + 'px';
+              placeholderElement.style.height = rect.height + 'px';
+              placeholderElement.style.margin = '0';
+              placeholderElement.style.padding = '0';
+              placeholderElement.style.visibility = 'hidden';
+              
+              // 3. Insérer le placeholder exactement à la position de la carte
+              this.parentNode.insertBefore(placeholderElement, this);
+              
+              // 4. Calculer précisément la position relative
+              const offsetTop = rect.top - parentRect.top;
+              const offsetLeft = rect.left - parentRect.left;
+              
+              // 5. Positionner la carte en absolu exactement à sa position actuelle avec animation simple
+              this.style.position = 'absolute';
+              this.style.top = offsetTop + 'px';
+              this.style.left = offsetLeft + 'px';
+              this.style.width = rect.width + 'px';
+              this.style.zIndex = '100';
+              this.style.transform = `perspective(${perspective}px) translateY(-5px)`;
+              this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.3)';
+              
+              // Activer la carte et afficher immédiatement la description
+              // en profitant des transitions CSS pour l'animation fluide
+              this.classList.add('active');
+              
+              // Afficher la description
+              if (description) {
+                description.style.display = 'block';
+              }
+              
+              activeCard = this;
+            });
+          });
+          
+          // Fermer la carte active en cliquant ailleurs
+          document.addEventListener('click', function(e) {
+            if (activeCard && !activeCard.contains(e.target)) {
+              console.log('Clic en dehors - fermeture de la carte active');
+              
+              // Supprimer l'élément placeholder
+              if (placeholderElement && placeholderElement.parentNode) {
+                placeholderElement.parentNode.removeChild(placeholderElement);
+                placeholderElement = null;
+              }
+              
+              activeCard.classList.remove('active');
+              
+              // Réinitialiser TOUS les styles
+              activeCard.style.position = '';
+              activeCard.style.top = '';
+              activeCard.style.left = '';
+              activeCard.style.width = '';
+              activeCard.style.height = '';
+              activeCard.style.transform = '';
+              activeCard.style.boxShadow = '';
+              activeCard.style.zIndex = '';
+              
+              const description = activeCard.querySelector('.skill-description');
+              if (description) {
+                description.style.display = 'none';
+              }
+              
+              activeCard = null;
+            }
+          });
+        }, 500);
+      });
+    </script>
+  </head>
+
+  <body>
+    <% unless controller_path.start_with?('admin/') || controller_name == 'admin' %>
+    <!-- Arrière-plan dynamique avec grille -->
+    <div class="grid-background">
+      <div class="grid-background__container">
+        <div class="grid-background__main">
+          <div class="grid-background__horizontal-lines"></div>
+          <div class="grid-background__vertical-lines"></div>
+          <div class="grid-background__dots"></div>
+        </div>
+      </div>
+      <div class="grid-background__horizon"></div>
+      <div class="grid-background__overlay"></div>
+    </div>
+    <% end %>
+    
+    <!-- Navbar -->
+    <%= render 'shared/navbar' %>
+    
+    <!-- Contenu principal -->
+    <main>
+      <% if notice %>
+        <div class="alert alert-success" style="display: none;"><%= notice %></div>
+      <% end %>
+      
+      <% if alert %>
+        <div class="alert alert-danger" style="display: none;"><%= alert %></div>
+      <% end %>
+      
+      <%= yield %>
+    </main>
+    
+    <!-- Footer -->
+    <%= render 'shared/footer' %>
+    
+    <!-- Modal de contact -->
+    <%= render 'shared/contact_modal' %>
+    
+    <!-- Modal de confirmation de suppression -->
+    <% if controller_path.start_with?('admin/') %>
+      <%= render 'shared/delete_confirmation_modal' %>
+      <!-- La modale education_delete_modal est maintenant incluse directement dans le fichier _education_delete_modal.html.erb -->
+    <% end %>
+    
+    <!-- JavaScript pour le smooth scroll et les icônes -->
+    <script>
+      // Remplacer les icônes Font Awesome
+      document.addEventListener('DOMContentLoaded', function() {
+        // Icône calendrier
+        document.querySelectorAll('.icon-calendar').forEach(icon => {
+          icon.classList.add('fas', 'fa-calendar-alt');
+        });
+        
+        // Icône localisation
+        document.querySelectorAll('.icon-location').forEach(icon => {
+          icon.classList.add('fas', 'fa-map-marker-alt');
+        });
+        
+        // Icônes réseaux sociaux
+        document.querySelectorAll('.icon-linkedin').forEach(icon => {
+          icon.classList.add('fab', 'fa-linkedin-in');
+        });
+        
+        document.querySelectorAll('.icon-github').forEach(icon => {
+          icon.classList.add('fab', 'fa-github');
+        });
+        
+        document.querySelectorAll('.icon-twitter').forEach(icon => {
+          icon.classList.add('fab', 'fa-twitter');
+        });
+      });
+    </script>
+    
+    <!-- JavaScript pour la navbar responsive -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Éléments DOM
+        const navbarBurger = document.querySelector('.navbar__burger');
+        const navbarMobile = document.querySelector('.navbar__mobile');
+        const navLinks = document.querySelectorAll('.navbar__links a:not(.btn-contact), .navbar__mobile a:not(.btn-contact)');
+        
+        // Gestion du menu burger
+        navbarBurger.addEventListener('click', function() {
+          this.classList.toggle('active');
+          navbarMobile.classList.toggle('active');
+          document.body.classList.toggle('no-scroll'); // Empêcher le défilement quand le menu est ouvert
+        });
+        
+        // Fermer le menu mobile lors du clic sur un lien
+        document.querySelectorAll('.navbar__mobile a').forEach(link => {
+          link.addEventListener('click', function() {
+            navbarBurger.classList.remove('active');
+            navbarMobile.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+          });
+        });
+        
+        // Gestion des liens actifs en fonction du scroll
+        function setActiveLink() {
+          const scrollPosition = window.scrollY;
+          
+          // Récupérer toutes les sections
+          const sections = document.querySelectorAll('section[id]');
+          
+          // Parcourir les sections pour trouver celle qui est visible
+          sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100; // Offset pour tenir compte de la hauteur de la navbar
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+              // Désactiver tous les liens
+              navLinks.forEach(link => {
+                link.classList.remove('active');
+              });
+              
+              // Activer le lien correspondant à la section visible
+              document.querySelectorAll(`a[href="#${sectionId}"]`).forEach(link => {
+                link.classList.add('active');
+              });
+            }
+          });
+        }
+        
+        // Écouter l'événement de scroll
+        window.addEventListener('scroll', setActiveLink);
+        
+        // Appeler la fonction au chargement de la page
+        setActiveLink();
+      });
+    </script>
+  </body>
+</html>

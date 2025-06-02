@@ -1,0 +1,129 @@
+<section id="skills" class="section section-skills">
+  <div class="container">
+    <div class="section-skills__header">
+      <h2>Compétences</h2>
+    </div>
+    
+    <div class="section-skills__content">
+      <% if @skill_groups.any? || @ungrouped_skills.any? %>
+        <!-- Compétences groupées -->
+        <% @skill_groups.each do |group| %>
+          <div class="skills-group">
+            <div class="skills-group__header">
+              <h3><%= group.name %></h3>
+              <% if group.description.present? %>
+                <p class="skills-group__description"><%= group.description %></p>
+              <% end %>
+            </div>
+            
+            <div class="skills-group__items">
+              <% group.skills.ordered_by_name.each do |skill| %>
+                <div class="skill-item" data-rotation="<%= rand(-5..5) %>">
+                  <!-- Logo et information principale -->
+                  <% if skill.logo.attached? %>
+                    <div class="skill-logo">
+                      <%= image_tag skill.logo, alt: skill.name %>
+                    </div>
+                  <% else %>
+                    <div class="skill-logo skill-logo--placeholder">
+                      <span><%= skill.name[0].upcase %></span>
+                    </div>
+                  <% end %>
+                  <h4 class="skill-name"><%= skill.name %></h4>
+                  <div class="skill-experience">
+                    <span class="skill-experience__text"><%= skill.experience_duration %></span>
+                  </div>
+                  
+                  <!-- Description (masquée par défaut, affichée au clic) -->
+                  <% if skill.description.present? %>
+                    <div class="skill-description" style="display: none;">
+                      <%= skill.description %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        
+        <!-- Compétences non groupées -->
+        <% if @ungrouped_skills.any? %>
+          <div class="skills-group">
+            <div class="skills-group__header">
+              <h3>Autres compétences</h3>
+            </div>
+            
+            <div class="skills-group__items">
+              <% @ungrouped_skills.each do |skill| %>
+                <div class="skill-item" data-rotation="<%= rand(-5..5) %>">
+                  <!-- Logo et information principale -->
+                  <% if skill.logo.attached? %>
+                    <div class="skill-logo">
+                      <%= image_tag skill.logo, alt: skill.name %>
+                    </div>
+                  <% else %>
+                    <div class="skill-logo skill-logo--placeholder">
+                      <span><%= skill.name[0].upcase %></span>
+                    </div>
+                  <% end %>
+                  <h4 class="skill-name"><%= skill.name %></h4>
+                  <div class="skill-experience">
+                    <span class="skill-experience__text"><%= skill.experience_duration %></span>
+                  </div>
+                  
+                  <!-- Description (masquée par défaut, affichée au clic) -->
+                  <% if skill.description.present? %>
+                    <div class="skill-description" style="display: none;">
+                      <%= skill.description %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <!-- Titre pour les compétences personnelles -->
+        <% if @soft_skills.any? %>
+          <div class="section-skills__header">
+            <h2>Compétences personnelles</h2>
+          </div>
+          
+          <!-- Soft Skills avec nuage de mots 3D interactif -->
+          <div class="skills-group soft-skills-group">
+            
+            <!-- Conteneur du canvas pour le nuage de mots 3D -->
+            <div id="soft-skills-canvas-container" class="soft-skills-canvas-container">
+              <canvas id="soft-skills-canvas" width="800" height="400">
+                Votre navigateur ne supporte pas HTML5 Canvas.
+              </canvas>
+              
+              <!-- Liste des tags pour le nuage de mots (invisible) -->
+              <div id="soft-skills-tags" style="display: none;">
+                <ul>
+                  <% @soft_skills.each_with_index do |soft_skill, index| %>
+                    <li>
+                      <a href="#" data-weight="8">
+                        <%= soft_skill.name %>
+                      </a>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+            
+            <!-- Version de secours si le canvas ne fonctionne pas -->
+            <div id="soft-skills-container" class="soft-skills-container" style="display: none;">
+              <% @soft_skills.each do |soft_skill| %>
+                <div class="soft-skill-item">
+                  <span class="soft-skill-name"><%= soft_skill.name %></span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="empty-state">Aucune compétence n'a été ajoutée pour le moment.</p>
+      <% end %>
+    </div>
+  </div>
+</section>

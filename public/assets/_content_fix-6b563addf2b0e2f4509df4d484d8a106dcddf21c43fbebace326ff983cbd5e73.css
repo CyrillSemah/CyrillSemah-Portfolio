@@ -1,0 +1,110 @@
+/* line 5, app/assets/stylesheets/_content_fix.scss */
+.container {
+  position: relative;
+  z-index: 5;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* line 14, app/assets/stylesheets/_content_fix.scss */
+.company-card {
+  position: relative;
+  z-index: 10;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* line 25, app/assets/stylesheets/_content_fix.scss */
+.company-card__header {
+  position: relative;
+  z-index: 11;
+}
+
+/* line 30, app/assets/stylesheets/_content_fix.scss */
+.company-card .experience-item {
+  position: relative;
+  z-index: 11;
+  opacity: 1 !important;
+}
+
+/* line 38, app/assets/stylesheets/_content_fix.scss */
+.school-card {
+  position: relative;
+  z-index: 10;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* line 49, app/assets/stylesheets/_content_fix.scss */
+.school-card__header {
+  position: relative;
+  z-index: 11;
+}
+
+/* line 54, app/assets/stylesheets/_content_fix.scss */
+.school-card .education-item {
+  position: relative;
+  z-index: 11;
+  opacity: 1 !important;
+}
+
+/* line 62, app/assets/stylesheets/_content_fix.scss */
+.skill-item {
+  position: relative;
+  z-index: 10;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* line 75, app/assets/stylesheets/_content_fix.scss */
+.skills-group {
+  position: relative;
+  z-index: 10;
+  margin-bottom: 2rem;
+}
+
+/* line 80, app/assets/stylesheets/_content_fix.scss */
+.skills-group__header {
+  position: relative;
+  z-index: 11;
+}
+
+/* line 85, app/assets/stylesheets/_content_fix.scss */
+.skills-group__items {
+  position: relative;
+  z-index: 11;
+}
+
+/* line 92, app/assets/stylesheets/_content_fix.scss */
+.section h2 {
+  position: relative;
+  z-index: 10;
+  color: inherit;
+  margin-bottom: 2rem;
+}
+
+/* line 100, app/assets/stylesheets/_content_fix.scss */
+.grid-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}

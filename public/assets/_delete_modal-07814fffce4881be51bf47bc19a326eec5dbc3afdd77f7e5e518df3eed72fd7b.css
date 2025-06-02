@@ -1,0 +1,169 @@
+/* line 4, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* line 19, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* line 24, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__container {
+  background-color: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+}
+
+/* line 34, app/assets/stylesheets/_delete_modal.scss */
+.active .delete-confirmation-modal__container {
+  transform: translateY(0);
+}
+
+/* line 39, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__header {
+  padding: 1rem 1.5rem;
+  background-color: #2b3f8a;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* line 47, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* line 53, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__header .close-modal {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+/* line 62, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__header .close-modal:hover {
+  opacity: 0.8;
+}
+
+/* line 68, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__body {
+  padding: 1.5rem;
+}
+
+/* line 71, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__body p {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #2b3f8a;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+/* line 79, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__body .text-muted {
+  color: #2b3f8a;
+  opacity: 0.8;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* line 86, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__body .warning-message {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #2b3f8a;
+  margin-bottom: 1rem;
+}
+
+/* line 93, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__body .warning-details {
+  color: #2b3f8a;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* line 100, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(32, 47, 102, 0.1);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* line 107, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__footer .btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+/* line 115, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__footer .btn-secondary {
+  background-color: white;
+  color: #6c757d;
+  border: 1px solid rgba(108, 117, 125, 0.3);
+}
+
+/* line 120, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__footer .btn-secondary:hover {
+  background-color: rgba(108, 117, 125, 0.1);
+  color: #202f66;
+}
+
+/* line 126, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__footer .btn-danger {
+  background-color: #c13733;
+  color: white;
+  border: none;
+}
+
+/* line 131, app/assets/stylesheets/_delete_modal.scss */
+.delete-confirmation-modal__footer .btn-danger:hover {
+  background-color: #992c28;
+}
+
+@media (max-width: 576px) {
+  /* line 142, app/assets/stylesheets/_delete_modal.scss */
+  .delete-confirmation-modal__container {
+    width: 95%;
+  }
+  /* line 146, app/assets/stylesheets/_delete_modal.scss */
+  .delete-confirmation-modal__footer {
+    flex-direction: column;
+  }
+  /* line 149, app/assets/stylesheets/_delete_modal.scss */
+  .delete-confirmation-modal__footer .btn {
+    width: 100%;
+    text-align: center;
+  }
+}

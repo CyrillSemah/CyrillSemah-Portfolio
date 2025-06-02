@@ -1,0 +1,387 @@
+// Styles pour la section des compétences sur la partie publique
+@import 'variables';
+
+// Animations de zoom pour les groupes de compétences
+@keyframes zoomIn {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes zoomOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}
+
+// Animations de fade pour les compétences personnelles
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.section-skills {
+  background-color: $color-light;
+  overflow: visible; // Ajouté pour permettre aux cartes de dépasser
+  padding-bottom: 60px; // Espace supplémentaire en bas de la section
+  
+  &__header {
+    margin-bottom: $spacing-xl;
+    text-align: center;
+    
+    h2 {
+      position: relative;
+      display: inline-block;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background-color: $color-blue;
+      }
+    }
+  }
+  
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xl;
+    position: relative; // Ajouté pour le contexte de positionnement
+  }
+}
+
+.skills-group {
+  background-color: white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-small;
+  overflow: visible; // Changé de hidden à visible pour permettre aux cartes de dépasser
+  transition: $transition-normal;
+  transform: scale(0.5); // État initial réduit pour l'animation de zoom
+  opacity: 0;
+  position: relative; // Ajouté pour le contexte de positionnement
+  margin-bottom: 60px; // Espace supplémentaire entre les groupes
+  
+  &.animate-in {
+    animation: zoomIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; // Animation avec rebond
+    z-index: 1; // Z-index normal pour les groupes standards
+  }
+  
+  &.animate-out {
+    animation: zoomOut 0.6s cubic-bezier(0.7, 0, 0.84, 0) forwards; // Animation de sortie
+  }
+  
+  &:hover {
+    box-shadow: $shadow-medium;
+    transform: scale(1.02); // Légèrement plus grand au survol
+  }
+  
+  // Styles spécifiques pour les compétences personnelles
+  &.soft-skills-group {
+    transform: scale(1); // Pas de réduction initiale pour les compétences personnelles
+    opacity: 0; // Seulement invisible au départ
+    z-index: 1; // Z-index inférieur pour éviter le chevauchement avec les cartes actives
+    background-color: transparent; // Fond transparent
+    box-shadow: none; // Pas d'ombre
+    padding-top: 0; // Pas de padding en haut
+    margin-top: $spacing-md; // Marge en haut réduite
+    
+    &.animate-in {
+      animation: fadeIn 1.2s ease forwards; // Animation de fade in plus lente et fluide
+    }
+    
+    &.animate-out {
+      animation: fadeOut 0.8s ease forwards; // Animation de fade out
+    }
+    
+    &:hover {
+      transform: none; // Pas d'effet de zoom au survol
+      box-shadow: none; // Pas d'ombre au survol
+    }
+  }
+  
+  &__header {
+    background-color: $color-blue;
+    color: white;
+    padding: $spacing-md $spacing-lg;
+    
+    h3 {
+      margin: 0 0 $spacing-xs;
+      font-size: 1.4rem;
+    }
+    
+    &__description {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin: 0;
+    }
+  }
+  
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    position: relative; 
+    overflow: visible;
+    min-height: 280px; // Hauteur minimale pour éviter les chevauchements
+  }
+}
+
+.skill-item {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  background-color: white;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: $shadow-light;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  will-change: transform, box-shadow; // Optimisation des performances d'animation
+  
+  // Image fantôme en arrière-plan
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: -10px;
+    width: 140px;
+    height: 140px;
+    background-image: var(--ghost-image, none);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    opacity: 0.07;
+    transform: rotate(-10deg) scale(1.4);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+    z-index: 0;
+    will-change: opacity, transform;
+  }
+  
+  // Rotation aléatoire au survol (l'effet sera appliqué en JS)
+  &:hover:not(.active) {
+    transform: translateY(-10px) scale(1.05);
+    z-index: 10;
+    box-shadow: $shadow-dark;
+  }
+  
+  &.active {
+    // Position absolue pour chevaucher les autres éléments sans perturber la mise en page
+    position: absolute;
+    height: auto;
+    min-height: 300px;
+    z-index: 1000; // Z-index beaucoup plus élevé pour s'assurer qu'il est au-dessus de tout
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    transition: all 0.25s ease-out; // Transition simplifiée pour plus de fluidité
+    overflow: visible; // Permet à la description de dépasser si nécessaire
+    // Pas de scale pour éviter de changer la taille
+    // La largeur est maintenant gérée en JavaScript pour être exactement la même qu'à l'origine
+    
+    // Masquer l'image fantôme quand la carte est active
+    &::before {
+      opacity: 0;
+      transform: translateY(50px) rotate(-20deg) scale(0.8);
+    }
+    
+    // Afficher la description quand la carte est active
+    .skill-description {
+      display: block;
+      max-height: 500px;
+      opacity: 1;
+      transition: all 0.25s ease-out; // Transition simplifiée et alignée avec la carte
+      margin-top: 15px;
+      padding: 10px;
+      background-color: rgba(249, 249, 249, 0.9);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: $color-dark;
+      line-height: 1.5;
+      will-change: opacity, max-height; // Optimisation des performances
+    }
+  }
+  
+  // Style des éléments internes de la carte
+  .skill-logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: $spacing-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent; // S'assurer que le fond est transparent
+    
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: all 0.25s ease-out;
+      will-change: transform, filter; // Optimisation des performances
+    }
+    
+    &--placeholder {
+      background-color: rgba($color-blue, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      span {
+        font-size: 2rem;
+        font-weight: 700;
+        color: $color-blue;
+      }
+    }
+  }
+  
+  .skill-name {
+    margin: $spacing-sm 0;
+    font-size: 1.1rem;
+    color: $color-blue;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  .skill-experience {
+    margin-top: $spacing-sm;
+    
+    &__text {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: $color-dark;
+      background-color: rgba($color-blue, 0.1);
+      border-radius: $border-radius-sm;
+      padding: $spacing-xs $spacing-sm;
+    }
+  }
+  
+  .skill-description {
+    font-size: 0.9rem;
+    color: $color-dark;
+    margin: $spacing-md 0;
+    line-height: 1.5;
+    background-color: rgba($color-blue, 0.05);
+    padding: $spacing-md;
+    border-radius: $border-radius-md;
+    width: 100%;
+  }
+}
+
+// Styles pour les soft skills
+.soft-skills-group {
+  margin-top: $spacing-xl;
+}
+
+// Conteneur du canvas pour le nuage de mots 3D
+.soft-skills-canvas-container {
+  position: relative;
+  width: 100%;
+  height: 500px; // Hauteur augmentée pour un nuage plus grand
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
+  background-color: $color-light; // Fond sans opacité
+  border-radius: $border-radius-lg; // Coins arrondis pour plus d'élégance
+  
+  canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}
+
+// Version de secours si le canvas ne fonctionne pas
+.soft-skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+}
+
+.soft-skill-item {
+  background-color: rgba($color-blue, 0.1);
+  border-radius: $border-radius-lg;
+  padding: $spacing-sm $spacing-md;
+  transition: $transition-fast;
+  
+  &:hover {
+    background-color: rgba($color-blue, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  .soft-skill-name {
+    font-weight: 500;
+    color: $color-blue;
+  }
+}
+
+// Styles pour les tags du nuage de mots
+#soft-skills-tags {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  a {
+    text-decoration: none;
+    color: $color-blue;
+    font-weight: 500;
+    transition: $transition-fast;
+    
+    &:hover {
+      color: darken($color-blue, 15%);
+      text-decoration: none;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .skills-group__items {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .soft-skills-container {
+    gap: $spacing-sm;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .skills-group__items {
+    grid-template-columns: 1fr;
+  }
+}

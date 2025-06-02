@@ -1,0 +1,405 @@
+/* line 5, app/assets/stylesheets/_soft_skills.scss */
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  color: #202f66;
+}
+
+/* line 18, app/assets/stylesheets/_soft_skills.scss */
+.btn-icon:hover {
+  background-color: rgba(32, 47, 102, 0.05);
+}
+
+/* line 22, app/assets/stylesheets/_soft_skills.scss */
+.btn-icon.btn-edit {
+  color: #2b3f8a;
+}
+
+/* line 24, app/assets/stylesheets/_soft_skills.scss */
+.btn-icon.btn-edit:hover {
+  background-color: rgba(43, 63, 138, 0.1);
+}
+
+/* line 29, app/assets/stylesheets/_soft_skills.scss */
+.btn-icon.btn-delete {
+  color: #c13733;
+}
+
+/* line 31, app/assets/stylesheets/_soft_skills.scss */
+.btn-icon.btn-delete:hover {
+  background-color: rgba(193, 55, 51, 0.1);
+}
+
+/* line 36, app/assets/stylesheets/_soft_skills.scss */
+.btn-icon i {
+  font-size: 1.2rem;
+}
+
+/* line 42, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+
+/* line 48, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  min-width: 0;
+}
+
+@media (max-width: 390px) {
+  /* line 48, app/assets/stylesheets/_soft_skills.scss */
+  .soft-skills-list .soft-skill-item {
+    padding: 0.5rem;
+  }
+}
+
+/* line 66, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+/* line 71, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-name {
+  font-weight: 500;
+  color: #202f66;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 390px) {
+  /* line 71, app/assets/stylesheets/_soft_skills.scss */
+  .soft-skills-list .soft-skill-item .soft-skill-name {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 320px) {
+  /* line 71, app/assets/stylesheets/_soft_skills.scss */
+  .soft-skills-list .soft-skill-item .soft-skill-name {
+    max-width: 160px;
+  }
+}
+
+/* line 88, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 1rem;
+  border-left: 1px solid rgba(32, 47, 102, 0.1);
+  padding-left: 1rem;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none !important;
+}
+
+/* line 99, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .normal-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* line 105, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions {
+  display: none;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* line 110, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(32, 47, 102, 0.05);
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  z-index: 30;
+}
+
+/* line 124, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__button:hover {
+  background-color: rgba(32, 47, 102, 0.05);
+}
+
+/* line 128, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__button .dot {
+  width: 4px;
+  height: 4px;
+  background-color: #202f66;
+  border-radius: 50%;
+  margin: 2px 0;
+}
+
+/* line 137, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  padding: 0.25rem 0;
+  min-width: 150px;
+  z-index: 100;
+  display: none;
+  pointer-events: auto;
+}
+
+/* line 150, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content.show {
+  display: block;
+}
+
+/* line 154, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content .menu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 1rem;
+  text-decoration: none;
+  color: #202f66;
+  transition: 0.3s ease;
+}
+
+/* line 162, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content .menu-item i {
+  margin-right: 0.5rem;
+  width: 20px;
+  text-align: center;
+}
+
+/* line 168, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content .menu-item:hover {
+  background-color: rgba(32, 47, 102, 0.05);
+}
+
+/* line 172, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content .menu-item.btn-edit:hover {
+  color: #2b3f8a;
+}
+
+/* line 176, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content .menu-item.btn-delete:hover {
+  color: #c13733;
+}
+
+@media (max-width: 390px) {
+  /* line 88, app/assets/stylesheets/_soft_skills.scss */
+  .soft-skills-list .soft-skill-item .soft-skill-actions {
+    border-left: none;
+    padding-left: 0;
+    margin-left: 0.5rem;
+    position: relative;
+    z-index: 20;
+  }
+  /* line 190, app/assets/stylesheets/_soft_skills.scss */
+  .soft-skills-list .soft-skill-item .soft-skill-actions .normal-actions {
+    display: none;
+  }
+  /* line 194, app/assets/stylesheets/_soft_skills.scss */
+  .soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions {
+    display: block;
+  }
+}
+
+@media (max-width: 320px) {
+  /* line 88, app/assets/stylesheets/_soft_skills.scss */
+  .soft-skills-list .soft-skill-item .soft-skill-actions {
+    margin-left: 5px;
+  }
+}
+
+/* line 205, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+/* line 210, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-name {
+  font-weight: 500;
+  color: #202f66;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 390px) {
+  /* line 210, app/assets/stylesheets/_soft_skills.scss */
+  .soft-skills-list .soft-skill-item .soft-skill-name {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 320px) {
+  /* line 210, app/assets/stylesheets/_soft_skills.scss */
+  .soft-skills-list .soft-skill-item .soft-skill-name {
+    max-width: 160px;
+  }
+}
+
+/* line 227, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 1rem;
+  border-left: 1px solid rgba(32, 47, 102, 0.1);
+  padding-left: 1rem;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none !important;
+}
+
+/* line 238, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .normal-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* line 244, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions {
+  display: none;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* line 249, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(32, 47, 102, 0.05);
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  z-index: 30;
+}
+
+/* line 263, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__button:hover {
+  background-color: rgba(32, 47, 102, 0.05);
+}
+
+/* line 267, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__button .dot {
+  width: 4px;
+  height: 4px;
+  background-color: #202f66;
+  border-radius: 50%;
+  margin: 2px 0;
+}
+
+/* line 276, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  padding: 0.25rem 0;
+  min-width: 150px;
+  z-index: 100;
+  display: none;
+  pointer-events: auto;
+}
+
+/* line 289, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content.show {
+  display: block;
+}
+
+/* line 293, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content .menu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 1rem;
+  text-decoration: none;
+  color: #202f66;
+  transition: 0.3s ease;
+}
+
+/* line 301, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content .menu-item i {
+  margin-right: 0.5rem;
+  width: 20px;
+  text-align: center;
+}
+
+/* line 307, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content .menu-item:hover {
+  background-color: rgba(32, 47, 102, 0.05);
+}
+
+/* line 311, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content .menu-item.btn-edit:hover {
+  color: #2b3f8a;
+}
+
+/* line 315, app/assets/stylesheets/_soft_skills.scss */
+.soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions .kebab-menu__content .menu-item.btn-delete:hover {
+  color: #c13733;
+}
+
+@media (max-width: 390px) {
+  /* line 227, app/assets/stylesheets/_soft_skills.scss */
+  .soft-skills-list .soft-skill-item .soft-skill-actions {
+    border-left: none;
+    padding-left: 0;
+    margin-left: 0.5rem;
+    position: relative;
+    z-index: 20;
+  }
+  /* line 329, app/assets/stylesheets/_soft_skills.scss */
+  .soft-skills-list .soft-skill-item .soft-skill-actions .normal-actions {
+    display: none;
+  }
+  /* line 333, app/assets/stylesheets/_soft_skills.scss */
+  .soft-skills-list .soft-skill-item .soft-skill-actions .kebab-actions {
+    display: block;
+  }
+}
+
+@media (max-width: 320px) {
+  /* line 227, app/assets/stylesheets/_soft_skills.scss */
+  .soft-skills-list .soft-skill-item .soft-skill-actions {
+    margin-left: 5px;
+  }
+}

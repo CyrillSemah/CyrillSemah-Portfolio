@@ -1,0 +1,151 @@
+@keyframes gridMove {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate3d(20px, 10px, 0) rotate(1deg);
+  }
+  50% {
+    transform: translate3d(0, 20px, 0) rotate(0deg);
+  }
+  75% {
+    transform: translate3d(-20px, 10px, 0) rotate(-1deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+@keyframes gridLineOpacity {
+  0% {
+    opacity: 0.25;
+  }
+  25% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.35;
+  }
+  75% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes gridDepth {
+  0% {
+    transform: perspective(1000px) rotateX(60deg) rotateZ(0deg);
+  }
+  50% {
+    transform: perspective(1000px) rotateX(65deg) rotateZ(1deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateX(60deg) rotateZ(0deg);
+  }
+}
+
+/* line 56, app/assets/stylesheets/_grid_background.scss */
+.grid-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* line 67, app/assets/stylesheets/_grid_background.scss */
+.grid-background__container {
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  animation: gridMove 30s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+/* line 78, app/assets/stylesheets/_grid_background.scss */
+.grid-background__main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 40px 40px;
+  animation: gridDepth 20s ease-in-out infinite;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(60deg) rotateZ(0deg);
+}
+
+/* line 92, app/assets/stylesheets/_grid_background.scss */
+.grid-background__horizontal-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(0deg, rgba(180, 220, 255, 0.35) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* line 104, app/assets/stylesheets/_grid_background.scss */
+.grid-background__horizon {
+  position: absolute;
+  bottom: 30%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(180, 220, 255, 0.1) 10%, rgba(180, 220, 255, 0.4) 50%, rgba(180, 220, 255, 0.1) 90%, transparent 100%);
+  box-shadow: 0 0 15px rgba(180, 220, 255, 0.3);
+  transform: perspective(1000px) rotateX(60deg);
+  z-index: 3;
+}
+
+/* line 123, app/assets/stylesheets/_grid_background.scss */
+.grid-background__vertical-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(90deg, rgba(180, 220, 255, 0.35) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* line 135, app/assets/stylesheets/_grid_background.scss */
+.grid-background__dots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 142, app/assets/stylesheets/_grid_background.scss */
+.grid-background__dots::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, rgba(210, 230, 255, 0.5) 1.5px, transparent 1.5px);
+  background-size: 40px 40px;
+}
+
+/* line 156, app/assets/stylesheets/_grid_background.scss */
+.grid-background__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(20, 40, 120, 0.15) 0%, rgba(20, 40, 120, 0.05) 50%, rgba(20, 40, 120, 0.15) 100%);
+  mix-blend-mode: normal;
+}

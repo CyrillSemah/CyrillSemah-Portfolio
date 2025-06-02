@@ -1,0 +1,90 @@
+<div class="admin-experience-container">
+  <div class="container">
+    <div class="admin-nav">
+      <ul class="admin-nav__list">
+        <li class="admin-nav__item">
+          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Formations", admin_educations_path %>
+        </li>
+        <li class="admin-nav__item active">
+          <%= link_to "Compétences", admin_skills_path %>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="experience-list">
+      <div class="experience-list__header">
+        <h2>Détails de la compétence</h2>
+      </div>
+    </div>
+    
+    <div class="experience-detail">
+      <div class="experience-detail__content">
+        <div class="experience-detail__logo">
+          <% if @skill.logo.attached? %>
+            <%= image_tag @skill.logo %>
+          <% else %>
+            <div class="no-logo"><%= @skill.name[0].upcase %></div>
+          <% end %>
+        </div>
+        
+        <div class="experience-detail__info">
+          <h3><%= @skill.name %></h3>
+          
+          <div class="meta-info">
+            <span class="meta-label">Date de début : </span>
+            <span class="meta-value"><%= l(@skill.start_date, format: '%d %B %Y') %></span>
+            <span class="separator">•</span>
+            <span class="meta-label">Expérience : </span>
+            <span class="meta-value"><%= @skill.experience_duration %></span>
+          </div>
+          
+          <div class="description-section">
+            <h4>Description</h4>
+            <p><%= @skill.description %></p>
+          </div>
+          
+          <div class="experience-list__item-actions">
+            <%= link_to "Retour à la liste", admin_skills_path, class: "btn btn-view" %>
+            <%= link_to "Modifier", edit_admin_skill_path(@skill), class: "btn btn-edit" %>
+            <%= link_to "Supprimer", "#", 
+                class: "btn btn-delete btn-delete-skill",
+                data: { delete_url: admin_skill_path(@skill) } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_tag do %>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Gestion de la suppression de la compétence
+    document.querySelector('.btn-delete-skill').addEventListener('click', function(e) {
+      e.preventDefault();
+      if (confirm('Êtes-vous sûr de vouloir supprimer cette compétence ?')) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = this.dataset.deleteUrl;
+        form.style.display = 'none';
+        
+        var methodInput = document.createElement('input');
+        methodInput.type = 'hidden';
+        methodInput.name = '_method';
+        methodInput.value = 'delete';
+        form.appendChild(methodInput);
+        
+        var csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = '<%= request_forgery_protection_token %>';
+        csrfInput.value = '<%= form_authenticity_token %>';
+        form.appendChild(csrfInput);
+        
+        document.body.appendChild(form);
+        form.submit();
+      }
+    });
+  });
+<% end %>

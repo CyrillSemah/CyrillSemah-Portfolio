@@ -1,0 +1,36 @@
+// Styles spécifiques pour le bouton Contact
+// Importation des variables
+@import 'variables';
+
+// Style du bouton Contact identique au bouton Télécharger mon CV
+.contact-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm $spacing-lg;
+  background-color: $color-blue;
+  color: white !important;
+  border: none;
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  transition: $transition-normal;
+  font-weight: 500;
+  font-size: 1rem;
+  text-decoration: none !important;
+  
+  &:hover {
+    background-color: darken($color-blue, 10%);
+    transform: translateY(-2px);
+    box-shadow: $shadow-medium;
+    text-decoration: none !important;
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  // Désactiver l'effet de soulignement
+  &::after {
+    display: none !important;
+  }
+}

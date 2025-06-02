@@ -1,0 +1,648 @@
+// Import des variables pour s'assurer qu'elles sont disponibles
+@import 'variables';
+
+.section-education {
+  position: relative;
+  
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+    position: relative;
+    z-index: 2; // S'assurer que le titre est au-dessus du trait
+    
+    h2 {
+      color: $color-dark;
+      position: relative;
+      display: inline-block;
+      background-color: $color-light; // Fond bleu pour le titre
+      padding: 10px 70px;
+      border-radius: 15px 50px 15px 50px;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background-color: $color-blue;
+      }
+    }
+    
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: $color-light;
+      font-weight: 300;
+      margin-top: $spacing-md;
+    }
+  }
+  
+  // Timeline verticale
+  &__timeline {
+    position: relative;
+    top: calc(#{$spacing-lg} + 10px);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50px; // Commencer plus haut pour passer derrière le titre
+      bottom: 0;
+      left: 24px;
+      width: 2px;
+      background-color: rgba($color-light, 0.3);
+      z-index: 1;
+      
+      @media (min-width: $breakpoint-md) {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+    &::after {
+      background-color: rgba($color-blue, 0.3);
+    }
+  }
+  
+  &__content {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .alert {
+    background-color: rgba($color-dark, 0.05);
+    padding: $spacing-md;
+    border-radius: $border-radius-md;
+    text-align: center;
+    color: rgba($color-dark, 0.7);
+    margin: $spacing-lg auto;
+    max-width: 600px;
+  }
+  
+  // Animation d'apparition depuis la droite (plus éloignée)
+  @keyframes slideInRight {
+    from {
+      transform: translateX(300px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  // Animation de disparition vers la droite (plus éloignée)
+  @keyframes slideOutRight {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(300px);
+      opacity: 0;
+    }
+  }
+
+  // Animations pour mobile (distance plus courte)
+  @keyframes slideInRightMobile {
+    from {
+      transform: translateX(100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideOutRightMobile {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100px);
+      opacity: 0;
+    }
+  }
+  
+  // Animation d'apparition depuis la gauche (pour les formations)
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-300px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  // Animation de disparition vers la gauche (pour les formations)
+  @keyframes slideOutLeft {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(-300px);
+      opacity: 0;
+    }
+  }
+
+  // Animations pour mobile (distance plus courte)
+  @keyframes slideInLeftMobile {
+    from {
+      transform: translateX(-100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideOutLeftMobile {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(-100px);
+      opacity: 0;
+    }
+  }
+  
+  .school-card {
+    background-color: white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-small;
+    margin-bottom: $spacing-xl;
+    overflow: hidden;
+    opacity: 0;
+    will-change: transform, opacity; // Optimisation des performances
+    
+    // Transition de base pour les propriétés non-animées
+    transition: box-shadow 0.3s ease;
+    
+    // Version desktop (par défaut)
+    transform: translateX(-300px); // Distance initiale depuis la gauche
+    
+    &.animate-in {
+      animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; // Animation de gauche à droite
+    }
+
+    &.animate-out {
+      animation: slideOutLeft 0.8s cubic-bezier(0.7, 0, 0.84, 0) forwards; // Animation de sortie vers la gauche
+    }
+    
+    // Version mobile (675px et moins)
+    @media (max-width: 675px) {
+      transform: translateX(-100px); // Distance initiale plus courte pour mobile
+      &.animate-in {
+        animation: slideInLeftMobile 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      &.animate-out {
+        animation: slideOutLeftMobile 0.6s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+      }
+    }
+    
+    &__header {
+      display: flex;
+      align-items: center;
+      padding: $spacing-lg;
+      background-color: $color-blue;
+      color: $color-light;
+      border-bottom: 1px solid rgba($color-dark, 0.1);
+      border-radius: $border-radius-lg $border-radius-lg 0 0;
+      position: relative; // Positionnement relatif pour contenir la prévisualisation
+      
+      .logo {
+        width: 60px;
+        height: 60px;
+        margin-right: $spacing-md;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        border-radius: $border-radius-md;
+        padding: $spacing-xs;
+        box-shadow: $shadow-small;
+        cursor: pointer;
+        transition: transform $transition-normal;
+        position: relative;
+        z-index: 2;
+        
+        &:hover {
+          transform: scale(1.05);
+        }
+        
+        img {
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+        }
+        
+        .logo-placeholder.large {
+          width: 200px;
+          height: 200px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 5rem;
+          font-weight: bold;
+          color: $color-blue;
+          background-color: white;
+          border-radius: $border-radius-md;
+          box-shadow: $shadow-large;
+        }
+      }
+      
+      .school-name {
+        h3 {
+          font-size: 1.5rem;
+          margin-bottom: $spacing-xs;
+          color: $color-light !important;
+        }
+      }
+      
+      // Positionnement relatif pour le header pour contenir l'image agrandie
+      position: relative;
+      
+      // Effet de survol pour le logo
+      .logo, .school-name {
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
+        
+        &:hover ~ .logo-preview,
+        &:focus ~ .logo-preview {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+      
+      .logo-preview {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        margin: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+        pointer-events: none; // Important pour que le hover fonctionne correctement
+        border-radius: $border-radius-lg;
+        
+        &:hover {
+          opacity: 1;
+          visibility: visible;
+        }
+        
+        img {
+          max-width: 80%;
+          max-height: 80%;
+          object-fit: contain;
+          border-radius: $border-radius-lg;
+          background-color: white;
+          padding: $spacing-lg;
+          box-shadow: $shadow-dark;
+        }
+      }
+      
+      // Suppression du hover sur l'ensemble de l'en-tête
+      // &:hover .logo-preview {
+      //   opacity: 1;
+      //   visibility: visible;
+      // }
+    }
+    
+    &__body {
+      padding: 0;
+    }
+  }
+  
+  .education-item {
+    position: relative;
+    padding: $spacing-lg;
+    border-bottom: 1px solid rgba($color-dark, 0.05);
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    &:hover {
+      background-color: rgba($color-dark, 0.01);
+    }
+    
+    // Timeline dot
+    &::before {
+      content: '';
+      position: absolute;
+      top: calc(#{$spacing-lg} + 10px);
+      left: -30px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: $color-blue;
+      border: 2px solid white;
+      box-shadow: $shadow-small;
+      z-index: 2;
+      
+      @media (max-width: $breakpoint-md) {
+        left: 18px;
+      }
+    }
+    
+    &__header {
+      margin-bottom: $spacing-md;
+      
+      .degree {
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: $color-dark;
+        margin-bottom: $spacing-xs;
+        font-size: 1.2rem;
+        margin: 0 0 $spacing-xs 0;
+        color: $color-dark;
+      }
+      
+      .field-of-study {
+        display: inline-block;
+        padding: $spacing-xs $spacing-sm;
+        background-color: rgba($color-blue, 0.1);
+        color: $color-blue;
+        border-radius: $border-radius-sm;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-bottom: $spacing-xs;
+      }
+    }
+    
+    &__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-md;
+      margin-bottom: $spacing-md;
+      font-size: 0.9rem;
+      color: rgba($color-dark, 0.7);
+      
+      .dates, .result {
+        display: flex;
+        align-items: center;
+        
+        i {
+          margin-right: $spacing-xs;
+          color: $color-blue;
+        }
+      }
+    }
+    
+    &__description {
+      color: rgba($color-dark, 0.9);
+      margin-bottom: $spacing-md;
+      
+      p {
+        margin-bottom: $spacing-sm;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+      
+      ul {
+        padding-left: $spacing-lg;
+        margin-bottom: $spacing-sm;
+        
+        li {
+          margin-bottom: $spacing-xs;
+        }
+      }
+    }
+    
+    &__activities {
+      margin-top: $spacing-md;
+      
+      .activities-title {
+        font-weight: 600;
+        margin-bottom: $spacing-xs;
+        font-size: 0.95rem;
+        color: $color-dark;
+      }
+      
+      .activities-content {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        padding: $spacing-sm;
+        background-color: rgba($color-dark, 0.05);
+        border-radius: $border-radius-sm;
+      }
+    }
+    
+    &__diploma {
+      margin-top: $spacing-md;
+      
+      .diploma-id, .diploma-url {
+        display: flex;
+        align-items: center;
+        margin-bottom: $spacing-xs;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        i {
+          margin-right: $spacing-xs;
+          color: $color-blue;
+        }
+      }
+      
+      .diploma-id {
+        span {
+          color: $color-red;
+        }
+        
+        i {
+          color: $color-red;
+        }
+      }
+      
+      .certificate-link {
+        color: $color-blue;
+        text-decoration: none;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    
+    &__gallery {
+      margin-top: $spacing-md;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: $spacing-md;
+      
+      .gallery-item {
+        position: relative;
+        border-radius: $border-radius-sm;
+        overflow: hidden;
+        box-shadow: $shadow-small;
+        cursor: pointer;
+        background-color: white;
+        
+        // Ratio identique au certificat (format paysage)
+        &::before {
+          content: '';
+          display: block;
+          padding-top: 70.7%; // Ratio paysage
+        }
+        
+        .a4-thumbnail {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          padding: $spacing-xs;
+          background-color: rgba($color-blue, 0.1); // Fond légèrement rosé comme sur les captures
+          transition: transform $transition-normal;
+        }
+        
+        .image-preview-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba($color-dark, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          opacity: 0;
+          transition: opacity $transition-normal;
+          
+          i {
+            color: white;
+            font-size: 1.5rem;
+          }
+        }
+        
+        &:hover {
+          .a4-thumbnail {
+            transform: scale(1.02);
+          }
+          
+          .image-preview-overlay {
+            opacity: 1;
+          }
+        }
+      }
+    }
+    
+    // Styles pour la modale d'image
+    .image-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba($color-dark, 0.9);
+      
+      &.show {
+        display: block; // Utiliser block au lieu de flex pour éviter les problèmes de défilement
+        animation: fadeIn 0.3s;
+      }
+      
+      &__content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 800px;
+        max-height: 90vh;
+        background-color: white;
+        border-radius: $border-radius-sm;
+        overflow: hidden;
+        box-shadow: $shadow-large;
+        
+        img {
+          display: block;
+          width: 100%;
+          height: auto;
+          object-fit: contain;
+          border: 3px solid rgba($color-blue, 0.1); // Cadre bleu avec 10% d'opacité autour de l'image agrandie
+          animation: zoomIn 0.3s;
+        }
+        
+        .close-modal {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          color: white;
+          font-size: 2rem;
+          font-weight: bold;
+          cursor: pointer;
+          background-color: rgba($color-dark, 0.5);
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          line-height: 1;
+          
+          &:hover {
+            color: white;
+            background-color: $color-red;
+          }
+        }
+      }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes zoomIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .section-education {
+    &__timeline {
+      padding-left: 50px;
+    }
+  }
+  
+  .school-card {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    
+    &__header {
+      flex-direction: column;
+      text-align: center;
+      
+      .logo {
+        margin-right: 0;
+        margin-bottom: $spacing-sm;
+      }
+    }
+  }
+}

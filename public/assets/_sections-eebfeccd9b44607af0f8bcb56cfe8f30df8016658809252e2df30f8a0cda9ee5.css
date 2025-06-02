@@ -1,0 +1,46 @@
+/* line 5, app/assets/stylesheets/_sections.scss */
+.section {
+  position: relative;
+  padding: 3rem 0;
+  transition: background-color 1.2s ease;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: transparent !important;
+}
+
+/* line 16, app/assets/stylesheets/_sections.scss */
+.section h2 {
+  position: relative;
+  z-index: 2;
+  color: inherit;
+}
+
+/* line 25, app/assets/stylesheets/_sections.scss */
+.section-home {
+  z-index: 1;
+}
+
+/* line 29, app/assets/stylesheets/_sections.scss */
+.section-experience {
+  z-index: 1;
+}
+
+/* line 33, app/assets/stylesheets/_sections.scss */
+.section-education {
+  background-color: #c13733;
+  color: #eeedec;
+}
+
+/* line 38, app/assets/stylesheets/_sections.scss */
+.section-skills {
+  background-color: #202f66;
+  color: #eeedec;
+}
+
+/* line 43, app/assets/stylesheets/_sections.scss */
+.section-projects {
+  background-color: #eeedec;
+  color: #202f66;
+}

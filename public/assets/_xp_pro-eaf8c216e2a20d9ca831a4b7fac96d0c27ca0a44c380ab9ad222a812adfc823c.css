@@ -1,0 +1,491 @@
+/* line 4, app/assets/stylesheets/_xp_pro.scss */
+.section-experience {
+  position: relative;
+}
+
+/* line 7, app/assets/stylesheets/_xp_pro.scss */
+.section-experience__header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* line 13, app/assets/stylesheets/_xp_pro.scss */
+.section-experience__header h2 {
+  color: #202f66;
+  position: relative;
+  display: inline-block;
+  background-color: #2b3f8a;
+  padding: 10px 70px;
+  border-radius: 15px 50px 15px 50px;
+}
+
+/* line 21, app/assets/stylesheets/_xp_pro.scss */
+.section-experience__header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background-color: #eeedec;
+}
+
+/* line 35, app/assets/stylesheets/_xp_pro.scss */
+.section-experience__timeline {
+  position: relative;
+  top: calc(1.5rem + 10px);
+}
+
+/* line 39, app/assets/stylesheets/_xp_pro.scss */
+.section-experience__timeline::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  bottom: 0;
+  left: 24px;
+  width: 2px;
+  background-color: rgba(238, 237, 236, 0.3);
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  /* line 39, app/assets/stylesheets/_xp_pro.scss */
+  .section-experience__timeline::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* line 54, app/assets/stylesheets/_xp_pro.scss */
+.section-experience__timeline::after {
+  background-color: rgba(43, 63, 138, 0.3);
+}
+
+/* line 60, app/assets/stylesheets/_xp_pro.scss */
+.section-experience__content {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(300px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(300px);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInRightMobile {
+  from {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRightMobile {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+}
+
+/* line 114, app/assets/stylesheets/_xp_pro.scss */
+.timeline-dot {
+  position: absolute;
+  top: 30px;
+  left: -36px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #2b3f8a;
+  border: 3px solid white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+  opacity: 0;
+  transform: scale(0);
+  will-change: transform, opacity;
+}
+
+@media (max-width: 768px) {
+  /* line 114, app/assets/stylesheets/_xp_pro.scss */
+  .timeline-dot {
+    left: 15px;
+  }
+}
+
+/* line 135, app/assets/stylesheets/_xp_pro.scss */
+.company-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: box-shadow 0.3s ease;
+  transform: translateX(300px);
+}
+
+/* line 150, app/assets/stylesheets/_xp_pro.scss */
+.company-card.animate-in {
+  animation: slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* line 154, app/assets/stylesheets/_xp_pro.scss */
+.company-card.animate-out {
+  animation: slideOutRight 0.8s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+
+@media (max-width: 675px) {
+  /* line 135, app/assets/stylesheets/_xp_pro.scss */
+  .company-card {
+    transform: translateX(100px);
+  }
+  /* line 162, app/assets/stylesheets/_xp_pro.scss */
+  .company-card.animate-in {
+    animation: slideInRightMobile 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  /* line 166, app/assets/stylesheets/_xp_pro.scss */
+  .company-card.animate-out {
+    animation: slideOutRightMobile 0.6s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+  }
+}
+
+/* line 171, app/assets/stylesheets/_xp_pro.scss */
+.company-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* line 175, app/assets/stylesheets/_xp_pro.scss */
+.company-card__header {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: #2b3f8a;
+  color: #eeedec !important;
+  border-bottom: 1px solid rgba(32, 47, 102, 0.1);
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  position: relative;
+}
+
+/* line 185, app/assets/stylesheets/_xp_pro.scss */
+.company-card__header .logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 8px;
+  padding: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+/* line 199, app/assets/stylesheets/_xp_pro.scss */
+.company-card__header .logo:hover {
+  transform: scale(1.05);
+}
+
+/* line 203, app/assets/stylesheets/_xp_pro.scss */
+.company-card__header .logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* line 214, app/assets/stylesheets/_xp_pro.scss */
+.company-card__header .logo, .company-card__header .company-name {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* line 219, app/assets/stylesheets/_xp_pro.scss */
+.company-card__header .logo:hover ~ .logo-preview, .company-card__header .logo:focus ~ .logo-preview, .company-card__header .company-name:hover ~ .logo-preview, .company-card__header .company-name:focus ~ .logo-preview {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* line 227, app/assets/stylesheets/_xp_pro.scss */
+.company-card__header .logo-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  margin: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+/* line 245, app/assets/stylesheets/_xp_pro.scss */
+.company-card__header .logo-preview:hover {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* line 250, app/assets/stylesheets/_xp_pro.scss */
+.company-card__header .logo-preview img {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  border-radius: 12px;
+  background-color: white;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* line 262, app/assets/stylesheets/_xp_pro.scss */
+.company-card__header .company-name h3 {
+  margin-bottom: 0.25rem;
+  color: #eeedec !important;
+  font-size: 1.5rem;
+}
+
+/* line 270, app/assets/stylesheets/_xp_pro.scss */
+.company-card__body {
+  padding: 0;
+}
+
+/* line 276, app/assets/stylesheets/_xp_pro.scss */
+.experience-item {
+  position: relative;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(32, 47, 102, 0.05);
+}
+
+/* line 281, app/assets/stylesheets/_xp_pro.scss */
+.experience-item:last-child {
+  border-bottom: none;
+}
+
+/* line 285, app/assets/stylesheets/_xp_pro.scss */
+.experience-item:hover {
+  background-color: rgba(32, 47, 102, 0.01);
+}
+
+/* line 289, app/assets/stylesheets/_xp_pro.scss */
+.experience-item::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #2b3f8a;
+  top: 24px;
+  left: -30px;
+  z-index: 2;
+  transition: none !important;
+  animation: none !important;
+}
+
+@media (min-width: 768px) {
+  /* line 289, app/assets/stylesheets/_xp_pro.scss */
+  .experience-item::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* line 308, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__header {
+  margin-bottom: 1rem;
+}
+
+/* line 311, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__header .job-title {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #202f66;
+  margin-bottom: 0.25rem;
+}
+
+/* line 318, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__header .employment-type {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(43, 63, 138, 0.1);
+  color: #2b3f8a;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+/* line 330, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: rgba(32, 47, 102, 0.7);
+}
+
+/* line 338, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__meta .dates,
+.experience-item__meta .location {
+  display: flex;
+  align-items: center;
+}
+
+/* line 343, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__meta .dates i,
+.experience-item__meta .location i {
+  margin-right: 0.25rem;
+}
+
+/* line 349, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__description {
+  color: rgba(32, 47, 102, 0.9);
+  margin-bottom: 1rem;
+}
+
+/* line 353, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__description p {
+  margin-bottom: 0.5rem;
+}
+
+/* line 356, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__description p:last-child {
+  margin-bottom: 0;
+}
+
+/* line 361, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__description ul {
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* line 365, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__description ul li {
+  margin-bottom: 0.25rem;
+}
+
+/* line 371, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__skills {
+  margin-top: 1rem;
+}
+
+/* line 374, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__skills .skills-title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  font-size: 0.95rem;
+}
+
+/* line 380, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__skills .skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+/* line 385, app/assets/stylesheets/_xp_pro.scss */
+.experience-item__skills .skills-list .skill-tag {
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(32, 47, 102, 0.05);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #202f66;
+}
+
+/* line 396, app/assets/stylesheets/_xp_pro.scss */
+.experience-item::before {
+  content: '';
+  position: absolute;
+  top: calc(1.5rem + 10px);
+  left: -30px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #2b3f8a;
+  border: 3px solid white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+  opacity: 0;
+  transform: scale(0);
+  will-change: transform, opacity;
+}
+
+@media (max-width: 768px) {
+  /* line 396, app/assets/stylesheets/_xp_pro.scss */
+  .experience-item::before {
+    left: 18px;
+  }
+}
+
+/* line 417, app/assets/stylesheets/_xp_pro.scss */
+.experience-item.animate-timeline-point::before {
+  animation: zoomInPoint 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, pulsePoint 2s infinite 1.3s;
+}
+
+@media (max-width: 768px) {
+  /* line 426, app/assets/stylesheets/_xp_pro.scss */
+  .section-experience__timeline {
+    padding-left: 50px;
+  }
+  /* line 434, app/assets/stylesheets/_xp_pro.scss */
+  .company-card__header .company-name h3 {
+    font-size: 1.3rem;
+  }
+  /* line 442, app/assets/stylesheets/_xp_pro.scss */
+  .experience-item__meta {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  /* line 448, app/assets/stylesheets/_xp_pro.scss */
+  .logo-preview {
+    display: none !important;
+  }
+}
+
+@media (max-width: 576px) {
+  /* line 455, app/assets/stylesheets/_xp_pro.scss */
+  .company-card__header {
+    flex-direction: column;
+    text-align: center;
+  }
+  /* line 459, app/assets/stylesheets/_xp_pro.scss */
+  .company-card__header .logo {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}

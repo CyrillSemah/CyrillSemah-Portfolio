@@ -1,0 +1,67 @@
+<div class="modal-overlay" id="contactModal">
+  <div class="modal-container">
+    <div class="modal-header">
+      <h2>Contactez-moi</h2>
+      <button type="button" class="modal-close" aria-label="Fermer">&times;</button>
+    </div>
+    
+    <div class="modal-body">
+      <p class="modal-intro">N'hésitez pas à me contacter pour toute question ou proposition.</p>
+      
+      <%= form_with model: Contact.new, url: contact_form_path, id: "contactForm", local: false do |form| %>
+        <div class="form-row">
+          <div class="form-group form-group-half">
+            <%= form.label :last_name, "Nom *" %>
+            <%= form.text_field :last_name, required: true %>
+          </div>
+          
+          <div class="form-group form-group-half">
+            <%= form.label :first_name, "Prénom *" %>
+            <%= form.text_field :first_name, required: true %>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <%= form.label :email, "Adresse e-mail *" %>
+          <%= form.email_field :email, required: true %>
+        </div>
+        
+        <div class="form-group">
+          <%= form.label :company, "Société" %>
+          <%= form.text_field :company %>
+          <small class="form-text text-muted">Optionnel</small>
+        </div>
+        
+        <div class="form-group">
+          <%= form.label :subject, "Objet du message *" %>
+          <%= form.select :subject, [
+            ["Sélectionnez un objet", ""],
+            ["Projet", "Projet"],
+            ["Collaboration", "Collaboration"],
+            ["Question", "Question"]
+          ], {}, { required: true } %>
+        </div>
+        
+        <div class="form-group">
+          <%= form.label :message, "Message *" %>
+          <%= form.text_area :message, rows: 5, required: true %>
+        </div>
+        
+        <div class="form-submit">
+          <%= form.submit "Envoyer", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+      
+      <div id="formResponse" class="form-response" style="display: none;">
+        <div class="success-message">
+          <i class="fas fa-check-circle"></i>
+          <p></p>
+        </div>
+        <div class="error-message">
+          <i class="fas fa-exclamation-circle"></i>
+          <p></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

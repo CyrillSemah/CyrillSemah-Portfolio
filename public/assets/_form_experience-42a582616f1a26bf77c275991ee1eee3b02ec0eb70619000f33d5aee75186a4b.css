@@ -1,0 +1,341 @@
+/* line 4, app/assets/stylesheets/_form_experience.scss */
+.admin-form {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* line 11, app/assets/stylesheets/_form_experience.scss */
+.admin-form__header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(32, 47, 102, 0.1);
+}
+
+/* line 16, app/assets/stylesheets/_form_experience.scss */
+.admin-form__header h2 {
+  color: #202f66;
+  margin-bottom: 0.25rem;
+}
+
+/* line 21, app/assets/stylesheets/_form_experience.scss */
+.admin-form__header p {
+  color: rgba(32, 47, 102, 0.7);
+}
+
+/* line 27, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* line 30, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+  color: #202f66;
+}
+
+/* line 37, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group .hint {
+  display: block;
+  font-size: 0.85rem;
+  color: rgba(32, 47, 102, 0.6);
+  margin-top: 0.25rem;
+}
+
+/* line 44, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group input[type="text"],
+.admin-form__form .form-group input[type="date"],
+.admin-form__form .form-group select,
+.admin-form__form .form-group textarea {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: 0.2s ease;
+}
+
+/* line 56, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group input[type="text"]:focus,
+.admin-form__form .form-group input[type="date"]:focus,
+.admin-form__form .form-group select:focus,
+.admin-form__form .form-group textarea:focus {
+  outline: none;
+  border-color: #2b3f8a;
+  box-shadow: 0 0 0 2px rgba(43, 63, 138, 0.2);
+}
+
+/* line 62, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group input[type="text"]:disabled,
+.admin-form__form .form-group input[type="date"]:disabled,
+.admin-form__form .form-group select:disabled,
+.admin-form__form .form-group textarea:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+/* line 68, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* line 73, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group .checkbox-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+/* line 79, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group .checkbox-group input[type="checkbox"] {
+  margin-right: 0.25rem;
+}
+
+/* line 83, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group .checkbox-group label {
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+/* line 89, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group .date-group {
+  display: flex;
+  gap: 1rem;
+}
+
+/* line 93, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group .date-group .date-field {
+  flex: 1;
+}
+
+/* line 98, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group .logo-preview {
+  margin-top: 1rem;
+}
+
+/* line 101, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group .logo-preview img {
+  max-width: 120px;
+  max-height: 120px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.25rem;
+}
+
+/* line 109, app/assets/stylesheets/_form_experience.scss */
+.admin-form__form .form-group .logo-preview .no-logo {
+  width: 120px;
+  height: 120px;
+  border: 1px dashed #ddd;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(32, 47, 102, 0.5);
+  font-size: 0.9rem;
+}
+
+/* line 124, app/assets/stylesheets/_form_experience.scss */
+.admin-form__actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(32, 47, 102, 0.1);
+}
+
+/* line 131, app/assets/stylesheets/_form_experience.scss */
+.admin-form__actions .btn-cancel {
+  background-color: #f5f5f5;
+  color: #202f66;
+}
+
+/* line 135, app/assets/stylesheets/_form_experience.scss */
+.admin-form__actions .btn-cancel:hover {
+  background-color: #eee;
+}
+
+/* line 144, app/assets/stylesheets/_form_experience.scss */
+.experience-list__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* line 150, app/assets/stylesheets/_form_experience.scss */
+.experience-list__header h2 {
+  margin-bottom: 0;
+}
+
+/* line 154, app/assets/stylesheets/_form_experience.scss */
+.experience-list__header .header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* line 160, app/assets/stylesheets/_form_experience.scss */
+.experience-list__items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* line 166, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: 0.3s ease;
+}
+
+/* line 173, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-3px);
+}
+
+/* line 178, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: rgba(43, 63, 138, 0.05);
+  border-bottom: 1px solid rgba(32, 47, 102, 0.1);
+}
+
+/* line 185, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item-header .logo {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+/* line 193, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item-header .logo img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* line 198, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item-header .logo .no-logo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(32, 47, 102, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #202f66;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+/* line 212, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item-header .company {
+  flex: 1;
+}
+
+/* line 215, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item-header .company h3 {
+  margin-bottom: 0;
+  font-size: 1.2rem;
+}
+
+/* line 222, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item-body {
+  padding: 1rem;
+}
+
+/* line 225, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item-body .position {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+/* line 230, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item-body .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(32, 47, 102, 0.7);
+}
+
+/* line 239, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item-body .description {
+  color: rgba(32, 47, 102, 0.9);
+  margin-bottom: 0;
+}
+
+/* line 245, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item-actions {
+  display: flex;
+  padding: 0.5rem 1rem;
+  border-top: 1px solid rgba(32, 47, 102, 0.1);
+  background-color: #f9f9f9;
+}
+
+/* line 251, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item-actions a {
+  margin-right: 1rem;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+/* line 257, app/assets/stylesheets/_form_experience.scss */
+.experience-list__item-actions a i {
+  margin-right: 0.25rem;
+}
+
+/* line 265, app/assets/stylesheets/_form_experience.scss */
+.experience-list__group {
+  margin-bottom: 1.5rem;
+}
+
+/* line 268, app/assets/stylesheets/_form_experience.scss */
+.experience-list__group-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* line 273, app/assets/stylesheets/_form_experience.scss */
+.experience-list__group-header .logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 1rem;
+}
+
+/* line 278, app/assets/stylesheets/_form_experience.scss */
+.experience-list__group-header .logo img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* line 284, app/assets/stylesheets/_form_experience.scss */
+.experience-list__group-header h3 {
+  margin-bottom: 0;
+  font-size: 1.3rem;
+}
+
+/* line 290, app/assets/stylesheets/_form_experience.scss */
+.experience-list__group-items {
+  margin-left: calc(40px + 1rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

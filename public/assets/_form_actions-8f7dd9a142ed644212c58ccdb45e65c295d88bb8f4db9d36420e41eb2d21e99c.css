@@ -1,0 +1,103 @@
+/* line 4, app/assets/stylesheets/_form_actions.scss */
+.experience-list__item-actions,
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(32, 47, 102, 0.1);
+}
+
+/* line 12, app/assets/stylesheets/_form_actions.scss */
+.experience-list__item-actions .btn,
+.form-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+/* line 25, app/assets/stylesheets/_form_actions.scss */
+.experience-list__item-actions .btn:first-child,
+.form-actions .btn:first-child {
+  margin-right: 1rem;
+}
+
+/* line 29, app/assets/stylesheets/_form_actions.scss */
+.experience-list__item-actions .btn:last-child,
+.form-actions .btn:last-child {
+  margin-left: 0;
+}
+
+/* line 34, app/assets/stylesheets/_form_actions.scss */
+.experience-list__item-actions .btn-view,
+.form-actions .btn-view {
+  background-color: white;
+  color: #202f66;
+  border: 1px solid rgba(32, 47, 102, 0.2);
+}
+
+/* line 39, app/assets/stylesheets/_form_actions.scss */
+.experience-list__item-actions .btn-view:hover,
+.form-actions .btn-view:hover {
+  background-color: rgba(32, 47, 102, 0.05);
+  border-color: rgba(32, 47, 102, 0.3);
+}
+
+/* line 45, app/assets/stylesheets/_form_actions.scss */
+.experience-list__item-actions .btn-edit,
+.form-actions .btn-edit {
+  background-color: #2b3f8a;
+  color: white;
+}
+
+/* line 49, app/assets/stylesheets/_form_actions.scss */
+.experience-list__item-actions .btn-edit:hover,
+.form-actions .btn-edit:hover {
+  background-color: #1f2d63;
+  transform: translateY(-2px);
+}
+
+/* line 55, app/assets/stylesheets/_form_actions.scss */
+.experience-list__item-actions .btn-delete,
+.form-actions .btn-delete {
+  background-color: #c13733;
+  color: white;
+}
+
+/* line 59, app/assets/stylesheets/_form_actions.scss */
+.experience-list__item-actions .btn-delete:hover,
+.form-actions .btn-delete:hover {
+  background-color: #992c28;
+}
+
+@media (max-width: 576px) {
+  /* line 67, app/assets/stylesheets/_form_actions.scss */
+  .experience-list__item-actions,
+.form-actions {
+    flex-direction: column;
+  }
+  /* line 71, app/assets/stylesheets/_form_actions.scss */
+  .experience-list__item-actions .btn,
+.form-actions .btn {
+    width: 100%;
+    margin: 0 0 0.5rem 0;
+  }
+  /* line 75, app/assets/stylesheets/_form_actions.scss */
+  .experience-list__item-actions .btn:first-child,
+.form-actions .btn:first-child {
+    margin-right: 0;
+  }
+}
+
+/* line 83, app/assets/stylesheets/_form_actions.scss */
+.admin-form {
+  margin-bottom: 0;
+}

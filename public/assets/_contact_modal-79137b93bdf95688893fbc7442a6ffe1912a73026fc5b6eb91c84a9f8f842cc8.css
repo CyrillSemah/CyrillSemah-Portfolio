@@ -1,0 +1,235 @@
+/* line 5, app/assets/stylesheets/_contact_modal.scss */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* line 19, app/assets/stylesheets/_contact_modal.scss */
+.modal-overlay.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* line 25, app/assets/stylesheets/_contact_modal.scss */
+.modal-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+/* line 37, app/assets/stylesheets/_contact_modal.scss */
+.active .modal-container {
+  transform: scale(1);
+}
+
+/* line 42, app/assets/stylesheets/_contact_modal.scss */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #eee;
+  background-color: #2b3f8a;
+  color: white;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+/* line 53, app/assets/stylesheets/_contact_modal.scss */
+.modal-header h2 {
+  margin: 0;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* line 60, app/assets/stylesheets/_contact_modal.scss */
+.modal-header .modal-close {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
+  transition: 0.2s ease;
+  line-height: 1;
+}
+
+/* line 69, app/assets/stylesheets/_contact_modal.scss */
+.modal-header .modal-close:hover {
+  color: white;
+}
+
+/* line 75, app/assets/stylesheets/_contact_modal.scss */
+.modal-body {
+  padding: 1.5rem;
+}
+
+/* line 79, app/assets/stylesheets/_contact_modal.scss */
+.modal-intro {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #202f66;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* line 88, app/assets/stylesheets/_contact_modal.scss */
+.form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* line 94, app/assets/stylesheets/_contact_modal.scss */
+.form-group {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+/* line 98, app/assets/stylesheets/_contact_modal.scss */
+.form-group.form-group-half {
+  flex: 1;
+}
+
+/* line 102, app/assets/stylesheets/_contact_modal.scss */
+.form-group label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+  color: #202f66;
+}
+
+/* line 109, app/assets/stylesheets/_contact_modal.scss */
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: 0.2s ease;
+}
+
+/* line 118, app/assets/stylesheets/_contact_modal.scss */
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: #2b3f8a;
+  box-shadow: 0 0 0 2px rgba(43, 63, 138, 0.2);
+}
+
+/* line 125, app/assets/stylesheets/_contact_modal.scss */
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* line 130, app/assets/stylesheets/_contact_modal.scss */
+.form-group .form-text {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+/* line 138, app/assets/stylesheets/_contact_modal.scss */
+.form-submit {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+/* line 142, app/assets/stylesheets/_contact_modal.scss */
+.form-submit .btn-primary {
+  background-color: #2b3f8a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease;
+  min-width: 150px;
+}
+
+/* line 154, app/assets/stylesheets/_contact_modal.scss */
+.form-submit .btn-primary:hover {
+  background-color: #1f2d63;
+}
+
+/* line 161, app/assets/stylesheets/_contact_modal.scss */
+.form-response {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* line 167, app/assets/stylesheets/_contact_modal.scss */
+.form-response .success-message, .form-response .error-message {
+  display: none;
+}
+
+/* line 170, app/assets/stylesheets/_contact_modal.scss */
+.form-response .success-message i, .form-response .error-message i {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* line 175, app/assets/stylesheets/_contact_modal.scss */
+.form-response .success-message p, .form-response .error-message p {
+  margin: 0;
+}
+
+/* line 180, app/assets/stylesheets/_contact_modal.scss */
+.form-response .success-message {
+  color: #28a745;
+}
+
+/* line 183, app/assets/stylesheets/_contact_modal.scss */
+.form-response .success-message.active {
+  display: block;
+}
+
+/* line 188, app/assets/stylesheets/_contact_modal.scss */
+.form-response .error-message {
+  color: #dc3545;
+}
+
+/* line 191, app/assets/stylesheets/_contact_modal.scss */
+.form-response .error-message.active {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  /* line 199, app/assets/stylesheets/_contact_modal.scss */
+  .modal-container {
+    width: 95%;
+    max-height: 85vh;
+  }
+  /* line 204, app/assets/stylesheets/_contact_modal.scss */
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  /* line 210, app/assets/stylesheets/_contact_modal.scss */
+  .form-submit .btn-primary {
+    width: 100%;
+  }
+}

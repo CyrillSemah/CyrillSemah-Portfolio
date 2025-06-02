@@ -1,0 +1,69 @@
+// Styles pour la flèche de réduction/expansion
+@import 'variables';
+
+.toggle-arrow-wrapper {
+  position: relative;
+  height: 25px;
+  z-index: 10;
+  margin-top: -12px;
+  margin-bottom: 12px;
+  pointer-events: none;
+}
+
+.toggle-arrow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-blue !important;
+  border: 2px solid $color-light;
+  cursor: pointer;
+  transition: $transition-normal;
+  z-index: 10;
+  box-shadow: $shadow-medium;
+  pointer-events: auto;
+  
+  &:hover {
+    background-color: $color-blue;
+  }
+  
+  &.active {
+    background-color: $color-blue;
+  }
+  
+  i {
+    color: $color-light;
+    font-size: 1rem;
+    transition: $transition-normal;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  &.collapsed {
+    background-color: $color-blue !important;
+    
+    i {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+// Styles pour le groupe réduit
+.education-list__group {
+  position: relative;
+  
+  &.collapsed {
+    .education-list__group-items {
+      display: none;
+    }
+    
+    & + .education-list__group {
+      margin-top: 30px;
+    }
+  }
+}

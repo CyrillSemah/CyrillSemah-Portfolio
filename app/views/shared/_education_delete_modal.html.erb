@@ -1,0 +1,251 @@
+<div class="delete-confirmation-modal" id="educationDeleteConfirmationModal" style="display: none;">
+  <div class="delete-confirmation-modal__container">
+    <div class="delete-confirmation-modal__header">
+      <h3>Confirmation de suppression</h3>
+      <button type="button" class="close-modal" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="delete-confirmation-modal__body">
+      <p class="warning-message">Êtes-vous sûr de vouloir supprimer cette formation ?</p>
+      <p class="warning-details">Les informations de cette formation seront définitivement supprimées et ne pourront pas être récupérées.</p>
+    </div>
+    <div class="delete-confirmation-modal__footer">
+      <button type="button" class="btn btn-cancel" id="cancelEducationDeleteBtn">Annuler</button>
+      <button type="button" class="btn btn-delete" id="confirmEducationDeleteBtn">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Supprimer tout script précédemment exécuté pour cette modale
+if (window.educationModalCleanup) {
+  window.educationModalCleanup();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Créer une fonction de nettoyage pour supprimer les écouteurs d'événements
+  window.educationModalCleanup = function() {
+    // Supprimer les écouteurs d'événements existants si nécessaire
+    document.querySelectorAll('.btn-delete-education').forEach(function(button) {
+      const newButton = button.cloneNode(true);
+      if (button.parentNode) {
+        button.parentNode.replaceChild(newButton, button);
+      }
+    });
+  };
+  
+  // Exécuter le nettoyage avant d'initialiser
+  window.educationModalCleanup();
+  // Modale pour formations
+  const educationModal = document.getElementById('educationDeleteConfirmationModal');
+  const confirmEducationBtn = document.getElementById('confirmEducationDeleteBtn');
+  const cancelEducationBtn = document.getElementById('cancelEducationDeleteBtn');
+  const closeEducationBtn = educationModal.querySelector('.close-modal');
+  let currentEducationDeleteButton = null;
+  
+  // Fonctions pour ouvrir/fermer la modale des formations
+  function openEducationModal() {
+    // Vérifier si la modale est déjà ouverte
+    if (educationModal.classList.contains('active') || document.body.classList.contains('modal-open')) {
+      console.log('Modale déjà ouverte, annulation de l\'ouverture');
+      return;
+    }
+    
+    // Vérifier s'il y a déjà une modale ouverte
+    const existingModals = document.querySelectorAll('.delete-confirmation-modal.active');
+    existingModals.forEach(modal => {
+      if (modal !== educationModal) {
+        modal.classList.remove('active');
+        modal.style.display = 'none';
+      }
+    });
+    
+    educationModal.style.display = 'flex';
+    educationModal.classList.add('active');
+    document.body.classList.add('modal-open');
+  }
+  
+  function closeEducationModal() {
+    educationModal.classList.remove('active');
+    setTimeout(function() {
+      educationModal.style.display = 'none';
+    }, 300);
+    document.body.classList.remove('modal-open');
+  }
+  
+  // Supprimer d'abord tout écouteur d'événements existant sur les boutons de fermeture
+  const newCloseBtn = closeEducationBtn.cloneNode(true);
+  closeEducationBtn.parentNode.replaceChild(newCloseBtn, closeEducationBtn);
+  
+  const newCancelBtn = cancelEducationBtn.cloneNode(true);
+  cancelEducationBtn.parentNode.replaceChild(newCancelBtn, cancelEducationBtn);
+  
+  // Récupérer les références mises à jour
+  const updatedCloseBtn = educationModal.querySelector('.close-modal');
+  const updatedCancelBtn = document.getElementById('cancelEducationDeleteBtn');
+  
+  // Écouteurs d'événements pour fermer la modale des formations
+  updatedCloseBtn.addEventListener('click', closeEducationModal);
+  updatedCancelBtn.addEventListener('click', closeEducationModal);
+  
+  // Fonction pour gérer le clic sur un bouton de suppression
+  function handleEducationDeleteClick(e) {
+    e.preventDefault();
+    
+    // Vérifier si le bouton n'est pas déjà désactivé
+    if (this.disabled || this.classList.contains('disabled')) {
+      return;
+    }
+    
+    // Stocker le bouton courant
+    currentEducationDeleteButton = this;
+    
+    // Afficher la modale
+    openEducationModal();
+  }
+  
+  // Supprimer d'abord tous les écouteurs d'événements existants
+  document.querySelectorAll('.btn-delete-education').forEach(function(button) {
+    // Cloner le bouton pour supprimer tous les écouteurs d'événements
+    const newButton = button.cloneNode(true);
+    button.parentNode.replaceChild(newButton, button);
+  });
+  
+  // Ensuite, ajouter les nouveaux écouteurs d'événements
+  document.querySelectorAll('.btn-delete-education').forEach(function(button) {
+    button.addEventListener('click', handleEducationDeleteClick, { once: true });
+  });
+  
+  // Supprimer d'abord tout écouteur d'événements existant sur le bouton de confirmation
+  const newConfirmBtn = confirmEducationBtn.cloneNode(true);
+  confirmEducationBtn.parentNode.replaceChild(newConfirmBtn, confirmEducationBtn);
+  
+  // Récupérer la référence mise à jour
+  const updatedConfirmBtn = document.getElementById('confirmEducationDeleteBtn');
+  
+  // Gérer la confirmation de suppression des formations
+  updatedConfirmBtn.addEventListener('click', function() {
+    if (currentEducationDeleteButton) {
+      const deleteUrl = currentEducationDeleteButton.getAttribute('data-delete-url');
+      // Désactiver le bouton pour éviter les clics multiples
+      this.disabled = true;
+      this.textContent = 'Suppression...';
+      
+      // Stocker une référence au bouton actuel et le désactiver
+      const buttonToDisable = currentEducationDeleteButton;
+      buttonToDisable.disabled = true;
+      buttonToDisable.style.opacity = '0.5';
+      buttonToDisable.style.pointerEvents = 'none';
+      
+      closeEducationModal();
+      
+      fetch(deleteUrl, {
+        method: 'DELETE',
+        headers: {
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Erreur lors de la suppression');
+      })
+      .then(data => {
+        // Réinitialiser le bouton de confirmation
+        const confirmBtn = document.getElementById('confirmEducationDeleteBtn');
+        if (confirmBtn) {
+          confirmBtn.disabled = false;
+          confirmBtn.textContent = 'Supprimer';
+        }
+        
+        if (data.success) {
+          // Trouver l'élément parent à supprimer
+          const educationItem = currentEducationDeleteButton.closest('.education-list__item');
+          if (educationItem) {
+            // Trouver le groupe parent avant de supprimer l'élément
+            const group = educationItem.closest('.education-list__group');
+            
+            // Vérifier s'il reste des formations dans ce groupe
+            const remainingItems = group.querySelectorAll('.education-list__item');
+            if (remainingItems.length <= 1) {
+              // C'est le dernier élément, animer tout le groupe
+              group.style.transition = 'all 0.3s ease';
+              group.style.opacity = '0';
+              group.style.transform = 'translateY(20px)';
+              
+              setTimeout(() => {
+                group.remove();
+                
+                // Vérifier s'il n'y a plus de formations du tout
+                if (document.querySelectorAll('.education-list__group').length === 0) {
+                  // Afficher un message indiquant qu'il n'y a pas de formations
+                  const educationList = document.querySelector('.education-list');
+                  if (educationList) {
+                    const noEducationsDiv = document.createElement('div');
+                    noEducationsDiv.className = 'alert';
+                    noEducationsDiv.innerHTML = '<p>Vous n\'avez pas encore ajouté de formation.</p>';
+                    educationList.appendChild(noEducationsDiv);
+                  }
+                }
+              }, 300);
+            } else {
+              // Il reste d'autres éléments, animer seulement cet élément
+              educationItem.style.opacity = '0';
+              educationItem.style.transform = 'translateX(20px)';
+              
+              setTimeout(() => {
+                educationItem.remove();
+              }, 300);
+            }
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Erreur:', error);
+        
+        // Réinitialiser le bouton de confirmation
+        const confirmBtn = document.getElementById('confirmEducationDeleteBtn');
+        if (confirmBtn) {
+          confirmBtn.disabled = false;
+          confirmBtn.textContent = 'Supprimer';
+        }
+        
+        // Réinitialiser le bouton original
+        if (buttonToDisable) {
+          buttonToDisable.disabled = false;
+          buttonToDisable.style.opacity = '';
+          buttonToDisable.style.pointerEvents = '';
+        }
+        
+        // Afficher un message d'erreur
+        const alertContainer = document.createElement('div');
+        alertContainer.className = 'alert alert-danger';
+        alertContainer.innerHTML = '<i class="fas fa-exclamation-circle"></i> Une erreur est survenue lors de la suppression.';
+        alertContainer.style.position = 'fixed';
+        alertContainer.style.top = '20px';
+        alertContainer.style.left = '50%';
+        alertContainer.style.transform = 'translateX(-50%)';
+        alertContainer.style.zIndex = '9999';
+        alertContainer.style.padding = '15px 20px';
+        alertContainer.style.borderRadius = '5px';
+        alertContainer.style.backgroundColor = '#f8d7da';
+        alertContainer.style.color = '#721c24';
+        alertContainer.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+        
+        document.body.appendChild(alertContainer);
+        
+        // Supprimer l'alerte après 5 secondes
+        setTimeout(() => {
+          alertContainer.style.opacity = '0';
+          alertContainer.style.transition = 'opacity 0.5s ease';
+          setTimeout(() => {
+            document.body.removeChild(alertContainer);
+          }, 500);
+        }, 5000);
+      });
+    }
+  });
+});
+</script>

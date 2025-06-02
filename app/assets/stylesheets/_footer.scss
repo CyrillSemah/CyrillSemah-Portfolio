@@ -1,0 +1,114 @@
+// Import des variables pour s'assurer qu'elles sont disponibles
+@import 'variables';
+
+.footer {
+  background-color: $color-blue;
+  color: white;
+  padding: $spacing-md 0;
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0;
+  }
+  
+  &__logo {
+    display: flex;
+    align-items: center;
+    
+    img {
+      height: 30px;
+      margin-right: $spacing-sm;
+      filter: brightness(0) invert(1);
+    }
+    
+    span {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+    }
+  }
+  
+  &__links {
+    display: flex;
+    
+    a {
+      margin-left: $spacing-lg;
+      color: white;
+      opacity: 0.8;
+      transition: $transition-fast;
+      
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  
+  &__social {
+    display: flex;
+    
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      margin-right: $spacing-md;
+      transition: $transition-normal;
+      
+      &:hover {
+        background-color: $color-blue;
+        transform: translateY(-3px);
+      }
+    }
+  }
+  
+  &__copyright {
+    width: 100%;
+    text-align: center;
+    padding-top: $spacing-sm;
+    border-top: none;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-top: $spacing-sm;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .footer {
+    .container {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    &__logo {
+      margin-bottom: $spacing-lg;
+      justify-content: center;
+    }
+    
+    &__links {
+      margin-bottom: $spacing-lg;
+      justify-content: center;
+      
+      a {
+        margin: 0 $spacing-md;
+      }
+    }
+    
+    &__social {
+      justify-content: center;
+      margin-bottom: $spacing-lg;
+    }
+  }
+}

@@ -1,0 +1,120 @@
+<div class="home-section-form">
+  <div class="home-section-form__header">
+    <div class="logo">
+      <% if home_section.home_image&.image? %>
+        <%= image_tag home_section.home_image.image.url(:thumb) %>
+      <% else %>
+        <div class="no-logo"><i class="fas fa-home"></i></div>
+      <% end %>
+    </div>
+    <h3><%= home_section.title.present? ? home_section.title : "Nouvelle section d'accueil" %></h3>
+  </div>
+
+  <div class="home-section-form__content">
+    <%= form_with(model: [:admin, home_section], class: "admin-form", local: true) do |form| %>
+      <% if home_section.errors.any? %>
+        <div class="alert alert-danger">
+          <h4><%= pluralize(home_section.errors.count, "erreur") %> :</h4>
+          <ul>
+            <% home_section.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-section">
+        <h4>Contenu textuel</h4>
+        
+        <div class="form-group">
+          <%= form.label :title, "Titre", for: "home_section_title" %>
+          <%= form.text_field :title, required: true, placeholder: "Ex: Bienvenue sur mon Portfolio", id: "home_section_title" %>
+          <span class="hint">Le titre sera affiché avec chaque mot dans un span séparé pour l'animation.</span>
+        </div>
+        
+        <div class="form-group">
+          <%= form.label :subtitle, "Sous-titre", for: "home_section_subtitle" %>
+          <%= form.text_area :subtitle, rows: 4, required: true, placeholder: "Ex: Chef de Projet Digital, expert UX/UI avec 20 ans d'expérience...", id: "home_section_subtitle" %>
+          <span class="hint">Le sous-titre sera affiché avec chaque mot dans un span séparé pour l'animation.</span>
+        </div>
+      </div>
+      
+      <div class="form-section">
+        <h4>Boutons</h4>
+        
+        <div class="form-group">
+          <%= form.label :talk_button_text, "Texte du bouton Contact", for: "home_section_talk_button_text" %>
+          <%= form.text_field :talk_button_text, placeholder: "Ex: Let's Talk", id: "home_section_talk_button_text" %>
+        </div>
+        
+        <div class="form-group">
+          <%= form.label :download_button_text, "Texte du bouton CV", for: "home_section_download_button_text" %>
+          <%= form.text_field :download_button_text, placeholder: "Ex: Télécharger mon CV", id: "home_section_download_button_text" %>
+        </div>
+        
+        <div class="form-group">
+          <%= form.label :cv_file, "Upload CV", for: "home_section_cv_file" %>
+          <div class="file-upload-container">
+            <%= form.file_field :cv_file, id: "home_section_cv_file" %>
+          </div>
+          <span class="hint">Choisissez un fichier à télécharger (PDF, DOC, DOCX, etc.)</span>
+          
+          <% if form.object.cv_file? %>
+            <div class="current-file">
+              <p class="current-file-name">Fichier actuel : <%= form.object.cv_file.file.filename %></p>
+              <div class="file-delete-option">
+                <%= form.check_box :remove_cv_file, class: "form-check-input", id: "home_section_remove_cv_file" %>
+                <%= form.label :remove_cv_file, "Supprimer le fichier actuel", class: "form-check-label", for: "home_section_remove_cv_file" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="form-section">
+        <h4>Image</h4>
+        
+        <%= form.fields_for :home_image do |image_form| %>
+          <div class="form-group">
+            <%= image_form.label :image, "Photo de profil", for: "home_section_home_image_attributes_image" %>
+            
+            <% if image_form.object&.image? %>
+              <div class="current-image">
+                <%= image_tag image_form.object.image.url, class: "preview-image" %>
+                <p>Image actuelle</p>
+              </div>
+            <% end %>
+            
+            <div class="file-upload-container">
+              <%= image_form.file_field :image, id: "home_section_home_image_attributes_image" %>
+            </div>
+            
+            <% if image_form.object&.persisted? %>
+              <div class="current-file">
+                <p class="current-file-name">Image actuelle</p>
+                <div class="file-delete-option">
+                  <%= image_form.check_box :_destroy, class: "form-check-input", id: "home_section_home_image_attributes__destroy" %>
+                  <%= image_form.label :_destroy, "Supprimer l'image actuelle", class: "form-check-label", for: "home_section_home_image_attributes__destroy" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="form-section">
+        <h4>Statut</h4>
+        
+        <div class="form-check">
+          <%= check_box_tag :activate, "1", home_section.active?, class: "form-check-input", id: "activate" %>
+          <%= label_tag :activate, "Activer cette section d'accueil (désactivera les autres sections)", class: "form-check-label", for: "activate" %>
+        </div>
+      </div>
+      
+      <div class="experience-list__item-actions">
+        <%= link_to "Annuler", admin_home_sections_path, class: "btn btn-view" %>
+        <%= form.submit home_section.persisted? ? "Mettre à jour" : "Créer", class: "btn btn-edit" %>
+      </div>
+    <% end %>
+  </div>
+</div>

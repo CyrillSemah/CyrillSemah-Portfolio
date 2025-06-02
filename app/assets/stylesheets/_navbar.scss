@@ -1,0 +1,371 @@
+// Import des variables pour s'assurer qu'elles sont disponibles
+@import 'variables';
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: $shadow-small;
+  padding: $spacing-md 0;
+  
+  .container {
+    position: relative;
+    z-index: 1001; // S'assurer que le contenu est au-dessus du menu mobile
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  &__logo {
+    display: flex;
+    align-items: center;
+    
+    img {
+      height: 40px;
+      margin-right: $spacing-sm;
+    }
+    
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $color-dark;
+      position: relative;
+      overflow: hidden;
+      min-width: 150px; // Assurer une largeur minimale pour éviter le rognage
+      
+      .text-original,
+      .text-hover {
+        display: inline-block;
+        transition: $transition-normal;
+        width: 100%; // Assurer que le texte prend toute la largeur disponible
+      }
+      
+      .text-hover {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        transform: translateY(100%);
+        white-space: nowrap; // Éviter le retour à la ligne
+      }
+      
+      &:hover {
+        .text-original {
+          opacity: 0;
+          transform: translateY(-100%);
+        }
+        
+        .text-hover {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+  
+  &__links {
+    display: flex;
+    align-items: center;
+    
+    // Style pour le kebab menu dans la navbar
+    .kebab-menu {
+      margin-left: $spacing-md;
+      
+      .kebab-menu__button {
+        background-color: transparent;
+        
+        .dot {
+          background-color: $color-blue;
+        }
+      }
+      
+      .kebab-menu__content {
+        top: 120%;
+        right: 0;
+        
+        .menu-item {
+          i {
+            width: 20px;
+            text-align: center;
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+    
+    a:not(.navbar__btn-contact) {
+      margin-left: $spacing-lg;
+      color: $color-dark;
+      font-weight: 500;
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: $color-blue;
+        transition: $transition-normal;
+      }
+      
+      &:hover::after,
+      &.active::after {
+        width: 100%;
+      }
+    }
+    
+    // Séparateur vertical entre Projets et Contact
+    &__separator {
+      height: 24px; // 60-80% de la hauteur de la navbar
+      width: 1px;
+      background-color: #cbd5e1;
+      margin: 0 $spacing-md;
+      align-self: center;
+    }
+    
+    // Style du bouton Contact (identique au bouton Télécharger mon CV)
+    &__btn-contact {
+      margin-left: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: $spacing-sm $spacing-lg;
+      background-color: $color-blue;
+      color: white !important;
+      border: none;
+      border-radius: $border-radius-md;
+      cursor: pointer;
+      transition: $transition-normal;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none !important;
+      position: static !important; // Empêcher l'héritage de la position relative
+      
+      &:hover {
+        background-color: darken($color-blue, 10%);
+        transform: translateY(-2px);
+        box-shadow: $shadow-medium;
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }
+    
+    .btn-secondary {
+      margin-left: $spacing-lg;
+      background-color: $color-blue;
+      color: white;
+      
+      &:hover {
+        background-color: darken($color-blue, 10%);
+      }
+    }
+    
+    .btn-outline {
+      margin-left: $spacing-lg;
+      background-color: transparent;
+      color: $color-dark;
+      border: 1px solid $color-dark;
+      padding: $spacing-xs $spacing-md;
+      border-radius: $border-radius-md;
+      transition: $transition-normal;
+      
+      &:hover {
+        background-color: $color-dark;
+        color: white;
+      }
+    }
+  }
+  
+  &__burger {
+    display: none; /* Par défaut, le burger est caché */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 15px; /* Zone cliquable plus grande */
+    margin: -15px; /* Compensation pour maintenir la taille visuelle */
+    position: relative; /* Assurer que le z-index fonctionne */
+    box-sizing: content-box; /* Garantir que le padding n'affecte pas la taille */
+    
+    span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background-color: $color-dark;
+      border-radius: 3px;
+      transition: all 0.3s ease-in-out;
+      position: relative;
+    }
+    
+    &.active {
+      span:nth-child(1) {
+        transform: translateY(8.5px) rotate(45deg);
+      }
+      
+      span:nth-child(2) {
+        opacity: 0;
+      }
+      
+      span:nth-child(3) {
+        transform: translateY(-8.5px) rotate(-45deg);
+      }
+    }
+  }
+  
+  &__mobile {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px);
+    
+    // Style pour le kebab menu dans la version mobile
+    .mobile-kebab {
+      margin-top: $spacing-lg;
+      display: flex;
+      justify-content: center;
+      
+      .kebab-menu__button {
+        background-color: transparent;
+        
+        .dot {
+          background-color: $color-blue;
+        }
+      }
+      
+      .kebab-menu__content {
+        top: 120%;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        
+        .menu-item {
+          i {
+            width: 20px;
+            text-align: center;
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+    background-color: white;
+    box-shadow: $shadow-small;
+    padding: $spacing-md 0;
+    flex-direction: column;
+    align-items: center;
+    z-index: 990;
+    overflow-y: auto;
+    
+    &.active {
+      display: flex !important;
+    }
+    
+    a:not(.navbar__btn-contact) {
+      margin: $spacing-md 0;
+      color: $color-dark;
+      font-weight: 500;
+      
+      &.active {
+        color: $color-blue;
+      }
+    }
+    
+    &__btn-contact {
+      margin-top: $spacing-md;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: $spacing-sm $spacing-lg;
+      background-color: $color-blue;
+      color: white !important;
+      border: none;
+      border-radius: $border-radius-md;
+      cursor: pointer;
+      transition: $transition-normal;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none !important;
+      position: static !important; // Empêcher l'héritage de la position relative
+      
+      &:hover {
+        background-color: darken($color-blue, 10%);
+        transform: translateY(-2px);
+        box-shadow: $shadow-medium;
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }
+    
+    .btn-secondary {
+      margin-top: $spacing-md;
+      background-color: $color-blue;
+      color: white;
+      
+      &:hover {
+        background-color: darken($color-blue, 10%);
+      }
+    }
+    
+    .btn-outline {
+      margin-top: $spacing-md;
+      background-color: transparent;
+      color: $color-dark;
+      border: 1px solid $color-dark;
+      padding: $spacing-xs $spacing-md;
+      border-radius: $border-radius-md;
+      transition: $transition-normal;
+      
+      &:hover {
+        background-color: $color-dark;
+        color: white;
+      }
+    }
+    
+    form {
+      margin-top: $spacing-md;
+    }
+  }
+}
+
+// Media query standard pour le mode public
+@media (max-width: $breakpoint-md) {
+  .navbar:not(.admin-mode) {
+    .navbar__links {
+      display: none;
+    }
+    
+    .navbar__burger {
+      display: flex;
+    }
+  }
+}
+
+// Media query spécifique pour le mode admin (1009px)
+@media (max-width: 1009px) {
+  .navbar.admin-mode {
+    .navbar__links {
+      display: none;
+    }
+    
+    .navbar__burger {
+      display: flex;
+    }
+  }
+}
+
+.burger-visible {
+  span {
+    background-color: $color-blue !important;
+    height: 4px !important;
+  }
+}

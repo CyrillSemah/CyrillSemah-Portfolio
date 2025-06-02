@@ -1,0 +1,42 @@
+<div class="admin-home-container">
+  <div class="container">
+    <!-- Menu de navigation admin -->
+    <div class="admin-nav">
+      <ul class="admin-nav__list">
+        <li class="admin-nav__item active">
+          <%= link_to "Page d'accueil", admin_home_sections_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Formations", admin_educations_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Compétences", admin_skills_path %>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="home-section-list">
+      <div class="home-section-list__header">
+        <div>
+          <h2>Modification de la section d'accueil</h2>
+          <p class="subtitle">Modifiez les détails de votre section d'accueil</p>
+        </div>
+        <div class="header-actions">
+          <%= link_to admin_home_sections_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+            <span class="button-text">Retour</span>
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="home-section-form-container">
+        <%= render 'form', home_section: @home_section %>
+      </div>
+    </div>
+  </div>
+</div>

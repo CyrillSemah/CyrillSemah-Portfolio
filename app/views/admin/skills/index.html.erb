@@ -1,0 +1,264 @@
+<div class="admin-experience-container">
+  <div class="container">
+    <!-- Menu de navigation admin -->
+    <div class="admin-nav">
+      <ul class="admin-nav__list">
+        <li class="admin-nav__item">
+          <%= link_to "Page d'accueil", admin_home_sections_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Formations", admin_educations_path %>
+        </li>
+        <li class="admin-nav__item active">
+          <%= link_to "Compétences", admin_skills_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Projets", admin_projects_path %>
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Section des compétences techniques -->
+    <div class="education-list">
+      <div class="education-list__header">
+        <h2>Mes compétences techniques</h2>
+        <div class="header-actions">
+          <%= link_to new_admin_skill_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-plus-circle"></i>
+            </div>
+            <span class="button-text">Ajouter une compétence</span>
+          <% end %>
+          
+          <%= link_to new_admin_skill_group_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-folder-plus"></i>
+            </div>
+            <span class="button-text">Créer un groupe</span>
+          <% end %>
+        </div>
+      </div>
+    
+      <% if @skill_groups.empty? && @ungrouped_skills.empty? %>
+        <div class="alert">
+          <p>Vous n'avez pas encore ajouté de compétence technique.</p>
+        </div>
+      <% else %>
+        <!-- Compétences groupées -->
+        <% @skill_groups.each do |group| %>
+            <div class="education-list__group">
+              <div class="education-list__group-header">
+                <div class="logo">
+                  <div class="no-logo"><%= group.name[0].upcase %></div>
+                </div>
+                <h3><%= group.name %> (<%= group.skills.count %>)</h3>
+                <div class="kebab-menu">
+                  <button class="kebab-menu__button" data-action="toggle-kebab">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                  </button>
+                  <div class="kebab-menu__content">
+                    <%= link_to new_admin_skill_path(skill_group_id: group.id), class: "menu-item btn-add" do %>
+                      <i class="fas fa-plus-circle"></i>
+                      <span>Ajouter</span>
+                    <% end %>
+                    <%= link_to admin_skill_group_path(group), class: "menu-item btn-view" do %>
+                      <i class="fas fa-eye"></i>
+                      <span>Voir</span>
+                    <% end %>
+                    <%= link_to edit_admin_skill_group_path(group), class: "menu-item btn-edit" do %>
+                      <i class="fas fa-edit"></i>
+                      <span>Modifier</span>
+                    <% end %>
+                    <%= link_to "#", class: "menu-item btn-delete btn-delete-skill-group", data: { delete_url: admin_skill_group_path(group) } do %>
+                      <i class="fas fa-trash-alt"></i>
+                      <span>Supprimer</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="toggle-arrow-wrapper">
+                <button class="toggle-arrow" data-action="toggle-group">
+                  <i class="fas fa-chevron-up"></i>
+                </button>
+              </div>
+              <div class="education-list__group-items">
+                <div class="skill-cards">
+                  <% group.skills.each do |skill| %>
+                    <div class="skill-card">
+                      <div class="skill-card__actions">
+                        <div class="normal-actions">
+                          <%= link_to admin_skill_path(skill), class: "action-icon btn-view" do %>
+                            <i class="fas fa-eye"></i>
+                            <span class="tooltip">Voir</span>
+                          <% end %>
+                          <%= link_to edit_admin_skill_path(skill), class: "action-icon btn-edit" do %>
+                            <i class="fas fa-edit"></i>
+                            <span class="tooltip">Modifier</span>
+                          <% end %>
+                          <%= link_to "#", class: "action-icon btn-delete btn-delete-skill", data: { delete_url: admin_skill_path(skill) } do %>
+                            <i class="fas fa-trash-alt"></i>
+                            <span class="tooltip">Supprimer</span>
+                          <% end %>
+                        </div>
+                        
+                        <div class="kebab-actions">
+                          <button class="kebab-menu__button" data-action="toggle-skill-kebab">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                          </button>
+                          <div class="kebab-menu__content">
+                            <%= link_to admin_skill_path(skill), class: "menu-item btn-view" do %>
+                              <i class="fas fa-eye"></i>
+                              <span>Voir</span>
+                            <% end %>
+                            <%= link_to edit_admin_skill_path(skill), class: "menu-item btn-edit" do %>
+                              <i class="fas fa-edit"></i>
+                              <span>Modifier</span>
+                            <% end %>
+                            <%= link_to "#", class: "menu-item btn-delete btn-delete-skill", data: { delete_url: admin_skill_path(skill) } do %>
+                              <i class="fas fa-trash-alt"></i>
+                              <span>Supprimer</span>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="skill-card__body">
+                        <div class="skill-card__header">
+                          <div class="skill-logo">
+                            <% if skill.logo.attached? %>
+                              <%= image_tag skill.logo %>
+                            <% else %>
+                              <div class="no-logo"><%= skill.name[0].upcase %></div>
+                            <% end %>
+                          </div>
+                          <div class="skill-info">
+                            <div class="skill-name"><%= skill.name %></div>
+                            <div class="skill-meta">
+                              <span class="experience">Expérience : <%= skill.experience_duration %></span>
+                            </div>
+                          </div>
+                        </div>
+                        <p class="skill-description"><%= skill.description %></p>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+                <% if group.skills.empty? %>
+                  <div class="alert alert-info">
+                    <p>Ce groupe ne contient pas encore de compétences.</p>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+        <% end %>
+        
+        <!-- Compétences non groupées -->
+        <% if @ungrouped_skills.any? %>
+          <div class="education-list__group">
+            <div class="education-list__group-header">
+              <div class="logo">
+                <div class="no-logo">?</div>
+              </div>
+              <h3>Compétences non classées (<%= @ungrouped_skills.count %>)</h3>
+            </div>
+            <div class="education-list__group-items">
+              <% @ungrouped_skills.each do |skill| %>
+                <div class="education-list__item">
+                  <div class="education-list__item-body">
+                    <div class="logo">
+                      <% if skill.logo.attached? %>
+                        <%= image_tag skill.logo %>
+                      <% else %>
+                        <div class="no-logo"><%= skill.name[0].upcase %></div>
+                      <% end %>
+                    </div>
+                    <div class="position"><%= skill.name %></div>
+                    <div class="meta">
+                      <span class="date">Expérience : <%= skill.experience_duration %></span>
+                    </div>
+                    <p class="description"><%= skill.description %></p>
+                  </div>
+                  <div class="education-list__item-actions">
+                    <%= link_to "Voir", admin_skill_path(skill), class: "btn btn-view" %>
+                    <%= link_to "Modifier", edit_admin_skill_path(skill), class: "btn btn-edit" %>
+                    <%= link_to "Supprimer", "#", 
+                        class: "btn btn-delete btn-delete-skill",
+                        data: { delete_url: admin_skill_path(skill) } %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    
+    <!-- Section des compétences personnelles -->
+    <div class="education-list">
+      <div class="education-list__header">
+        <h2>Mes compétences personnelles</h2>
+        <div class="header-actions">
+          <%= link_to new_admin_soft_skill_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-plus-circle"></i>
+            </div>
+            <span class="button-text">Ajouter une compétence personnelle</span>
+          <% end %>
+        </div>
+      </div>
+    
+      <% if @soft_skills.empty? %>
+        <div class="alert">
+          <p>Vous n'avez pas encore ajouté de compétence personnelle.</p>
+        </div>
+      <% else %>
+        <div class="education-list__group">
+          <div class="education-list__group-items soft-skills-list">
+            <% @soft_skills.each do |soft_skill| %>
+              <div class="soft-skill-item">
+                <span class="soft-skill-name"><%= soft_skill.name %></span>
+                <div class="soft-skill-actions">
+                  <div class="normal-actions">
+                    <%= link_to edit_admin_soft_skill_path(soft_skill), class: "btn-icon btn-edit", title: "Modifier" do %>
+                      <i class="fas fa-edit"></i>
+                    <% end %>
+                    <%= link_to "#", class: "btn-icon btn-delete btn-delete-soft-skill", title: "Supprimer", data: { delete_url: admin_soft_skill_path(soft_skill) } do %>
+                      <i class="fas fa-trash-alt"></i>
+                    <% end %>
+                  </div>
+                  
+                  <div class="kebab-actions">
+                    <button class="kebab-menu__button" data-action="toggle-soft-skill-kebab">
+                      <div class="dot"></div>
+                      <div class="dot"></div>
+                      <div class="dot"></div>
+                    </button>
+                    <div class="kebab-menu__content">
+                      <%= link_to edit_admin_soft_skill_path(soft_skill), class: "menu-item btn-edit" do %>
+                        <i class="fas fa-edit"></i>
+                        <span>Modifier</span>
+                      <% end %>
+                      <%= link_to "#", class: "menu-item btn-delete btn-delete-soft-skill", data: { delete_url: admin_soft_skill_path(soft_skill) } do %>
+                        <i class="fas fa-trash-alt"></i>
+                        <span>Supprimer</span>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- La modale de confirmation est déjà incluse dans le layout principal -->
+

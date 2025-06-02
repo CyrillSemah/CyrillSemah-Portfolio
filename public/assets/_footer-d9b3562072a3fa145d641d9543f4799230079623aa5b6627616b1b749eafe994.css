@@ -1,0 +1,123 @@
+/* line 4, app/assets/stylesheets/_footer.scss */
+.footer {
+  background-color: #2b3f8a;
+  color: white;
+  padding: 2rem 0;
+}
+
+/* line 9, app/assets/stylesheets/_footer.scss */
+.footer .container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* line 15, app/assets/stylesheets/_footer.scss */
+.footer__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* line 23, app/assets/stylesheets/_footer.scss */
+.footer__logo {
+  display: flex;
+  align-items: center;
+}
+
+/* line 27, app/assets/stylesheets/_footer.scss */
+.footer__logo img {
+  height: 30px;
+  margin-right: 0.5rem;
+  filter: brightness(0) invert(1);
+}
+
+/* line 33, app/assets/stylesheets/_footer.scss */
+.footer__logo span {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+}
+
+/* line 40, app/assets/stylesheets/_footer.scss */
+.footer__links {
+  display: flex;
+}
+
+/* line 43, app/assets/stylesheets/_footer.scss */
+.footer__links a {
+  margin-left: 1.5rem;
+  color: white;
+  opacity: 0.8;
+  transition: 0.2s ease;
+}
+
+/* line 49, app/assets/stylesheets/_footer.scss */
+.footer__links a:hover {
+  opacity: 1;
+}
+
+/* line 55, app/assets/stylesheets/_footer.scss */
+.footer__social {
+  display: flex;
+}
+
+/* line 58, app/assets/stylesheets/_footer.scss */
+.footer__social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  margin-right: 1rem;
+  transition: 0.3s ease;
+}
+
+/* line 70, app/assets/stylesheets/_footer.scss */
+.footer__social a:hover {
+  background-color: #2b3f8a;
+  transform: translateY(-3px);
+}
+
+/* line 77, app/assets/stylesheets/_footer.scss */
+.footer__copyright {
+  width: 100%;
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  /* line 90, app/assets/stylesheets/_footer.scss */
+  .footer .container {
+    flex-direction: column;
+    text-align: center;
+  }
+  /* line 95, app/assets/stylesheets/_footer.scss */
+  .footer__logo {
+    margin-bottom: 1.5rem;
+    justify-content: center;
+  }
+  /* line 100, app/assets/stylesheets/_footer.scss */
+  .footer__links {
+    margin-bottom: 1.5rem;
+    justify-content: center;
+  }
+  /* line 104, app/assets/stylesheets/_footer.scss */
+  .footer__links a {
+    margin: 0 1rem;
+  }
+  /* line 109, app/assets/stylesheets/_footer.scss */
+  .footer__social {
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+}

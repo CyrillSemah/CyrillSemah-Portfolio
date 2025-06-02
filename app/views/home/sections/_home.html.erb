@@ -1,0 +1,62 @@
+<section id="home" class="section section-home">
+  <div class="container">
+    <div class="section-home__content">
+      <div class="section-home__text">
+        <div class="animated-container">
+          <div class="bracket bracket-top-left"></div>
+          <div class="bracket bracket-top-right invisible"></div>
+          
+          <h1 class="animated-title">
+            <% if @home_section %>
+              <% @home_section.title.split.each do |word| %>
+                <span><%= word %></span>&nbsp;
+              <% end %>
+            <% else %>
+              <span>Bienvenue</span>&nbsp;<span>sur</span>&nbsp;<span>mon</span>&nbsp;<span>Portfolio</span>
+            <% end %>
+          </h1>
+          
+          <p class="animated-text">
+            <% if @home_section %>
+              <% @home_section.subtitle.split.each do |word| %>
+                <span><%= word %></span> 
+              <% end %>
+            <% else %>
+              <span>Chef</span> <span>de</span> <span>Projet</span> <span>Digital,</span> <span>expert</span> <span>UX/UI</span> <span>avec</span> <span>20</span> <span>ans</span> <span>d'expérience</span> <span>design</span> <span>&</span> <span>tech.</span> <span>Passionné</span> <span>par</span> <span>l'optimisation</span> <span>de</span> <span>process,</span> <span>la</span> <span>qualité</span> <span>graphique</span> <span>et</span> <span>l'agilité</span> <span>d'équipe.</span>
+            <% end %>
+          </p>
+          
+          <div class="section-home__buttons animated-buttons">
+            <a href="#" class="btn btn-talk js-contact-modal">
+              <i class="fas fa-comment-dots"></i> <%= @home_section&.talk_button_text || "Let's Talk" %>
+            </a>
+            <% if @home_section&.cv_file.present? %>
+              <a href="<%= @home_section.cv_file.url %>" class="btn btn-download" download>
+                <i class="fas fa-download"></i> <%= @home_section&.download_button_text || "Télécharger mon CV" %>
+              </a>
+            <% elsif @home_section&.cv_link.present? %>
+              <a href="<%= @home_section.cv_link %>" class="btn btn-download" download>
+                <i class="fas fa-download"></i> <%= @home_section&.download_button_text || "Télécharger mon CV" %>
+              </a>
+            <% else %>
+              <a href="/cv_cyrill_semah_2025.pdf" class="btn btn-download" download>
+                <i class="fas fa-download"></i> <%= @home_section&.download_button_text || "Télécharger mon CV" %>
+              </a>
+            <% end %>
+          </div>
+          
+          <div class="bracket bracket-bottom-left invisible"></div>
+          <div class="bracket bracket-bottom-right"></div>
+        </div>
+      </div>
+      
+      <div class="section-home__image">
+        <% if @home_image&.image? %>
+          <%= image_tag @home_image.image.url, alt: "Photo de profil de Cyrill Semah" %>
+        <% else %>
+          <%= image_tag "myprofil.png", alt: "Photo de profil de Cyrill Semah" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,99 @@
+/* line 4, app/assets/stylesheets/_navbar_projects.scss */
+.navbar {
+  transition: all 0.5s ease;
+}
+
+/* line 7, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode {
+  max-width: 650px;
+  margin: 16px auto 0;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* line 14, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode .container {
+  padding: 0 1rem;
+  justify-content: center;
+}
+
+/* line 20, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode .navbar__links a {
+  font-size: 0.9rem;
+  padding: 0.5rem 0.6rem;
+  white-space: nowrap;
+}
+
+/* line 25, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode .navbar__links a.active {
+  background-color: rgba(43, 63, 138, 0.1);
+  border-radius: 20px;
+}
+
+/* line 32, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode .navbar__links .js-contact-modal {
+  border-radius: 50%;
+}
+
+/* line 38, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode .navbar__logo img {
+  transform: scale(0.9);
+  transition: transform 0.5s ease;
+}
+
+/* line 44, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode .navbar__separator {
+  height: 24px;
+}
+
+@keyframes navbar-projects-in {
+  0% {
+    max-width: 100%;
+    border-radius: 0;
+    margin-top: 0;
+  }
+  100% {
+    max-width: 90%;
+    border-radius: 50px;
+    margin-top: 16px;
+  }
+}
+
+@keyframes navbar-projects-out {
+  0% {
+    max-width: 90%;
+    border-radius: 50px;
+    margin-top: 16px;
+  }
+  100% {
+    max-width: 100%;
+    border-radius: 0;
+    margin-top: 0;
+  }
+}
+
+/* line 78, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode-in {
+  animation: navbar-projects-in 0.5s forwards;
+}
+
+/* line 82, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode-out {
+  animation: navbar-projects-out 0.5s forwards;
+}
+
+@media (max-width: 768px) {
+  /* line 88, app/assets/stylesheets/_navbar_projects.scss */
+  .navbar.projects-mode {
+    max-width: 95%;
+  }
+  /* line 91, app/assets/stylesheets/_navbar_projects.scss */
+  .navbar.projects-mode .navbar__links {
+    display: none;
+  }
+  /* line 95, app/assets/stylesheets/_navbar_projects.scss */
+  .navbar.projects-mode .navbar__burger {
+    display: flex;
+  }
+}

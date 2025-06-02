@@ -1,0 +1,142 @@
+<section id="education" class="section section-education">
+  <div class="container">
+    <div class="section-education__header">
+      <h2>Formation</h2>
+    </div>
+    
+    <div class="section-education__timeline">
+      <div class="section-education__content">
+        <% if @grouped_educations.empty? %>
+          <div class="alert">
+            <p>Aucune formation à afficher pour le moment.</p>
+          </div>
+        <% else %>
+          <% @grouped_educations.each do |school, educations| %>
+            <div class="school-card">
+              <div class="school-card__header">
+                <div class="logo">
+                  <% if educations.first.image.attached? %>
+                    <%= image_tag educations.first.image, alt: school %>
+                  <% else %>
+                    <div class="logo-placeholder"><%= school[0].upcase %></div>
+                  <% end %>
+                </div>
+                <div class="school-name">
+                  <h3><%= school %></h3>
+                </div>
+                
+                <!-- Prévisualisation du logo au survol -->
+                <div class="logo-preview">
+                  <% if educations.first.image.attached? %>
+                    <%= image_tag educations.first.image, alt: "Logo #{school} en grand" %>
+                  <% else %>
+                    <div class="logo-placeholder large"><%= school[0].upcase %></div>
+                  <% end %>
+                </div>
+              </div>
+              
+              <div class="school-card__body">
+                <% educations.each do |education| %>
+                  <article class="education-item">
+                    <div class="education-item__header">
+                      <h4 class="degree"><%= education.degree %></h4>
+                      <span class="field-of-study"><%= education.field_of_study %></span>
+                    </div>
+                    
+                    <div class="education-item__meta">
+                      <div class="dates">
+                        <i class="icon-calendar"></i>
+                        <%= Date::MONTHNAMES[education.start_month + 1] %> <%= education.start_year %> - 
+                        <% if education.end_year.present? && education.end_month.present? %>
+                          <%= Date::MONTHNAMES[education.end_month + 1] %> <%= education.end_year %>
+                        <% else %>
+                          <strong>En cours</strong>
+                        <% end %>
+                      </div>
+                      
+                      <% if education.result.present? %>
+                        <div class="result">
+                          <i class="icon-award"></i>
+                          <%= education.result %>
+                        </div>
+                      <% end %>
+                    </div>
+                    
+                    <div class="education-item__description">
+                      <% if education.description.present? %>
+                        <%= simple_format(education.description) %>
+                      <% end %>
+                      
+                      <% if education.activities.present? %>
+                        <div class="education-item__activities">
+                          <div class="activities-title">Activités :</div>
+                          <div class="activities-content">
+                            <%= education.activities %>
+                          </div>
+                        </div>
+                      <% end %>
+                    </div>
+                    
+                    <% if education.diploma_id.present? || education.diploma_url.present? %>
+                      <div class="education-item__diploma">
+                        <% if education.diploma_id.present? %>
+                          <div class="diploma-id">
+                            <i class="icon-certificate"></i>
+                            <span>ID du Diplôme: <%= education.diploma_id %></span>
+                          </div>
+                        <% end %>
+                        
+                        <% if education.diploma_url.present? %>
+                          <div class="diploma-url">
+                            <i class="icon-external-link"></i>
+                            <%= link_to "Vérifier le certificat", education.diploma_url, target: "_blank", rel: "noopener noreferrer", class: "certificate-link" %>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                    
+                    <% if education.image_1.attached? || education.image_2.attached? %>
+                      <div class="education-item__gallery">
+                        <% if education.image_1.attached? %>
+                          <div class="gallery-item" data-image-id="image-<%= education.id %>-1">
+                            <%= image_tag education.image_1, alt: "#{education.degree} - Image 1", class: "a4-thumbnail" %>
+                            <div class="image-preview-overlay">
+                              <i class="fas fa-search-plus"></i>
+                            </div>
+                          </div>
+                          <!-- Modale pour l'image 1 -->
+                          <div class="image-modal" id="modal-image-<%= education.id %>-1">
+                            <div class="image-modal__content">
+                              <span class="close-modal">&times;</span>
+                              <%= image_tag education.image_1, alt: "#{education.degree} - Image 1 (plein écran)", class: "certificate-image" %>
+                            </div>
+                          </div>
+                        <% end %>
+                        
+                        <% if education.image_2.attached? %>
+                          <div class="gallery-item" data-image-id="image-<%= education.id %>-2">
+                            <%= image_tag education.image_2, alt: "#{education.degree} - Image 2", class: "a4-thumbnail" %>
+                            <div class="image-preview-overlay">
+                              <i class="fas fa-search-plus"></i>
+                            </div>
+                          </div>
+                          <!-- Modale pour l'image 2 -->
+                          <div class="image-modal" id="modal-image-<%= education.id %>-2">
+                            <div class="image-modal__content">
+                              <span class="close-modal">&times;</span>
+                              <%= image_tag education.image_2, alt: "#{education.degree} - Image 2 (plein écran)", class: "certificate-image" %>
+                            </div>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </article>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        
+      <% end %>
+    </div>
+  </div>
+</section>

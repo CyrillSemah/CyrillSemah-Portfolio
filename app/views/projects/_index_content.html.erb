@@ -1,0 +1,194 @@
+<section class="section section-projects">
+  <div class="container">
+    <div class="section-projects__header">
+      <h1>Mes Projets</h1>
+      <p class="section-projects__subtitle">Découvrez mes réalisations et projets personnels</p>
+      <a href="#" class="btn-back-to-portfolio" onclick="window.history.back(); return false;">
+        <i class="fas fa-arrow-left"></i> Retour au portfolio
+      </a>
+    </div>
+    
+    <div class="section-projects__content">
+      <% if @projects.any? %>
+        <div class="projects-grid">
+          <% @projects.each do |project| %>
+            <div class="project-card">
+              <div class="project-card__image">
+                <% if project.image.attached? %>
+                  <%= image_tag project.image, alt: project.title %>
+                <% else %>
+                  <div class="project-placeholder">
+                    <i class="fas fa-code"></i>
+                  </div>
+                <% end %>
+              </div>
+              <div class="project-card__content">
+                <h3 class="project-card__title"><%= project.title %></h3>
+                <div class="project-card__technologies">
+                  <% project.technologies.split(',').each do |tech| %>
+                    <span class="technology-tag"><%= tech.strip %></span>
+                  <% end %>
+                </div>
+                <p class="project-card__description"><%= truncate(project.description, length: 150) %></p>
+                <div class="project-card__actions">
+                  <a href="#" class="btn btn-primary js-project-details" data-project-id="<%= project.id %>">Voir détails</a>
+                  <% if project.project_url.present? %>
+                    <a href="<%= project.project_url %>" target="_blank" class="btn btn-secondary">
+                      <i class="fas fa-external-link-alt"></i> Visiter
+                    </a>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty-state">
+          <p>Aucun projet n'a été ajouté pour le moment.</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<style>
+  .btn-back-to-portfolio {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 20px;
+    color: #2b3f8a;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-back-to-portfolio i {
+    margin-right: 8px;
+  }
+  
+  .btn-back-to-portfolio:hover {
+    color: #202f66;
+    transform: translateX(-5px);
+  }
+  
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+  }
+  
+  .project-card {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .project-card__image {
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .project-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .project-card:hover .project-card__image img {
+    transform: scale(1.05);
+  }
+  
+  .project-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    color: #2b3f8a;
+    font-size: 3rem;
+  }
+  
+  .project-card__content {
+    padding: 20px;
+  }
+  
+  .project-card__title {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #202f66;
+  }
+  
+  .project-card__technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .technology-tag {
+    background-color: #eeedec;
+    color: #2b3f8a;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+  }
+  
+  .project-card__description {
+    color: #6c757d;
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
+  
+  .project-card__actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .btn i {
+    margin-right: 5px;
+  }
+  
+  .btn-primary {
+    background-color: #2b3f8a;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: #202f66;
+  }
+  
+  .btn-secondary {
+    background-color: #eeedec;
+    color: #202f66;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #ddd;
+  }
+  
+  @media (max-width: 768px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

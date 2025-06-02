@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Administration - Portfolio Cyrill Semah</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  </head>
+
+  <body class="admin-body">
+    <%= render 'shared/navbar' %>
+    
+    <main class="admin-main">
+      <%= yield %>
+    </main>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Initialisation des tooltips et popovers si Bootstrap est utilisé
+        if (typeof $ !== 'undefined') {
+          $('[data-toggle="tooltip"]').tooltip();
+          $('[data-toggle="popover"]').popover();
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,154 @@
+<nav class="navbar <%= admin? ? 'admin-mode' : '' %>">
+  <div class="container">
+    <div class="navbar__logo">
+      <a href="<%= root_path %>" style="display: flex; align-items: center; text-decoration: none;">
+        <%= image_tag "LogoCS.png", alt: "Logo Cyrill Semah" %>
+        <div class="logo-text" style="display: inline-block; white-space: nowrap;">
+          <span class="text-original">Portfolio.</span>
+          <span class="text-hover">Bienvenue ✌🏼.</span>
+        </div>
+      </a>
+    </div>
+    
+    <div class="navbar__links">
+      <% if !request.path.start_with?('/admin') || !admin? %>
+        <a href="#home" class="<%= current_page?(root_path) ? 'active' : '' %>">Accueil</a>
+        <a href="#xp-pro" class="<%= params[:anchor] == 'xp-pro' ? 'active' : '' %>">XP Pro</a>
+        <a href="#education" class="<%= params[:anchor] == 'education' ? 'active' : '' %>">Formation</a>
+        <a href="#skills" class="<%= params[:anchor] == 'skills' ? 'active' : '' %>">Skills</a>
+        <a href="#" class="js-projects-link">Projets</a>
+        <div class="navbar__separator"></div>
+        <a href="#" class="js-contact-modal" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1.5rem; background-color: #2b3f8a; color: white; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s ease; font-weight: 500; font-size: 1rem; text-decoration: none; height: 38px; line-height: 1;">Contact</a>
+      <% end %>
+      
+      <% if admin? && (request.path.start_with?('/admin') || current_page?(root_path)) %>
+        <% if request.path.start_with?('/admin') %>
+          <div class="navbar__separator"></div>
+        <% end %>
+        <div class="kebab-menu">
+          <button class="kebab-menu__button" onclick="toggleKebabMenu(this, event)">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </button>
+          <div class="kebab-menu__content">
+            <%= link_to admin_professional_experiences_path, class: "menu-item btn-view" do %>
+              <i class="fas fa-cog"></i>
+              <span>Admin</span>
+            <% end %>
+            <%= button_to logout_path, method: :delete, class: "menu-item btn-delete", form_class: "kebab-form-button" do %>
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Déconnexion</span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="navbar__burger burger-visible">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  
+  <div class="navbar__mobile">
+    <% if !request.path.start_with?('/admin') || !admin? %>
+      <a href="#home" class="<%= current_page?(root_path) ? 'active' : '' %>">Accueil</a>
+      <a href="#xp-pro" class="<%= params[:anchor] == 'xp-pro' ? 'active' : '' %>">XP Pro</a>
+      <a href="#education" class="<%= params[:anchor] == 'education' ? 'active' : '' %>">Formation</a>
+      <a href="#skills" class="<%= params[:anchor] == 'skills' ? 'active' : '' %>">Skills</a>
+      <a href="<%= projets_path %>" class="<%= current_page?(projets_path) ? 'active' : '' %>">Projets</a>
+      <a href="#" class="js-contact-modal" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1.5rem; background-color: #2b3f8a; color: white; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s ease; font-weight: 500; font-size: 1rem; text-decoration: none; margin-top: 1.5rem; height: 38px; line-height: 1;">Contact</a>
+    <% end %>
+    
+    <% if admin? && (request.path.start_with?('/admin') || current_page?(root_path)) %>
+      <div class="kebab-menu mobile-kebab">
+        <button class="kebab-menu__button" onclick="toggleKebabMenu(this, event)">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </button>
+        <div class="kebab-menu__content">
+          <%= link_to admin_professional_experiences_path, class: "menu-item btn-view" do %>
+            <i class="fas fa-cog"></i>
+            <span>Admin</span>
+          <% end %>
+          <%= button_to logout_path, method: :delete, class: "menu-item btn-delete", form_class: "kebab-form-button" do %>
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Déconnexion</span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Sélection des éléments
+    var burger = document.querySelector('.navbar__burger');
+    var mobileMenu = document.querySelector('.navbar__mobile');
+    
+    // Vérification que les éléments existent
+    if (!burger) {
+      console.error('Élément burger non trouvé');
+      return;
+    }
+    
+    if (!mobileMenu) {
+      console.error('Élément menu mobile non trouvé');
+      return;
+    }
+    
+    // Fonction pour ouvrir/fermer le menu
+    function toggleMenu(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      burger.classList.toggle('active');
+      
+      if (mobileMenu.classList.contains('active')) {
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      } else {
+        mobileMenu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      
+      console.log('Menu toggled, active state:', mobileMenu.classList.contains('active'));
+    }
+    
+    // Ajout de l'événement de clic avec capture
+    burger.addEventListener('click', toggleMenu, true);
+    
+    // Fermer le menu quand on clique sur un lien
+    var mobileLinks = document.querySelectorAll('.navbar__mobile a');
+    mobileLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        burger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+    
+    // Smooth scroll pour les ancres
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        if (this.getAttribute('href') !== '#') {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 70, // Ajustement pour la navbar
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+  });
+</script>

@@ -1,0 +1,104 @@
+/* line 6, app/assets/stylesheets/_admin_education.scss */
+.education-list__group {
+  margin-bottom: 1.5rem;
+}
+
+/* line 9, app/assets/stylesheets/_admin_education.scss */
+.education-list__group-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: #2b3f8a;
+  border-bottom: 1px solid rgba(108, 117, 125, 0.1);
+}
+
+/* line 16, app/assets/stylesheets/_admin_education.scss */
+.education-list__group-header .logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eeedec;
+  color: #2b3f8a;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+/* line 30, app/assets/stylesheets/_admin_education.scss */
+.education-list__group-header .logo i {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+/* line 35, app/assets/stylesheets/_admin_education.scss */
+.education-list__group-header .logo:hover {
+  background-color: #e2e0df;
+}
+
+/* line 38, app/assets/stylesheets/_admin_education.scss */
+.education-list__group-header .logo:hover i {
+  transform: scale(1.1);
+}
+
+/* line 48, app/assets/stylesheets/_admin_education.scss */
+.education-list__item-body .activities-section {
+  margin-top: 1rem;
+}
+
+/* line 51, app/assets/stylesheets/_admin_education.scss */
+.education-list__item-body .activities-section h4 {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  color: #202f66;
+  font-size: 1rem;
+}
+
+/* line 58, app/assets/stylesheets/_admin_education.scss */
+.education-list__item-body .activities-section .activities-content {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+  color: #495057;
+}
+
+/* line 68, app/assets/stylesheets/_admin_education.scss */
+.education-list__item-body .activities-section .activities-thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* line 74, app/assets/stylesheets/_admin_education.scss */
+.education-list__item-body .activities-section .activities-thumbnails .activity-thumbnail {
+  flex: 0 0 60px;
+  max-width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+}
+
+/* line 83, app/assets/stylesheets/_admin_education.scss */
+.education-list__item-body .activities-section .activities-thumbnails .activity-thumbnail img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* line 90, app/assets/stylesheets/_admin_education.scss */
+.education-list__item-body .activities-section .activities-thumbnails .activity-thumbnail:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}

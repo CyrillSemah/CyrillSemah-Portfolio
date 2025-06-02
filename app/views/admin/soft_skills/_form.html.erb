@@ -1,0 +1,38 @@
+<div class="experience-list__group">
+  <div class="experience-list__group-header">
+    <div class="logo">
+      <div class="no-logo"><%= soft_skill.name.present? ? soft_skill.name[0].upcase : "?" %></div>
+    </div>
+    <h3><%= soft_skill.name.present? ? soft_skill.name : "Nouvelle compétence personnelle" %></h3>
+  </div>
+  
+  <div class="experience-list__group-items">
+    <div class="experience-list__item">
+      <div class="experience-list__item-body">
+        <%= form_with(model: [:admin, soft_skill], local: true) do |form| %>
+          <% if soft_skill.errors.any? %>
+            <div class="alert alert-danger">
+              <h4><%= pluralize(soft_skill.errors.count, "erreur") %> :</h4>
+              <ul>
+                <% soft_skill.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+      
+          <div class="form-group">
+            <%= form.label :name, "Nom de la compétence personnelle" %>
+            <%= form.text_field :name, required: true, placeholder: "Ex: Travail d'équipe, Adaptabilité, Communication..." %>
+            <span class="hint">Entrez une compétence personnelle qui vous caractérise</span>
+          </div>
+          
+          <div class="experience-list__item-actions">
+            <%= link_to "Annuler", admin_skills_path, class: "btn btn-view" %>
+            <%= form.submit soft_skill.new_record? ? "Créer" : "Mettre à jour", class: "btn btn-edit" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

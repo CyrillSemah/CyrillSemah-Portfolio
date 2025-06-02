@@ -1,0 +1,111 @@
+<div class="admin-experience-container">
+  <div class="container">
+    <!-- Menu de navigation admin -->
+    <div class="admin-nav">
+      <ul class="admin-nav__list">
+        <li class="admin-nav__item">
+          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Formations", admin_educations_path %>
+        </li>
+        <li class="admin-nav__item active">
+          <%= link_to "Compétences", admin_skills_path %>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="experience-list">
+      <div class="experience-list__header">
+        <h2>Détails du groupe de compétences</h2>
+        <%= link_to "Retour aux compétences", admin_skills_path, class: "btn btn-secondary" %>
+      </div>
+    </div>
+    
+    <div class="experience-detail">
+      <div class="experience-detail__content">
+        <div class="experience-detail__info">
+          <h3><%= @skill_group.name %></h3>
+          
+          <% if @skill_group.description.present? %>
+            <div class="experience-detail__description">
+              <h4>Description</h4>
+              <p><%= simple_format(@skill_group.description) %></p>
+            </div>
+          <% end %>
+          
+          <div class="experience-detail__skills">
+            <h4>Compétences dans ce groupe</h4>
+            
+            <% if @skills.any? %>
+              <div class="skills-grid">
+                <% @skills.each do |skill| %>
+                  <div class="skill-card">
+                    <div class="skill-card__logo">
+                      <% if skill.logo.attached? %>
+                        <%= image_tag skill.logo %>
+                      <% else %>
+                        <div class="no-logo"><%= skill.name[0].upcase %></div>
+                      <% end %>
+                    </div>
+                    <div class="skill-card__info">
+                      <h5><%= skill.name %></h5>
+                      <div class="skill-card__meta">
+                        <span class="experience"><%= skill.experience_duration %></span>
+                      </div>
+                    </div>
+                    <div class="skill-card__actions">
+                      <%= link_to "Voir", admin_skill_path(skill), class: "btn btn-sm btn-view" %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% else %>
+              <div class="empty-state">
+                <p>Aucune compétence n'est associée à ce groupe pour le moment.</p>
+                <p><%= link_to "Ajouter une compétence", new_admin_skill_path, class: "btn btn-primary" %></p>
+              </div>
+            <% end %>
+          </div>
+          
+          <div class="experience-list__item-actions">
+            <%= link_to "Retour à la liste", admin_skill_groups_path, class: "btn btn-view" %>
+            <%= link_to "Modifier", edit_admin_skill_group_path(@skill_group), class: "btn btn-edit" %>
+            <%= link_to "Supprimer", "#", 
+                class: "btn btn-delete btn-delete-skill-group",
+                data: { delete_url: admin_skill_group_path(@skill_group) } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_tag do %>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Gestion de la suppression du groupe de compétences
+    document.querySelector('.btn-delete-skill-group').addEventListener('click', function(e) {
+      e.preventDefault();
+      if (confirm('Êtes-vous sûr de vouloir supprimer ce groupe de compétences ? Les compétences associées seront conservées mais ne seront plus groupées.')) {
+        var deleteUrl = this.dataset.deleteUrl;
+        var token = document.querySelector('meta[name="csrf-token"]').content;
+        
+        fetch(deleteUrl, {
+          method: 'DELETE',
+          headers: {
+            'X-CSRF-Token': token,
+            'Content-Type': 'application/json'
+          },
+          credentials: 'same-origin'
+        })
+        .then(function(response) {
+          if (response.ok) {
+            window.location.href = '<%= admin_skill_groups_path %>';
+          } else {
+            alert('Une erreur est survenue lors de la suppression.');
+          }
+        });
+      }
+    });
+  });
+<% end %>

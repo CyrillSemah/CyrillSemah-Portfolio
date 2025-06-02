@@ -1,0 +1,262 @@
+@charset "UTF-8";
+/* line 4, app/assets/stylesheets/_book_transition.scss */
+.book-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  overflow: hidden;
+}
+
+/* line 18, app/assets/stylesheets/_book_transition.scss */
+.book-page {
+  position: absolute;
+  width: 45%;
+  height: 70%;
+  background-color: white;
+  box-shadow: 0 10px 30px rgba(32, 47, 102, 0.3);
+  transform-origin: center left;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+  border-radius: 0 5px 5px 0;
+  overflow: hidden;
+}
+
+/* line 31, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 43, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-content .page-title {
+  font-size: 1.5rem;
+  color: #2b3f8a;
+  margin-bottom: 15px;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(43, 63, 138, 0.2);
+  padding-bottom: 10px;
+}
+
+/* line 53, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-content .page-text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #202f66;
+  margin-bottom: 15px;
+}
+
+/* line 60, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-content .page-text .highlight {
+  background-color: rgba(43, 63, 138, 0.1);
+  color: #2b3f8a;
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
+/* line 69, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-content .page-list {
+  margin: 15px 0;
+  padding-left: 20px;
+}
+
+/* line 73, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-content .page-list li {
+  margin-bottom: 8px;
+  position: relative;
+}
+
+/* line 77, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-content .page-list li::before {
+  content: '•';
+  color: #2b3f8a;
+  font-weight: bold;
+  position: absolute;
+  left: -15px;
+}
+
+/* line 88, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-content .page-image {
+  width: 100%;
+  height: 120px;
+  background-color: rgba(43, 63, 138, 0.05);
+  border-radius: 5px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* line 99, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-content .page-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* line 106, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-content .page-image .chart {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+}
+
+/* line 113, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-content .page-image .chart .bar {
+  width: 15%;
+  background-color: rgba(43, 63, 138, 0.7);
+  border-radius: 3px 3px 0 0;
+  transition: height 0.5s ease;
+}
+
+/* line 123, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-content .page-footer {
+  margin-top: auto;
+  font-size: 0.8rem;
+  color: rgba(32, 47, 102, 0.6);
+  font-style: italic;
+  border-top: 1px solid rgba(32, 47, 102, 0.1);
+  padding-top: 10px;
+}
+
+/* line 134, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f8f8f8;
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+  border-left: 1px solid rgba(32, 47, 102, 0.1);
+}
+
+/* line 146, app/assets/stylesheets/_book_transition.scss */
+.book-page .page-back .page-content {
+  opacity: 0.8;
+}
+
+/* line 152, app/assets/stylesheets/_book_transition.scss */
+.book-page::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background: linear-gradient(to right, rgba(32, 47, 102, 0.1), rgba(32, 47, 102, 0.05) 50%, transparent);
+}
+
+/* line 168, app/assets/stylesheets/_book_transition.scss */
+.book-cover {
+  position: absolute;
+  width: 45%;
+  height: 70%;
+  background-color: #2b3f8a;
+  box-shadow: 0 10px 30px rgba(32, 47, 102, 0.5);
+  transform-origin: center left;
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 5;
+}
+
+/* line 180, app/assets/stylesheets/_book_transition.scss */
+.book-cover .book-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  width: 80%;
+}
+
+/* line 192, app/assets/stylesheets/_book_transition.scss */
+.book-cover .book-title .book-subtitle {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 10px;
+  opacity: 0.8;
+}
+
+/* line 201, app/assets/stylesheets/_book_transition.scss */
+.book-cover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.05) 50%, transparent 52%);
+  background-size: 20px 20px;
+}
+
+/* line 218, app/assets/stylesheets/_book_transition.scss */
+.book-cover::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+}
+
+/* line 231, app/assets/stylesheets/_book_transition.scss */
+.book-particle {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
+  opacity: 0;
+  transform: scale(0.5) rotate(0deg);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  box-shadow: 0 2px 10px rgba(32, 47, 102, 0.1);
+}
+
+/* line 241, app/assets/stylesheets/_book_transition.scss */
+.book-particle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.7;
+}
+
+/* line 255, app/assets/stylesheets/_book_transition.scss */
+.book-particle.formula::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M7 5h10a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2v10h8V7H8z' fill='rgba(43,63,138,1)'/%3E%3C/svg%3E");
+}
+
+/* line 259, app/assets/stylesheets/_book_transition.scss */
+.book-particle.note::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M3 4h18v2H3V4zm0 15h14v2H3v-2zm0-5h18v2H3v-2zm0-5h14v2H3V9z' fill='rgba(43,63,138,1)'/%3E%3C/svg%3E");
+}
+
+/* line 263, app/assets/stylesheets/_book_transition.scss */
+.book-particle.diploma::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M12 2a9 9 0 0 1 9 9v7.5a3.5 3.5 0 0 1-6.39 1.976a2.999 2.999 0 0 1-5.223 0a3.5 3.5 0 0 1-6.382-1.783L3 18.499V11a9 9 0 0 1 9-9zm0 2a7 7 0 0 0-6.996 6.76L5 11v7.446l.002.138a1.5 1.5 0 0 0 2.645.88l.088-.116a1 1 0 0 1 1.834.001a1.5 1.5 0 0 0 2.422.033L12 19.293l.01.09a1.5 1.5 0 0 0 2.422-.033a1 1 0 0 1 1.834-.001l.088.117a1.5 1.5 0 0 0 2.643-.881L19 18.5V11a7 7 0 0 0-7-7zm4 9a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h8zm0 2h-8v2h8v-2zm-7-6a1 1 0 1 1 0 2a1 1 0 0 1 0-2zm3 0a1 1 0 1 1 0 2a1 1 0 0 1 0-2zm3 0a1 1 0 1 1 0 2a1 1 0 0 1 0-2z' fill='rgba(43,63,138,1)'/%3E%3C/svg%3E");
+}

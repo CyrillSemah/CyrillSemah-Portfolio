@@ -1,0 +1,48 @@
+<section class="section section-project-detail">
+  <div class="container">
+    <div class="section-project-detail__header">
+      <h1><%= @project.title %></h1>
+      <div class="project-technologies">
+        <% @project.technologies.split(',').each do |tech| %>
+          <span class="technology-tag"><%= tech.strip %></span>
+        <% end %>
+      </div>
+    </div>
+    
+    <div class="section-project-detail__content">
+      <div class="project-image">
+        <% if @project.image.attached? %>
+          <%= image_tag @project.image, alt: @project.title %>
+        <% else %>
+          <div class="project-placeholder large">
+            <i class="fas fa-code"></i>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="project-description">
+        <%= simple_format(@project.description) %>
+      </div>
+      
+      <div class="project-links">
+        <% if @project.github_url.present? %>
+          <%= link_to @project.github_url, target: "_blank", class: "btn btn-outline btn-with-icon" do %>
+            <i class="fab fa-github"></i> Voir sur GitHub
+          <% end %>
+        <% end %>
+        
+        <% if @project.live_url.present? %>
+          <%= link_to @project.live_url, target: "_blank", class: "btn btn-primary btn-with-icon" do %>
+            <i class="fas fa-external-link-alt"></i> Voir la démo
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    
+    <div class="section-project-detail__footer">
+      <%= link_to projets_path, class: "btn btn-back" do %>
+        <i class="fas fa-arrow-left"></i> Retour aux projets
+      <% end %>
+    </div>
+  </div>
+</section>

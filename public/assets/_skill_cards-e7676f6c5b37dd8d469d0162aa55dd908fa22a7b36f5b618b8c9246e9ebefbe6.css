@@ -1,0 +1,300 @@
+/* line 4, app/assets/stylesheets/_skill_cards.scss */
+.skill-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* line 11, app/assets/stylesheets/_skill_cards.scss */
+.skill-card {
+  position: relative;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: 0.3s ease;
+}
+
+/* line 19, app/assets/stylesheets/_skill_cards.scss */
+.skill-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* line 23, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* line 30, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .normal-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* line 35, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .kebab-actions {
+  display: none;
+  position: relative;
+}
+
+/* line 39, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .kebab-actions .kebab-menu__button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+/* line 52, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .kebab-actions .kebab-menu__button:hover {
+  background-color: rgba(43, 63, 138, 0.1);
+}
+
+/* line 56, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .kebab-actions .kebab-menu__button .dot {
+  width: 4px;
+  height: 4px;
+  background-color: #2b3f8a;
+  border-radius: 50%;
+  margin: 2px 0;
+}
+
+/* line 65, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .kebab-actions .kebab-menu__content {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  padding: 0.25rem 0;
+  min-width: 150px;
+  z-index: 100;
+  display: none;
+}
+
+/* line 77, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .kebab-actions .kebab-menu__content.show {
+  display: block;
+}
+
+/* line 81, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .kebab-actions .kebab-menu__content .menu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 1rem;
+  text-decoration: none;
+  color: #202f66;
+  transition: 0.3s ease;
+}
+
+/* line 89, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .kebab-actions .kebab-menu__content .menu-item i {
+  margin-right: 0.5rem;
+  width: 20px;
+  text-align: center;
+}
+
+/* line 95, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .kebab-actions .kebab-menu__content .menu-item:hover {
+  background-color: rgba(43, 63, 138, 0.05);
+}
+
+/* line 99, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .kebab-actions .kebab-menu__content .menu-item.btn-view:hover {
+  color: #2b3f8a;
+}
+
+/* line 103, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .kebab-actions .kebab-menu__content .menu-item.btn-edit:hover {
+  color: #2b3f8a;
+}
+
+/* line 107, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .kebab-actions .kebab-menu__content .menu-item.btn-delete:hover {
+  color: #c13733;
+}
+
+/* line 114, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .action-icon {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  transition: 0.3s ease;
+}
+
+/* line 125, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .action-icon i {
+  color: #2b3f8a;
+  font-size: 1rem;
+}
+
+/* line 130, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .action-icon .tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #202f66;
+  color: #eeedec;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease;
+  margin-top: 5px;
+  pointer-events: none;
+}
+
+/* line 148, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .action-icon:hover {
+  background-color: rgba(43, 63, 138, 0.1);
+}
+
+/* line 151, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .action-icon:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* line 157, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .action-icon.btn-view:hover i {
+  color: #2b3f8a;
+}
+
+/* line 161, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .action-icon.btn-edit:hover i {
+  color: #2b3f8a;
+}
+
+/* line 165, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__actions .action-icon.btn-delete:hover i {
+  color: #c13733;
+}
+
+@media (max-width: 1009px) and (min-width: 769px) {
+  /* line 172, app/assets/stylesheets/_skill_cards.scss */
+  .skill-card__actions .normal-actions {
+    display: none;
+  }
+  /* line 176, app/assets/stylesheets/_skill_cards.scss */
+  .skill-card__actions .kebab-actions {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 480px) {
+  /* line 183, app/assets/stylesheets/_skill_cards.scss */
+  .skill-card__actions .normal-actions {
+    display: flex;
+  }
+  /* line 187, app/assets/stylesheets/_skill_cards.scss */
+  .skill-card__actions .kebab-actions {
+    display: none;
+  }
+}
+
+@media (max-width: 479px) {
+  /* line 194, app/assets/stylesheets/_skill_cards.scss */
+  .skill-card__actions .normal-actions {
+    display: none;
+  }
+  /* line 198, app/assets/stylesheets/_skill_cards.scss */
+  .skill-card__actions .kebab-actions {
+    display: block;
+  }
+}
+
+/* line 205, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__body .skill-card__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* line 210, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__body .skill-card__header .skill-logo {
+  width: 80px;
+  height: 80px;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+/* line 216, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__body .skill-card__header .skill-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* line 222, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__body .skill-card__header .skill-logo .no-logo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eeedec;
+  color: #202f66;
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+/* line 235, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__body .skill-card__header .skill-info {
+  flex: 1;
+}
+
+/* line 240, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__body .skill-name {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #202f66;
+  margin-bottom: 0.25rem;
+}
+
+/* line 247, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__body .skill-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(32, 47, 102, 0.7);
+}
+
+/* line 256, app/assets/stylesheets/_skill_cards.scss */
+.skill-card__body .skill-description {
+  color: rgba(32, 47, 102, 0.8);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+  border-top: 1px solid rgba(32, 47, 102, 0.1);
+  padding-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  /* line 269, app/assets/stylesheets/_skill_cards.scss */
+  .skill-cards {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,36 @@
+<div class="admin-experience-container">
+  <div class="container">
+    <div class="admin-nav">
+      <ul class="admin-nav__list">
+        <li class="admin-nav__item">
+          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Formations", admin_educations_path %>
+        </li>
+        <li class="admin-nav__item active">
+          <%= link_to "Compétences", admin_skills_path %>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="experience-list">
+      <div class="experience-list__header">
+        <div>
+          <h2>Ajouter une compétence personnelle</h2>
+          <p class="subtitle">Renseignez les détails de votre nouvelle compétence personnelle</p>
+        </div>
+        <div class="header-actions">
+          <%= link_to admin_skills_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+            <span class="button-text">Retour</span>
+          <% end %>
+        </div>
+      </div>
+      
+      <%= render 'form', soft_skill: @soft_skill %>
+    </div>
+  </div>
+</div>
