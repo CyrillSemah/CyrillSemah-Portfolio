@@ -1,0 +1,28 @@
+# === Rails ===
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+/public/assets
+.byebug_history
+*.rbc
+*.sassc
+*.pid
+*.sql
+*.sqlite3
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/db/schema.rb
+/db/development_structure.sql
+/storage/*
+/.env
+
+# === macOS ===
+.DS_Store
+
+# === Node (si jamais ajouté plus tard) ===
+node_modules/
+yarn-error.log
+
+# === Bundler ===
+/vendor/bundle
