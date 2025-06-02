@@ -1,0 +1,146 @@
+// Import des variables pour s'assurer qu'elles sont disponibles
+@import 'variables';
+
+// Reset CSS et styles globaux
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: $color-dark;
+  background-color: $color-light;
+  scroll-behavior: smooth;
+}
+
+body {
+  color: $color-dark;
+  transition: background-color 1.5s ease, color 1.5s ease;
+  
+  &.no-scroll {
+    overflow: hidden;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: $color-blue;
+  transition: $transition-fast;
+  
+  &:hover {
+    color: darken($color-blue, 10%);
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: $spacing-md;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  margin-bottom: $spacing-md;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+}
+
+.section {
+  padding: $spacing-xxl 0;
+}
+
+.btn {
+  display: inline-block;
+  padding: $spacing-sm $spacing-lg;
+  background-color: $color-blue;
+  color: white;
+  border: none;
+  border-radius: $border-radius-md;
+  cursor: pointer;
+  transition: $transition-normal;
+  font-weight: 500;
+  text-align: center;
+  
+  &:hover {
+    background-color: darken($color-blue, 10%);
+    transform: translateY(-2px);
+    box-shadow: $shadow-medium;
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &.btn-primary {
+    background-color: $color-blue;
+  }
+  
+  &.btn-secondary {
+    background-color: transparent;
+    border: 2px solid $color-blue;
+    color: $color-blue;
+    
+    &:hover {
+      background-color: $color-blue;
+      color: white;
+    }
+  }
+  
+  &.btn-danger {
+    background-color: $color-red;
+    height: 38px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+      background-color: darken($color-red, 10%);
+    }
+  }
+}
+
+.card {
+  background-color: white;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-small;
+  padding: $spacing-lg;
+  transition: $transition-normal;
+  
+  &:hover {
+    box-shadow: $shadow-medium;
+    transform: translateY(-5px);
+  }
+}

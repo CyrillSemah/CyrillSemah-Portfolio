@@ -1,0 +1,13 @@
+Nouveau message de contact
+=======================
+
+De : <%= @contact.name %> (<%= @contact.email %>)
+<% if @contact.company.present? %>Société : <%= @contact.company %>
+<% end %>Objet : <%= @subject_type %>
+
+Message :
+---------
+<%= @message %>
+
+--
+Ce message a été envoyé depuis le formulaire de contact de votre portfolio.

@@ -1,0 +1,101 @@
+<div class="admin-education-container">
+  <div class="container">
+    <!-- Menu de navigation admin -->
+    <div class="admin-nav">
+      <ul class="admin-nav__list">
+        <li class="admin-nav__item">
+          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
+        </li>
+        <li class="admin-nav__item active">
+          <%= link_to "Formations", admin_educations_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Compétences", admin_skills_path %>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="education-list">
+      <div class="education-list__header">
+        <h2>Détails de la formation</h2>
+        <div class="header-actions">
+          <%= link_to admin_educations_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+            <span class="button-text">Retour à la liste</span>
+          <% end %>
+        </div>
+      </div>
+    
+      <div class="education-list__group">
+        <div class="education-list__group-header">
+          <div class="logo">
+            <% if @education.image.attached? %>
+              <%= image_tag @education.image %>
+            <% else %>
+              <div class="no-logo"><%= @education.school[0].upcase %></div>
+            <% end %>
+          </div>
+          <h3><%= @education.school %></h3>
+          <div class="kebab-menu">
+            <button class="kebab-menu__button" onclick="toggleKebabMenu(this, event)">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </button>
+            <div class="kebab-menu__content">
+              <%= link_to edit_admin_education_path(@education), class: "menu-item btn-edit" do %>
+                <i class="fas fa-edit"></i>
+                <span>Modifier</span>
+              <% end %>
+              <%= link_to "#", class: "menu-item btn-delete btn-delete-education", data: { delete_url: admin_education_path(@education) } do %>
+                <i class="fas fa-trash-alt"></i>
+                <span>Supprimer</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        
+        <div class="education-list__group-items">
+          <div class="education-list__item">
+            <div class="education-list__item-body">
+              <div class="position"><%= @education.degree %> - <%= @education.field_of_study %></div>
+              <div class="meta">
+                <span class="date">
+                  <%= Date::MONTHNAMES[@education.start_month + 1] %> <%= @education.start_year %> - 
+                  <% if @education.end_year.present? && @education.end_month.present? %>
+                    <%= Date::MONTHNAMES[@education.end_month + 1] %> <%= @education.end_year %>
+                  <% else %>
+                    En cours
+                  <% end %>
+                </span>
+              </div>
+              
+              <% if @education.description.present? %>
+                <div class="description">
+                  <%= simple_format(@education.description) %>
+                </div>
+              <% end %>
+              
+              <% if @education.result.present? %>
+                <div class="description">
+                  <strong>Résultat :</strong> <%= @education.result %>
+                </div>
+              <% end %>
+              
+              <% if @education.activities.present? %>
+                <div class="description">
+                  <strong>Activités et associations :</strong>
+                  <%= simple_format(@education.activities) %>
+                </div>
+              <% end %>
+            </div>
+        
+            <!-- Les boutons d'action ont été déplacés dans le kebab menu en haut -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

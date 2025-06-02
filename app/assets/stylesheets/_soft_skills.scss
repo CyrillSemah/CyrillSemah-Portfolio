@@ -1,0 +1,344 @@
+// Styles pour les compétences personnelles
+@import 'variables';
+
+// Styles pour les boutons icônes
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: $transition-normal;
+  color: $color-dark;
+  
+  &:hover {
+    background-color: rgba($color-dark, 0.05);
+  }
+  
+  &.btn-edit {
+    color: $color-blue;
+    &:hover {
+      background-color: rgba($color-blue, 0.1);
+    }
+  }
+  
+  &.btn-delete {
+    color: $color-red;
+    &:hover {
+      background-color: rgba($color-red, 0.1);
+    }
+  }
+  
+  i {
+    font-size: 1.2rem;
+  }
+}
+
+// Styles pour la liste des compétences personnelles
+.soft-skills-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-md;
+  width: 100%;
+  
+  .soft-skill-item {
+    background-color: white;
+    border-radius: $border-radius-md;
+    padding: $spacing-md;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: $shadow-small;
+    transition: $transition-normal;
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    min-width: 0; // Nécessaire pour que text-overflow fonctionne
+    
+    @media (max-width: 390px) {
+      padding: $spacing-sm;
+    }
+    
+    &:hover {
+      box-shadow: $shadow-medium;
+      transform: translateY(-2px);
+    }
+    
+    .soft-skill-name {
+      font-weight: 500;
+      color: $color-dark;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      
+      @media (max-width: 390px) {
+        max-width: 200px;
+      }
+      
+      @media (max-width: 320px) {
+        max-width: 160px;
+      }
+    }
+    
+    .soft-skill-actions {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      margin-left: $spacing-md;
+      border-left: 1px solid rgba($color-dark, 0.1);
+      padding-left: $spacing-md;
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none !important;
+      
+      .normal-actions {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+      }
+      
+      .kebab-actions {
+        display: none;
+        position: relative;
+        flex-shrink: 0;
+        
+        .kebab-menu__button {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background-color: rgba($color-dark, 0.05);
+          border: none;
+          cursor: pointer;
+          transition: $transition-normal;
+          z-index: 30;
+          
+          &:hover {
+            background-color: rgba($color-dark, 0.05);
+          }
+          
+          .dot {
+            width: 4px;
+            height: 4px;
+            background-color: $color-dark;
+            border-radius: 50%;
+            margin: 2px 0;
+          }
+        }
+        
+        .kebab-menu__content {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background-color: white;
+          border-radius: $border-radius-md;
+          box-shadow: $shadow-medium;
+          padding: $spacing-xs 0;
+          min-width: 150px;
+          z-index: 100;
+          display: none;
+          pointer-events: auto;
+          
+          &.show {
+            display: block;
+          }
+          
+          .menu-item {
+            display: flex;
+            align-items: center;
+            padding: $spacing-xs $spacing-md;
+            text-decoration: none;
+            color: $color-dark;
+            transition: $transition-normal;
+            
+            i {
+              margin-right: $spacing-sm;
+              width: 20px;
+              text-align: center;
+            }
+            
+            &:hover {
+              background-color: rgba($color-dark, 0.05);
+            }
+            
+            &.btn-edit:hover {
+              color: $color-blue;
+            }
+            
+            &.btn-delete:hover {
+              color: $color-red;
+            }
+          }
+        }
+      }
+      
+      @media (max-width: 390px) {
+        border-left: none;
+        padding-left: 0;
+        margin-left: $spacing-sm;
+        position: relative;
+        z-index: 20; // Assurer que le menu est au-dessus des autres éléments
+        
+        .normal-actions {
+          display: none;
+        }
+        
+        .kebab-actions {
+          display: block;
+        }
+      }
+      
+      // Styles spécifiques pour les très petits écrans
+      @media (max-width: 320px) {
+        margin-left: 5px;
+      }
+    }
+    
+    &:hover {
+      box-shadow: $shadow-medium;
+      transform: translateY(-2px);
+    }
+    
+    .soft-skill-name {
+      font-weight: 500;
+      color: $color-dark;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      
+      @media (max-width: 390px) {
+        max-width: 200px;
+      }
+      
+      @media (max-width: 320px) {
+        max-width: 160px;
+      }
+    }
+    
+    .soft-skill-actions {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      margin-left: $spacing-md;
+      border-left: 1px solid rgba($color-dark, 0.1);
+      padding-left: $spacing-md;
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none !important;
+      
+      .normal-actions {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+      }
+      
+      .kebab-actions {
+        display: none;
+        position: relative;
+        flex-shrink: 0;
+        
+        .kebab-menu__button {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background-color: rgba($color-dark, 0.05);
+          border: none;
+          cursor: pointer;
+          transition: $transition-normal;
+          z-index: 30;
+          
+          &:hover {
+            background-color: rgba($color-dark, 0.05);
+          }
+          
+          .dot {
+            width: 4px;
+            height: 4px;
+            background-color: $color-dark;
+            border-radius: 50%;
+            margin: 2px 0;
+          }
+        }
+        
+        .kebab-menu__content {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background-color: white;
+          border-radius: $border-radius-md;
+          box-shadow: $shadow-medium;
+          padding: $spacing-xs 0;
+          min-width: 150px;
+          z-index: 100;
+          display: none;
+          pointer-events: auto;
+          
+          &.show {
+            display: block;
+          }
+          
+          .menu-item {
+            display: flex;
+            align-items: center;
+            padding: $spacing-xs $spacing-md;
+            text-decoration: none;
+            color: $color-dark;
+            transition: $transition-normal;
+            
+            i {
+              margin-right: $spacing-sm;
+              width: 20px;
+              text-align: center;
+            }
+            
+            &:hover {
+              background-color: rgba($color-dark, 0.05);
+            }
+            
+            &.btn-edit:hover {
+              color: $color-blue;
+            }
+            
+            &.btn-delete:hover {
+              color: $color-red;
+            }
+          }
+        }
+      }
+      
+      @media (max-width: 390px) {
+        border-left: none;
+        padding-left: 0;
+        margin-left: $spacing-sm;
+        position: relative;
+        z-index: 20; // Assurer que le menu est au-dessus des autres éléments
+        
+        .normal-actions {
+          display: none;
+        }
+        
+        .kebab-actions {
+          display: block;
+        }
+      }
+      
+      // Styles spécifiques pour les très petits écrans
+      @media (max-width: 320px) {
+        margin-left: 5px;
+      }
+    }
+  }
+}

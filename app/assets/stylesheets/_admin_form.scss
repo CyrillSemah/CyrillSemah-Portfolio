@@ -1,0 +1,197 @@
+// Styles pour le formulaire d'expérience professionnelle dans le nouveau design admin
+@import 'variables';
+
+// Styles généraux pour les formulaires dans l'interface admin
+.experience-list__item {
+  .form-group {
+    margin-bottom: $spacing-lg;
+    
+    label {
+      display: block;
+      margin-bottom: $spacing-xs;
+      font-weight: 500;
+      color: $color-dark;
+    }
+    
+    .hint {
+      display: block;
+      font-size: 0.85rem;
+      color: rgba($color-dark, 0.6);
+      margin-top: $spacing-xs;
+    }
+    
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: $spacing-sm $spacing-md;
+      border: 1px solid #ddd;
+      border-radius: $border-radius-sm;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: $transition-fast;
+      
+      &:focus {
+        outline: none;
+        border-color: $color-blue;
+        box-shadow: 0 0 0 2px rgba($color-blue, 0.2);
+      }
+      
+      &:disabled {
+        background-color: #f5f5f5;
+        cursor: not-allowed;
+      }
+    }
+    
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+  }
+  
+  // Checkbox sur la même ligne
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: $spacing-md 0;
+    
+    .checkbox-wrapper {
+      display: inline-flex;
+      align-items: center;
+    }
+    
+    input[type="checkbox"] {
+      margin-right: $spacing-xs;
+      width: auto;
+    }
+    
+    label {
+      display: inline-block;
+      margin-bottom: 0;
+      margin-right: $spacing-md;
+      font-weight: 500;
+    }
+  }
+  
+  // Dates sur la même ligne
+  .date-group {
+    display: flex;
+    gap: $spacing-md;
+    
+    .date-field {
+      flex: 1;
+    }
+  }
+}
+
+// Styles pour le conteneur des activités
+.activities-container {
+  margin-top: $spacing-sm;
+  position: relative;
+  
+  &::before {
+    content: "Activités :";
+    display: block;
+    font-weight: bold;
+    margin-bottom: $spacing-xs;
+    color: $color-dark;
+  }
+}
+
+// Styles pour le textarea des activités
+.activities-textarea {
+  font-size: 0.9rem !important;
+  line-height: 1.5 !important;
+  padding: $spacing-md !important;
+  background-color: #f8f9fa !important;
+  border-radius: $border-radius-sm !important;
+  border: 1px solid #e9ecef !important;
+  width: 100% !important;
+  color: #495057 !important;
+  min-height: 120px !important;
+}
+
+// Styles pour la date-group en dehors du contexte de experience-list__item
+.date-group {
+  display: flex;
+  gap: $spacing-md;
+  
+  .date-field {
+    flex: 1;
+  }
+  
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+}
+
+// Lieu et Type de lieu sur la même ligne
+.location-group {
+  display: flex;
+  gap: $spacing-md;
+  
+  .location-field {
+    flex: 1;
+  }
+}
+
+// Centrer la prévisualisation du logo
+.logo-preview {
+  margin-top: $spacing-md;
+  display: flex;
+  justify-content: center;
+  
+  img {
+    max-width: 120px;
+    max-height: 120px;
+    border: 1px solid #ddd;
+    border-radius: $border-radius-sm;
+    padding: $spacing-xs;
+    object-fit: contain;
+  }
+  
+  .no-logo {
+    width: 120px;
+    height: 120px;
+    border: 1px dashed #ddd;
+    border-radius: $border-radius-sm;
+    margin-top: $spacing-md;
+    display: flex;
+    justify-content: center;
+    
+    img {
+      max-width: 120px;
+      max-height: 120px;
+      border: 1px solid #ddd;
+      border-radius: $border-radius-sm;
+      padding: $spacing-xs;
+      object-fit: contain;
+    }
+    
+    .no-logo {
+      width: 120px;
+      height: 120px;
+      border: 1px dashed #ddd;
+      border-radius: $border-radius-sm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba($color-dark, 0.5);
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .experience-list__item {
+    .date-group,
+    .location-group {
+      flex-direction: column;
+      gap: $spacing-md;
+    }
+  }
+}

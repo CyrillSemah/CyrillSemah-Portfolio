@@ -1,0 +1,194 @@
+/* line 4, app/assets/stylesheets/_home_sections.scss */
+.home-section-list {
+  margin-top: 1.5rem;
+}
+
+/* line 7, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* line 13, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__header h2 {
+  margin: 0;
+  color: #2b3f8a;
+}
+
+/* line 19, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__group {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+/* line 26, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__group-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #2b3f8a;
+  color: white;
+}
+
+/* line 33, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__group-header .logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+/* line 43, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__group-header .logo i {
+  font-size: 1.5rem;
+  color: #2b3f8a;
+}
+
+/* line 48, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__group-header .logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* line 56, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__group-header .title {
+  flex: 1;
+}
+
+/* line 59, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__group-header .title h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+/* line 64, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__group-header .title .meta {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+/* line 69, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__group-header .title .meta .status-badge {
+  font-size: 0.8rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* line 74, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__group-header .title .meta .status-badge.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* line 79, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__group-header .title .meta .status-badge.inactive {
+  background-color: #F44336;
+  color: white;
+}
+
+/* line 88, app/assets/stylesheets/_home_sections.scss */
+.home-section-list__group-items {
+  padding: 1rem;
+}
+
+/* line 95, app/assets/stylesheets/_home_sections.scss */
+.detail-info {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* line 101, app/assets/stylesheets/_home_sections.scss */
+.detail-info .info-title {
+  color: #202f66;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+/* line 108, app/assets/stylesheets/_home_sections.scss */
+.detail-info .details-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+/* line 114, app/assets/stylesheets/_home_sections.scss */
+.detail-info .detail-item {
+  display: flex;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 0.5rem;
+}
+
+/* line 119, app/assets/stylesheets/_home_sections.scss */
+.detail-info .detail-item:last-child {
+  border-bottom: none;
+}
+
+/* line 123, app/assets/stylesheets/_home_sections.scss */
+.detail-info .detail-item .detail-label {
+  width: 200px;
+  font-weight: 600;
+  color: #6c757d;
+}
+
+/* line 129, app/assets/stylesheets/_home_sections.scss */
+.detail-info .detail-item .detail-value {
+  flex: 1;
+}
+
+/* line 132, app/assets/stylesheets/_home_sections.scss */
+.detail-info .detail-item .detail-value.blue-text {
+  color: #2b3f8a;
+}
+
+/* line 140, app/assets/stylesheets/_home_sections.scss */
+.home-section-image {
+  margin-bottom: 1rem;
+}
+
+/* line 143, app/assets/stylesheets/_home_sections.scss */
+.home-section-image .image-title {
+  color: #202f66;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+/* line 150, app/assets/stylesheets/_home_sections.scss */
+.home-section-image .image-container {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+/* line 159, app/assets/stylesheets/_home_sections.scss */
+.home-section-image .image-container img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+/* line 166, app/assets/stylesheets/_home_sections.scss */
+.home-section-image .image-container .no-image {
+  color: #6c757d;
+  font-style: italic;
+}

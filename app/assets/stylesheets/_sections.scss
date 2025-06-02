@@ -1,0 +1,46 @@
+// Import des variables
+@import 'variables';
+
+// Styles communs pour toutes les sections
+.section {
+  position: relative;
+  padding: $spacing-xxl 0;
+  transition: background-color 1.2s ease;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: transparent !important; // Forcer la transparence pour éviter les délimitations
+  
+  // Titres de section
+  h2 {
+    position: relative;
+    z-index: 2;
+    color: inherit;
+  }
+}
+
+// Les couleurs sont maintenant gérées par JavaScript
+// Ces classes ne servent plus qu'à la structure
+.section-home {
+  z-index: 1; // Assurer que la section est bien positionnée
+}
+
+.section-experience {
+  z-index: 1; // Assurer que la section est bien positionnée
+}
+
+.section-education {
+  background-color: $color-red;
+  color: $color-light;
+}
+
+.section-skills {
+  background-color: $color-dark;
+  color: $color-light;
+}
+
+.section-projects {
+  background-color: $color-light;
+  color: $color-dark;
+}

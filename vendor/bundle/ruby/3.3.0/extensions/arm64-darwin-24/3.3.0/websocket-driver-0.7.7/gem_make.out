@@ -1,0 +1,18 @@
+current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/websocket-driver-0.7.7/ext/websocket-driver
+/Users/cyrillsemah/.rbenv/versions/3.3.0/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/websocket-driver-0.7.7/ext/websocket-driver
+make DESTDIR\= sitearchdir\=./.gem.20250530-44350-b330li sitelibdir\=./.gem.20250530-44350-b330li clean
+
+current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/websocket-driver-0.7.7/ext/websocket-driver
+make DESTDIR\= sitearchdir\=./.gem.20250530-44350-b330li sitelibdir\=./.gem.20250530-44350-b330li
+compiling websocket_mask.c
+linking shared-object websocket_mask.bundle
+
+current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/websocket-driver-0.7.7/ext/websocket-driver
+make DESTDIR\= sitearchdir\=./.gem.20250530-44350-b330li sitelibdir\=./.gem.20250530-44350-b330li install
+/usr/bin/install -c -m 0755 websocket_mask.bundle ./.gem.20250530-44350-b330li
+
+current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/websocket-driver-0.7.7/ext/websocket-driver
+make DESTDIR\= sitearchdir\=./.gem.20250530-44350-b330li sitelibdir\=./.gem.20250530-44350-b330li clean

@@ -1,0 +1,72 @@
+<!-- Conteneur principal pour toutes les sections -->
+<div class="main-sections">
+  <!-- Section Accueil -->
+  <%= render 'home/sections/home' %>
+
+  <!-- Section XP Pro -->
+  <%= render 'home/sections/xp_pro' %>
+
+  <!-- Section Formation -->
+  <%= render 'home/sections/education' %>
+
+  <!-- Section Skills -->
+  <%= render 'home/sections/skills' %>
+</div>
+
+<!-- Section Projets (cachée par défaut) -->
+<div id="projects-section" class="section section-projects" style="display: none; opacity: 0;">
+  <div class="container">
+    <div class="section-projects__header">
+      <h2>Mes Projets</h2>
+      <p class="section-projects__subtitle">Découvrez mes réalisations et projets personnels</p>
+      <a href="#" class="btn-back-to-portfolio">
+        <i class="fas fa-arrow-left"></i> Retour au portfolio
+      </a>
+    </div>
+    
+    <div class="section-projects__content">
+      <% if @projects.any? %>
+        <div class="projects-grid">
+          <% @projects.each do |project| %>
+            <div class="project-card" data-project-id="<%= project.id %>" data-description="<%= project.description %>">
+              <div class="project-card__image">
+                <% if project.image.attached? %>
+                  <%= image_tag project.image, alt: project.title %>
+                <% else %>
+                  <div class="project-placeholder">
+                    <i class="fas fa-code"></i>
+                  </div>
+                <% end %>
+              </div>
+              <div class="project-card__content">
+                <h3 class="project-card__title"><%= project.title %></h3>
+                <div class="project-card__technologies">
+                  <% project.technologies.split(',').each do |tech| %>
+                    <span class="technology-tag"><%= tech.strip %></span>
+                  <% end %>
+                </div>
+                <p class="project-card__description"><%= truncate(project.description, length: 150) %></p>
+                <div class="project-card__actions">
+                  <a href="#" class="btn btn-primary js-project-details" data-project-id="<%= project.id %>">
+                    Voir détails
+                  </a>
+                  <% if project.live_url.present? %>
+                    <a href="<%= project.live_url %>" target="_blank" class="btn btn-secondary">
+                      <i class="fas fa-external-link-alt"></i> Visiter
+                    </a>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty-state">
+          <p>Aucun projet n'a été ajouté pour le moment.</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- La modale de contact a été déplacée dans shared/_contact_modal.html.erb -->

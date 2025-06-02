@@ -1,0 +1,123 @@
+/* line 4, app/assets/stylesheets/_admin_login.scss */
+.admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+}
+
+/* line 13, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form {
+  width: 100%;
+  max-width: 450px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* line 21, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form h1 {
+  margin-bottom: 1.5rem;
+  color: #2b3f8a;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* line 28, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form .alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+/* line 33, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form .alert.alert-danger {
+  background-color: rgba(193, 55, 51, 0.1);
+  color: #c13733;
+  border: 1px solid rgba(193, 55, 51, 0.2);
+}
+
+/* line 40, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form .form-group {
+  margin-bottom: 1rem;
+}
+
+/* line 43, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form .form-group label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+  color: #202f66;
+}
+
+/* line 50, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form .form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #eeedec;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: 0.3s ease;
+}
+
+/* line 58, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form .form-group input:focus {
+  outline: none;
+  border-color: #2b3f8a;
+  box-shadow: 0 0 0 2px rgba(43, 63, 138, 0.2);
+}
+
+/* line 66, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form .form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* line 74, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form .form-actions .btn {
+  padding: 0.5rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+  height: 44px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.3s ease;
+  flex: 1;
+}
+
+/* line 90, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form .form-actions .btn-primary {
+  background-color: #2b3f8a;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* line 96, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form .form-actions .btn-primary:hover {
+  background-color: #1f2d63;
+}
+
+/* line 101, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form .form-actions .btn-secondary {
+  background-color: #eeedec;
+  color: #202f66;
+  border: 1px solid #6c757d;
+}
+
+/* line 106, app/assets/stylesheets/_admin_login.scss */
+.admin-login-form .form-actions .btn-secondary:hover {
+  background-color: #e2e0df;
+}

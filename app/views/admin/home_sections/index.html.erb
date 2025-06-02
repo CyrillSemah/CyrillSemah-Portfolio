@@ -1,0 +1,175 @@
+<div class="admin-home-container">
+  <div class="container">
+    <!-- Menu de navigation admin -->
+    <div class="admin-nav">
+      <ul class="admin-nav__list">
+        <li class="admin-nav__item active">
+          <%= link_to "Page d'accueil", admin_home_sections_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Formations", admin_educations_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Compétences", admin_skills_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Projets", admin_projects_path %>
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Section des sections d'accueil -->
+    <div class="education-list">
+      <div class="education-list__header">
+        <h2>Mes sections d'accueil</h2>
+        <div class="header-actions">
+          <%= link_to new_admin_home_section_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-plus-circle"></i>
+            </div>
+            <span class="button-text">Ajouter une section</span>
+          <% end %>
+        </div>
+      </div>
+      
+      <% if @home_sections.any? %>
+        <div class="education-list__group">
+          <div class="education-list__group-header">
+            <div class="logo">
+              <i class="fas fa-home"></i>
+            </div>
+            <div class="title">
+              <h3>Sections d'accueil</h3>
+              <div class="meta">
+                <span class="count"><%= @home_sections.count %> section(s)</span>
+                <span class="active-count"><%= @home_sections.where(active: true).count %> active</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="education-list__group-items">
+            <div class="home-section-cards">
+              <% @home_sections.each do |section| %>
+                <div class="home-section-card <%= 'active-card' if section.active? %>">
+                  <div class="home-section-card__actions">
+                    <% unless section.active? %>
+                      <%= link_to activate_admin_home_section_path(section), class: "action-button activate-button" do %>
+                        <i class="fas fa-check"></i>
+                      <% end %>
+                    <% end %>
+                    <%= link_to admin_home_section_path(section), class: "action-button view-button" do %>
+                      <i class="fas fa-eye"></i>
+                    <% end %>
+                    <%= link_to edit_admin_home_section_path(section), class: "action-button edit-button" do %>
+                      <i class="fas fa-edit"></i>
+                    <% end %>
+                    <%= link_to "#", class: "action-button delete-button btn-delete-section", data: { delete_url: admin_home_section_path(section) } do %>
+                      <i class="fas fa-trash-alt"></i>
+                    <% end %>
+                  </div>
+                  
+                  <div class="home-section-card__header">
+                    <div class="section-logo">
+                      <% if section.home_image&.image? %>
+                        <%= image_tag section.home_image.image.url(:thumb), alt: "Image d'accueil" %>
+                      <% else %>
+                        <div class="no-logo"><i class="fas fa-home"></i></div>
+                      <% end %>
+                    </div>
+                    <div class="section-info">
+                      <div class="section-title <%= section.active? ? 'active-title' : '' %>"><%= section.title %></div>
+                      <div class="section-meta">
+                        <span class="status-badge <%= section.active? ? 'active' : 'inactive' %>">
+                          <%= section.active? ? 'Active' : 'Inactive' %>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-section-card__body">
+                    <p class="section-description"><%= section.subtitle %></p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="empty-state">
+          <div class="empty-icon">
+            <i class="fas fa-home"></i>
+          </div>
+          <h3>Aucune section d'accueil disponible</h3>
+          <p>Créez votre première section d'accueil pour personnaliser la page d'accueil de votre portfolio.</p>
+          <%= link_to new_admin_home_section_path, class: "btn btn-primary" do %>
+            <i class="fas fa-plus"></i> Créer une section d'accueil
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- La modale de confirmation est déjà incluse dans le layout principal -->
+
+<%= javascript_tag do %>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Gestion de la suppression des sections
+    document.querySelectorAll('.btn-delete-section').forEach(function(button) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const deleteUrl = this.dataset.deleteUrl;
+        
+        // Utiliser la modale de suppression commune
+        const modal = document.getElementById('deleteConfirmationModal');
+        const confirmBtn = document.getElementById('confirmDeleteBtn');
+        
+        // Personnaliser le texte pour les sections d'accueil
+        const warningMessage = modal.querySelector('.warning-message');
+        const warningDetails = modal.querySelector('.warning-details');
+        
+        if (warningMessage) warningMessage.textContent = 'Êtes-vous sûr de vouloir supprimer cette section d\'accueil ?';
+        if (warningDetails) warningDetails.textContent = 'Les informations de cette section d\'accueil seront définitivement supprimées et ne pourront pas être récupérées.';
+        
+        // Mettre à jour l'URL de suppression
+        confirmBtn.setAttribute('data-delete-url', deleteUrl);
+        
+        // Afficher la modale
+        modal.style.display = 'flex';
+        modal.classList.add('active');
+      });
+    });
+    
+    // Gestion du bouton de confirmation de suppression
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+      const deleteUrl = this.getAttribute('data-delete-url');
+      
+      if (deleteUrl) {
+        // Créer et soumettre le formulaire de suppression
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = deleteUrl;
+        form.style.display = 'none';
+        
+        var methodInput = document.createElement('input');
+        methodInput.type = 'hidden';
+        methodInput.name = '_method';
+        methodInput.value = 'delete';
+        form.appendChild(methodInput);
+        
+        var tokenInput = document.createElement('input');
+        tokenInput.type = 'hidden';
+        tokenInput.name = 'authenticity_token';
+        tokenInput.value = document.querySelector('meta[name="csrf-token"]').content;
+        form.appendChild(tokenInput);
+        
+        document.body.appendChild(form);
+        form.submit();
+      }
+    });
+  });
+<% end %>

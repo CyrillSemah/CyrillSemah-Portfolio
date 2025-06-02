@@ -1,0 +1,156 @@
+<div class="admin-home-container">
+  <div class="container">
+    <!-- Menu de navigation admin -->
+    <div class="admin-nav">
+      <ul class="admin-nav__list">
+        <li class="admin-nav__item active">
+          <%= link_to "Page d'accueil", admin_home_sections_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Formations", admin_educations_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Compétences", admin_skills_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Projets", admin_projects_path %>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="home-section-list">
+      <div class="home-section-list__header">
+        <h2 style="color: #2b3f8a;">Détails de la section d'accueil</h2>
+        <div class="header-actions">
+          <% unless @home_section.active? %>
+            <%= link_to activate_admin_home_section_path(@home_section), class: "animated-action-button" do %>
+              <div class="icon-container">
+                <i class="fas fa-check"></i>
+              </div>
+              <span class="button-text">Activer</span>
+            <% end %>
+          <% end %>
+          <%= link_to admin_home_sections_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+            <span class="button-text">Retour</span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="home-section-list__group">
+        <div class="home-section-list__group-header">
+          <div class="logo">
+            <i class="fas fa-home"></i>
+          </div>
+          <div class="title">
+            <h3><%= @home_section.title %></h3>
+            <div class="meta">
+              <span class="status-badge <%= @home_section.active? ? 'active' : 'inactive' %>">
+                <%= @home_section.active? ? 'Active' : 'Inactive' %>
+              </span>
+            </div>
+          </div>
+          <div class="kebab-menu">
+            <button class="kebab-menu__button" onclick="toggleKebabMenu(this, event)">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </button>
+            <div class="kebab-menu__content">
+              <%= link_to edit_admin_home_section_path(@home_section), class: "menu-item btn-edit" do %>
+                <i class="fas fa-edit"></i>
+                <span>Modifier</span>
+              <% end %>
+              <%= link_to admin_home_section_path(@home_section), method: :delete, data: { confirm: 'Êtes-vous sûr de vouloir supprimer cette section d\'accueil ?' }, class: 'menu-item btn-delete' do %>
+                <i class="fas fa-trash"></i>
+                <span>Supprimer</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        
+        <div class="home-section-list__group-items">
+          <!-- Section d'image -->
+          <div class="home-section-image">
+            <h3 class="image-title">Image</h3>
+            <div class="image-container">
+              <% if @home_section.home_image&.image? %>
+                <%= image_tag @home_section.home_image.image.url, alt: "Image de profil" %>
+              <% else %>
+                <div class="no-image">Aucune image</div>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Section d'informations -->
+          <div class="detail-info">
+            <h3 class="info-title">Informations</h3>
+            <div class="details-list">
+              <div class="detail-item">
+                <div class="detail-label">Titre:</div>
+                <div class="detail-value blue-text"><%= @home_section.title %></div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Sous-titre:</div>
+                <div class="detail-value blue-text"><%= @home_section.subtitle %></div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Texte du bouton de contact:</div>
+                <div class="detail-value blue-text"><%= @home_section.talk_button_text || "Let's Talk" %></div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Texte du bouton de téléchargement:</div>
+                <div class="detail-value blue-text"><%= @home_section.download_button_text || "Télécharger mon CV" %></div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Lien du CV:</div>
+                <div class="detail-value blue-text"><%= @home_section.cv_link || "Non défini" %></div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Statut:</div>
+                <div class="detail-value">
+                  <% if @home_section.active? %>
+                    <span class="status-badge active">Active</span>
+                  <% else %>
+                    <span class="status-badge inactive">Inactive</span>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_tag do %>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Fonction pour gérer le menu kebab
+    window.toggleKebabMenu = function(button, event) {
+      event.stopPropagation();
+      
+      // Fermer tous les autres menus kebab
+      document.querySelectorAll('.kebab-menu__content').forEach(function(menu) {
+        if (menu !== button.nextElementSibling) {
+          menu.classList.remove('active');
+        }
+      });
+      
+      // Basculer le menu actuel
+      button.nextElementSibling.classList.toggle('active');
+    };
+    
+    // Fermer le menu kebab lorsqu'on clique ailleurs
+    document.addEventListener('click', function() {
+      document.querySelectorAll('.kebab-menu__content').forEach(function(menu) {
+        menu.classList.remove('active');
+      });
+    });
+  });
+<% end %>

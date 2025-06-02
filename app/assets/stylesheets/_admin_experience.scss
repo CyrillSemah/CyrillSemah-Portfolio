@@ -1,0 +1,482 @@
+// Styles pour la page d'administration des expériences professionnelles et formations
+@import 'variables';
+
+// Menu de navigation admin
+.admin-nav {
+  margin-bottom: $spacing-xl;
+  border-bottom: 1px solid rgba($color-dark, 0.1);
+  
+  &__list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  &__item {
+    margin-right: $spacing-md;
+    padding: $spacing-md $spacing-lg;
+    position: relative;
+    
+    a {
+      text-decoration: none;
+      color: $color-dark;
+      font-weight: 500;
+      transition: $transition-normal;
+    }
+    
+    &:hover a {
+      color: $color-blue;
+    }
+    
+    &.active {
+      a {
+        color: $color-blue;
+      }
+      
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: $color-blue;
+      }
+    }
+  }
+}
+
+// Conteneur principal pour la page admin des expériences et formations
+.admin-experience-container,
+.admin-education-container {
+  background-color: #f5f5f7; // Gris clair neutre
+  padding: $spacing-xl 0;
+  min-height: calc(100vh - 80px); // Hauteur minimale en tenant compte de la navbar
+  
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+// En-tête des listes d'expériences et formations
+.experience-list,
+.education-list {
+  &__header {
+    margin-bottom: $spacing-xl;
+    padding-top: $spacing-xl; // Espacement supplémentaire par rapport à la navbar
+    
+    @media (max-width: 768px) {
+      display: block;
+    }
+    
+    @media (min-width: 769px) {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    
+    h2 {
+      color: $color-dark;
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    
+    .subtitle {
+      color: $color-dark;
+      margin: $spacing-xs 0 0 0;
+      font-size: 1rem;
+    }
+    
+    .btn-primary {
+      background-color: $color-blue;
+      color: white;
+      padding: $spacing-sm $spacing-lg;
+      border-radius: $border-radius-md;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s;
+      
+      &:hover {
+        background-color: darken($color-blue, 10%);
+      }
+    }
+  }
+}
+
+// Groupe d'expériences et formations par entreprise/école
+.experience-list,
+.education-list {
+  &__group {
+    background-color: white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-small;
+    margin-bottom: $spacing-xl;
+    overflow: hidden;
+    
+    &-header {
+      display: flex;
+      align-items: center;
+      padding: $spacing-lg;
+      background-color: $color-blue;
+      color: white;
+      
+      .logo {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: $spacing-md;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        @media (max-width: 500px) {
+          display: none;
+        }
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+        
+        .no-logo {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: $color-light;
+          color: $color-dark;
+          font-weight: bold;
+          font-size: 1.2rem;
+          
+          @media (max-width: 500px) {
+            display: none;
+          }
+        }
+      }
+      
+      h3 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+    }
+    
+    &-items {
+      padding: $spacing-md;
+      padding-left: 16px;
+      margin-left: 0;
+    }
+  }
+  
+  // Éléments individuels (expériences/formations)
+  &__item {
+    border-radius: $border-radius-md;
+    padding: $spacing-md;
+    margin-bottom: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    // Style pour le kebab menu dans les expériences professionnelles
+    .kebab-menu {
+      position: absolute;
+      top: $spacing-md;
+      right: $spacing-md;
+      z-index: 10;
+      
+      .dot {
+        background-color: $color-blue;
+      }
+    }
+    
+    &-body {
+      flex: 1;
+      
+      .position {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: $color-dark;
+        margin-bottom: $spacing-xs;
+      }
+      
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-sm;
+        margin-bottom: $spacing-sm;
+        font-size: 0.9rem;
+        color: rgba($color-dark, 0.7);
+        
+        span {
+          display: inline-flex;
+          align-items: center;
+          
+          &:not(:last-child)::after {
+            content: "•";
+            margin-left: $spacing-sm;
+          }
+        }
+      }
+      
+      .description {
+        color: $color-dark;
+        margin-bottom: $spacing-lg;
+      }
+    }
+    
+    &-actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      border-top: 1px solid rgba($color-dark, 0.1);
+      padding-top: $spacing-md;
+      margin-top: $spacing-md;
+      
+      .btn {
+        flex: 1;
+        display: block;
+        padding: $spacing-md;
+        border-radius: $border-radius-sm;
+        font-weight: 500;
+        text-decoration: none;
+        text-align: center;
+        transition: all $transition-normal;
+        border: none;
+        cursor: pointer;
+        margin: 0 $spacing-xs;
+        
+        &:first-child {
+          margin-left: 0;
+        }
+        
+        &:last-child {
+          margin-right: 0;
+        }
+        
+        &-view {
+          background-color: $color-blue;
+          color: white;
+          
+          &:hover {
+            background-color: darken($color-blue, 10%);
+          }
+        }
+        
+        &-edit {
+          background-color: white;
+          color: $color-blue;
+          border: 1px solid $color-blue;
+          
+          &:hover {
+            background-color: rgba($color-blue, 0.1);
+          }
+        }
+        
+        &-delete {
+          background-color: $color-red;
+          color: white;
+          
+          &:hover {
+            background-color: darken($color-red, 10%);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Alerte quand il n'y a pas d'expériences
+.alert {
+  background-color: rgba($color-blue, 0.1);
+  border-left: 4px solid $color-blue;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-xl;
+  
+  p {
+    margin: 0;
+    color: $color-dark;
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .experience-list,
+  .education-list {
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-md;
+    }
+    
+    &__item {
+      flex-direction: column;
+      
+      &-actions {
+        flex-direction: row;
+        margin-top: $spacing-md;
+        justify-content: flex-start;
+      }
+    }
+  }
+}
+
+// Styles pour les pages de détail (show)
+.experience-detail,
+.education-detail {
+  background-color: white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-small;
+  overflow: hidden;
+  
+  &__header {
+    display: flex;
+    align-items: center;
+    padding: $spacing-lg;
+    background-color: $color-blue;
+    color: white;
+    
+    .logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: $spacing-md;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      .no-logo {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $color-light;
+        color: $color-dark;
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
+    }
+    
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+  }
+  
+  &__content {
+    padding: $spacing-lg;
+    
+    .detail-group {
+      margin-bottom: $spacing-lg;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      h3 {
+        margin: 0 0 $spacing-xs 0;
+        color: $color-dark;
+      }
+      
+      h4 {
+        margin: 0 0 $spacing-xs 0;
+        color: $color-dark;
+        font-size: 1.1rem;
+      }
+      
+      p {
+        margin: 0;
+        
+        &.date {
+          color: $color-dark;
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+  
+  &__actions {
+    padding: $spacing-md $spacing-lg;
+    border-top: 1px solid rgba($color-dark, 0.1);
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-md;
+    
+    .btn {
+      padding: $spacing-sm $spacing-md;
+      border-radius: $border-radius-sm;
+      text-decoration: none;
+      
+      &-edit {
+        background-color: $color-blue;
+        color: white;
+      }
+      
+      &-delete {
+        background-color: $color-red;
+        color: white;
+      }
+    }
+  }
+}
+
+// Styles pour les conteneurs admin (new, edit)
+.admin-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: $spacing-xl;
+  background-color: white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-small;
+  
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid rgba($color-dark, 0.1);
+    
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      color: $color-dark;
+    }
+    
+    .header-actions {
+      display: flex;
+      gap: $spacing-sm;
+    }
+    
+    .btn-secondary {
+      background-color: $color-light;
+      color: $color-dark;
+      padding: $spacing-sm $spacing-lg;
+      border-radius: $border-radius-md;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s;
+      
+      &:hover {
+        background-color: darken($color-light, 10%);
+      }
+    }
+  }
+}

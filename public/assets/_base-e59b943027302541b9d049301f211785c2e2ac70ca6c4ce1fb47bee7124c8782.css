@@ -1,0 +1,168 @@
+/* line 5, app/assets/stylesheets/_base.scss */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* line 11, app/assets/stylesheets/_base.scss */
+html, body {
+  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #202f66;
+  background-color: #eeedec;
+  scroll-behavior: smooth;
+}
+
+/* line 20, app/assets/stylesheets/_base.scss */
+body {
+  color: #202f66;
+  transition: background-color 1.5s ease, color 1.5s ease;
+}
+
+/* line 24, app/assets/stylesheets/_base.scss */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* line 29, app/assets/stylesheets/_base.scss */
+a {
+  text-decoration: none;
+  color: #2b3f8a;
+  transition: 0.2s ease;
+}
+
+/* line 34, app/assets/stylesheets/_base.scss */
+a:hover {
+  color: #1f2d63;
+}
+
+/* line 39, app/assets/stylesheets/_base.scss */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* line 45, app/assets/stylesheets/_base.scss */
+h1 {
+  font-size: 2.5rem;
+}
+
+/* line 49, app/assets/stylesheets/_base.scss */
+h2 {
+  font-size: 2rem;
+}
+
+/* line 53, app/assets/stylesheets/_base.scss */
+h3 {
+  font-size: 1.75rem;
+}
+
+/* line 57, app/assets/stylesheets/_base.scss */
+h4 {
+  font-size: 1.5rem;
+}
+
+/* line 61, app/assets/stylesheets/_base.scss */
+h5 {
+  font-size: 1.25rem;
+}
+
+/* line 65, app/assets/stylesheets/_base.scss */
+h6 {
+  font-size: 1rem;
+}
+
+/* line 69, app/assets/stylesheets/_base.scss */
+p {
+  margin-bottom: 1rem;
+}
+
+/* line 73, app/assets/stylesheets/_base.scss */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* line 80, app/assets/stylesheets/_base.scss */
+.section {
+  padding: 3rem 0;
+}
+
+/* line 84, app/assets/stylesheets/_base.scss */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background-color: #2b3f8a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* line 96, app/assets/stylesheets/_base.scss */
+.btn:hover {
+  background-color: #1f2d63;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* line 102, app/assets/stylesheets/_base.scss */
+.btn:active {
+  transform: translateY(0);
+}
+
+/* line 106, app/assets/stylesheets/_base.scss */
+.btn.btn-primary {
+  background-color: #2b3f8a;
+}
+
+/* line 110, app/assets/stylesheets/_base.scss */
+.btn.btn-secondary {
+  background-color: transparent;
+  border: 2px solid #2b3f8a;
+  color: #2b3f8a;
+}
+
+/* line 115, app/assets/stylesheets/_base.scss */
+.btn.btn-secondary:hover {
+  background-color: #2b3f8a;
+  color: white;
+}
+
+/* line 121, app/assets/stylesheets/_base.scss */
+.btn.btn-danger {
+  background-color: #c13733;
+  height: 38px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* line 129, app/assets/stylesheets/_base.scss */
+.btn.btn-danger:hover {
+  background-color: #992c28;
+}
+
+/* line 135, app/assets/stylesheets/_base.scss */
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: 0.3s ease;
+}
+
+/* line 142, app/assets/stylesheets/_base.scss */
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+}

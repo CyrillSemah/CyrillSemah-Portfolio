@@ -1,0 +1,91 @@
+/* line 4, app/assets/stylesheets/_navbar_projects.scss */
+.navbar {
+  transition: all 0.5s ease;
+}
+
+/* line 7, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode {
+  max-width: 60%;
+  margin: 16px auto 0;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* line 13, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode .container {
+  padding: 0 1.5rem;
+}
+
+/* line 18, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode .navbar__links a {
+  font-size: 0.9rem;
+  padding: 0.5rem 0.8rem;
+}
+
+/* line 22, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode .navbar__links a.active {
+  background-color: rgba(43, 63, 138, 0.1);
+  border-radius: 20px;
+}
+
+/* line 30, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode .navbar__logo img {
+  transform: scale(0.9);
+  transition: transform 0.5s ease;
+}
+
+/* line 36, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode .navbar__separator {
+  height: 24px;
+}
+
+@keyframes navbar-projects-in {
+  0% {
+    max-width: 100%;
+    border-radius: 0;
+    margin-top: 0;
+  }
+  100% {
+    max-width: 90%;
+    border-radius: 50px;
+    margin-top: 16px;
+  }
+}
+
+@keyframes navbar-projects-out {
+  0% {
+    max-width: 90%;
+    border-radius: 50px;
+    margin-top: 16px;
+  }
+  100% {
+    max-width: 100%;
+    border-radius: 0;
+    margin-top: 0;
+  }
+}
+
+/* line 70, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode-in {
+  animation: navbar-projects-in 0.5s forwards;
+}
+
+/* line 74, app/assets/stylesheets/_navbar_projects.scss */
+.navbar.projects-mode-out {
+  animation: navbar-projects-out 0.5s forwards;
+}
+
+@media (max-width: 768px) {
+  /* line 80, app/assets/stylesheets/_navbar_projects.scss */
+  .navbar.projects-mode {
+    max-width: 95%;
+  }
+  /* line 83, app/assets/stylesheets/_navbar_projects.scss */
+  .navbar.projects-mode .navbar__links {
+    display: none;
+  }
+  /* line 87, app/assets/stylesheets/_navbar_projects.scss */
+  .navbar.projects-mode .navbar__burger {
+    display: flex;
+  }
+}

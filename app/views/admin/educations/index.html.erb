@@ -1,0 +1,133 @@
+<div class="admin-education-container">
+  <div class="container">
+    <!-- Menu de navigation admin -->
+    <div class="admin-nav">
+      <ul class="admin-nav__list">
+        <li class="admin-nav__item">
+          <%= link_to "Page d'accueil", admin_home_sections_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
+        </li>
+        <li class="admin-nav__item active">
+          <%= link_to "Formations", admin_educations_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Compétences", admin_skills_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Projets", admin_projects_path %>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="education-list">
+      <div class="education-list__header">
+        <h2>Mes formations</h2>
+        <div class="header-actions">
+          <%= link_to new_admin_education_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-plus-circle"></i>
+            </div>
+            <span class="button-text">Ajouter une formation</span>
+          <% end %>
+        </div>
+      </div>
+    
+      <% if @educations.empty? %>
+        <div class="alert">
+          <p>Vous n'avez pas encore ajouté de formation.</p>
+        </div>
+      <% else %>
+        <% # Grouper les formations par établissement %>
+        <% @educations.group_by(&:school).each do |school, educations| %>
+          <div class="education-list__group">
+            <div class="education-list__group-header">
+              <div class="logo">
+                <% if educations.first.image.attached? %>
+                  <%= image_tag educations.first.image %>
+                <% else %>
+                  <div class="no-logo"><%= school[0].upcase %></div>
+                <% end %>
+              </div>
+              <h3><%= school %></h3>
+              <div class="kebab-menu">
+                <button class="kebab-menu__button" onclick="toggleKebabMenu(this, event)" data-action="toggle-kebab">
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                </button>
+                <div class="kebab-menu__content">
+                  <% first_education = educations.first %>
+                  <%= link_to admin_education_path(first_education), class: "menu-item btn-view" do %>
+                    <i class="fas fa-eye"></i>
+                    <span>Voir</span>
+                  <% end %>
+                  <%= link_to edit_admin_education_path(first_education), class: "menu-item btn-edit" do %>
+                    <i class="fas fa-edit"></i>
+                    <span>Modifier</span>
+                  <% end %>
+                  <%= link_to "#", class: "menu-item btn-delete btn-delete-education", data: { delete_url: admin_education_path(first_education) } do %>
+                    <i class="fas fa-trash-alt"></i>
+                    <span>Supprimer</span>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            
+            <div class="education-list__group-items">
+              <% educations.each do |education| %>
+                <div class="education-list__item">
+                  <div class="education-list__item-body">
+                    <div class="position"><%= education.degree %> - <%= education.field_of_study %></div>
+                    <div class="meta">
+                      <span class="date">
+                        <%= Date::MONTHNAMES[education.start_month + 1] %> <%= education.start_year %> - 
+                        <% if education.end_year.present? && education.end_month.present? %>
+                          <%= Date::MONTHNAMES[education.end_month + 1] %> <%= education.end_year %>
+                        <% else %>
+                          En cours
+                        <% end %>
+                      </span>
+                      <% if education.result.present? %>
+                        <span class="result"><%= education.result %></span>
+                      <% end %>
+                    </div>
+                    <% if education.description.present? %>
+                      <p class="description"><%= education.description %></p>
+                    <% end %>
+                    <% if education.activities.present? %>
+                      <div class="activities-section">
+                        <h4>Activités :</h4>
+                        <div class="activities-content">
+                          <%= education.activities %>
+                        </div>
+                        
+                        <% if education.image_1.attached? || education.image_2.attached? %>
+                          <div class="activities-thumbnails">
+                            <% if education.image_1.attached? %>
+                              <div class="activity-thumbnail">
+                                <%= image_tag education.image_1, alt: "Image d'activité 1" %>
+                              </div>
+                            <% end %>
+                            
+                            <% if education.image_2.attached? %>
+                              <div class="activity-thumbnail">
+                                <%= image_tag education.image_2, alt: "Image d'activité 2" %>
+                              </div>
+                            <% end %>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <!-- Les actions sont maintenant dans le menu kebab de l'en-tête du groupe -->
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

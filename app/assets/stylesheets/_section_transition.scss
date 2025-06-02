@@ -1,0 +1,331 @@
+// Styles pour l'effet de lignes de code animées entre les sections
+@import 'variables';
+
+.code-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  overflow: hidden;
+  font-family: 'Courier New', monospace;
+  color: $color-light;
+  text-shadow: 0 0 2px rgba($color-blue, 0.5);
+}
+
+// Styles pour les lignes de code
+.code-line {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 5px;
+  transform: translateX(50px);
+  background-color: rgba($color-blue, 0.05);
+  padding: 2px 8px;
+  border-radius: 4px;
+  max-width: 80vw;
+  overflow: hidden;
+  
+  &:nth-child(odd) {
+    background-color: rgba($color-blue, 0.08);
+  }
+  
+  // Numéro de ligne
+  .line-number {
+    display: inline-block;
+    min-width: 30px;
+    color: rgba($color-light, 0.5);
+    margin-right: 10px;
+    text-align: right;
+    user-select: none;
+  }
+  
+  // Texte de code
+  .code-text {
+    color: $color-light;
+    font-weight: 400;
+    
+    // Coloration syntaxique
+    .keyword {
+      color: #ff79c6;
+    }
+    
+    .string {
+      color: #f1fa8c;
+    }
+    
+    .function {
+      color: #50fa7b;
+    }
+    
+    .comment {
+      color: #6272a4;
+    }
+  }
+  
+  // Curseur clignotant
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 14px;
+    background-color: $color-light;
+    margin-left: 2px;
+    animation: cursorBlink 1s infinite;
+    opacity: 0;
+  }
+}
+
+// Animation du curseur clignotant
+@keyframes cursorBlink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+// Variation des délais d'apparition
+@for $i from 1 through 15 {
+  .code-line:nth-child(#{$i}) {
+    animation-delay: $i * 0.1s;
+  }
+}
+
+// Styles spécifiques pour les lignes de code à droite
+.code-line-right {
+  transform: translateX(-50px);
+  display: flex;
+  flex-direction: row-reverse;
+  
+  .line-number {
+    margin-right: 0;
+    margin-left: 10px;
+  }
+  
+  .code-text {
+    direction: ltr;
+    text-align: left;
+  }
+  
+  .cursor {
+    margin-left: 0;
+    margin-right: 2px;
+  }
+}
+
+// Effet de survol
+.code-line:hover {
+  background-color: rgba($color-blue, 0.15);
+  z-index: 101;
+}
+
+// Styles pour l'effet de révélation progressive
+.reveal-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 90; // En dessous des lignes de code
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.reveal-element {
+  position: absolute;
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  width: 40px !important;
+  height: 40px !important;
+  z-index: 95;
+  
+  // Formes de base avec des couleurs plus vives
+  &.circle {
+    border-radius: 50%;
+    border: 3px solid rgba($color-blue, 0.8);
+    background-color: rgba($color-blue, 0.3);
+    box-shadow: 0 0 15px rgba($color-blue, 0.5);
+  }
+  
+  &.square {
+    border: 3px solid rgba($color-blue, 0.8);
+    background-color: rgba($color-blue, 0.3);
+    transform: rotate(45deg);
+    box-shadow: 0 0 15px rgba($color-blue, 0.5);
+  }
+  
+  &.triangle {
+    width: 0 !important;
+    height: 0 !important;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 40px solid rgba($color-blue, 0.6);
+    background-color: transparent;
+    filter: drop-shadow(0 0 10px rgba($color-blue, 0.5));
+  }
+  
+  &.diamond {
+    transform: rotate(45deg);
+    border: 3px solid rgba($color-red, 0.8);
+    background-color: rgba($color-red, 0.3);
+    box-shadow: 0 0 15px rgba($color-red, 0.5);
+  }
+  
+  &.hexagon {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border: 3px solid rgba($color-blue, 0.8);
+    background-color: rgba($color-blue, 0.3);
+    box-shadow: 0 0 15px rgba($color-blue, 0.5);
+  }
+  
+  // Symboles de code
+  &.bracket-left::after {
+    content: '{';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $color-light;
+    font-family: 'Courier New', monospace;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba($color-blue, 0.8);
+  }
+  
+  &.bracket-right::after {
+    content: '}';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $color-light;
+    font-family: 'Courier New', monospace;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba($color-blue, 0.8);
+  }
+  
+  &.parenthesis-left::after {
+    content: '(';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $color-light;
+    font-family: 'Courier New', monospace;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba($color-blue, 0.8);
+  }
+  
+  &.parenthesis-right::after {
+    content: ')';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $color-light;
+    font-family: 'Courier New', monospace;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba($color-blue, 0.8);
+  }
+  
+  &.dot::after {
+    content: '.';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $color-light;
+    font-family: 'Courier New', monospace;
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba($color-blue, 0.8);
+  }
+  
+  &.plus::after {
+    content: '+';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $color-light;
+    font-family: 'Courier New', monospace;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba($color-blue, 0.8);
+  }
+  
+  &.minus::after {
+    content: '-';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $color-light;
+    font-family: 'Courier New', monospace;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba($color-blue, 0.8);
+  }
+  
+  &.asterisk::after {
+    content: '*';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $color-light;
+    font-family: 'Courier New', monospace;
+    font-size: 40px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba($color-blue, 0.8);
+  }
+  
+  &.equals::after {
+    content: '=';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $color-light;
+    font-family: 'Courier New', monospace;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba($color-blue, 0.8);
+  }
+}
+
+// Animation flottante pour les éléments de révélation
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .code-line {
+    font-size: 12px;
+    max-width: 90vw;
+  }
+}

@@ -1,0 +1,98 @@
+<section id="xp-pro" class="section section-experience">
+  <div class="container">
+    <div class="section-experience__header">
+      <h2>Expériences Professionnelles</h2>
+    </div>
+    
+    <div class="section-experience__timeline">
+      <div class="section-experience__content">
+        <% if @grouped_experiences.empty? %>
+          <div class="alert">
+            <p>Aucune expérience professionnelle à afficher pour le moment.</p>
+          </div>
+        <% else %>
+          <% @grouped_experiences.each do |company_name, experiences| %>
+            <div class="company-card">
+              <div class="company-card__header">
+                <div class="logo">
+                  <% if experiences.first.logo.attached? %>
+                    <%= image_tag experiences.first.logo, alt: company_name %>
+                  <% else %>
+                    <%= image_tag "logo.svg", alt: "Logo par défaut" %>
+                  <% end %>
+                </div>
+                <div class="company-name">
+                  <h3><%= company_name %></h3>
+                </div>
+                
+                <!-- Prévisualisation du logo au survol -->
+                <div class="logo-preview">
+                  <% if experiences.first.logo.attached? %>
+                    <%= image_tag experiences.first.logo, alt: "Logo #{company_name} en grand" %>
+                  <% else %>
+                    <%= image_tag "logo.svg", alt: "Logo par défaut en grand" %>
+                  <% end %>
+                </div>
+              </div>
+              
+              <div class="company-card__body">
+                <% experiences.each do |experience| %>
+                  <article class="experience-item">
+                    <div class="experience-item__header">
+                      <h4 class="job-title"><%= experience.job_title %></h4>
+                      <span class="employment-type"><%= experience.employment_type %></span>
+                    </div>
+                    
+                    <div class="experience-item__meta">
+                      <div class="dates">
+                        <i class="icon-calendar"></i>
+                        <%= l(experience.start_date, format: '%B %Y') %> - 
+                        <% if experience.currently_working_here %>
+                          <strong>Aujourd'hui</strong>
+                        <% else %>
+                          <% if experience.end_date.present? %>
+                            <%= l(experience.end_date, format: '%B %Y') %>
+                          <% else %>
+                            Non spécifiée
+                          <% end %>
+                        <% end %>
+                      </div>
+                      
+                      <div class="location">
+                        <i class="icon-location"></i>
+                        <%= experience.location %> · <%= experience.workplace_type %>
+                      </div>
+                    </div>
+                    
+                    <div class="experience-item__description">
+                      <% 
+                        # Extraire la description principale et les compétences clés
+                        full_description = experience.description
+                        description_parts = full_description.split(/Compétences clés\s*:/)
+                        main_description = description_parts[0]
+                        skills = description_parts[1].strip.split(',').map(&:strip) if description_parts.size > 1
+                      %>
+                      
+                      <%= simple_format(main_description) %>
+                      
+                      <% if skills.present? %>
+                        <div class="experience-item__skills">
+                          <div class="skills-title">Compétences clés :</div>
+                          <div class="skills-list">
+                            <% skills.each do |skill| %>
+                              <span class="skill-tag"><%= skill %></span>
+                            <% end %>
+                          </div>
+                        </div>
+                      <% end %>
+                    </div>
+                  </article>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

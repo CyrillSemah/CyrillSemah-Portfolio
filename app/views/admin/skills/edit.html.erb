@@ -1,0 +1,36 @@
+<div class="admin-education-container">
+  <div class="container">
+    <div class="admin-nav">
+      <ul class="admin-nav__list">
+        <li class="admin-nav__item">
+          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Formations", admin_educations_path %>
+        </li>
+        <li class="admin-nav__item active">
+          <%= link_to "Compétences", admin_skills_path %>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="education-list">
+      <div class="education-list__header">
+        <div>
+          <h2>Modifier la compétence technique</h2>
+          <p class="subtitle">Mettez à jour les détails de votre compétence technique</p>
+        </div>
+        <div class="header-actions">
+          <%= link_to admin_skills_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+            <span class="button-text">Retour</span>
+          <% end %>
+        </div>
+      </div>
+      
+      <%= render 'form', skill: @skill %>
+    </div>
+  </div>
+</div>

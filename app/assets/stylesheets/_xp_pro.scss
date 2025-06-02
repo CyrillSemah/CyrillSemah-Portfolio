@@ -1,0 +1,436 @@
+// Import des variables pour s'assurer qu'elles sont disponibles
+@import 'variables';
+
+.section-experience {
+  position: relative;
+  
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+    position: relative;
+    z-index: 2; // S'assurer que le titre est au-dessus du trait
+    
+    h2 {
+      color: $color-dark;
+      position: relative;
+      display: inline-block;
+      background-color: $color-blue; // Fond blanc pour masquer le trait
+      padding: 10px 70px;
+      border-radius: 15px 50px 15px 50px;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background-color: $color-light;
+      }
+    }
+  }
+  
+  // Timeline verticale
+  &__timeline {
+    position: relative;
+    top: calc(#{$spacing-lg} + 10px);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50px; // Commencer plus haut pour passer derrière le titre
+      bottom: 0;
+      left: 24px;
+      width: 2px;
+      background-color: rgba($color-light, 0.3);
+      z-index: 1;
+      
+      @media (min-width: $breakpoint-md) {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+    &::after {
+      background-color: rgba($color-blue, 0.3);
+
+    }
+  }
+  
+  &__content {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// Animation d'apparition depuis la droite (plus éloignée)
+@keyframes slideInRight {
+  from {
+    transform: translateX(300px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Animation de disparition vers la droite (plus éloignée)
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(300px);
+    opacity: 0;
+  }
+}
+
+// Animations pour mobile (distance plus courte)
+@keyframes slideInRightMobile {
+  from {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRightMobile {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+}
+
+// État initial (invisible et décalé)
+.company-card {
+  background-color: white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-small;
+  margin-bottom: $spacing-xl;
+  overflow: hidden;
+  opacity: 0;
+  will-change: transform, opacity; // Optimisation des performances
+  
+  // Transition de base pour les propriétés non-animées
+  transition: box-shadow 0.3s ease;
+  
+  // Version desktop (par défaut)
+  transform: translateX(300px); // Distance initiale plus grande
+  
+  &.animate-in {
+    animation: slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; // Courbe d'accélération améliorée
+  }
+
+  &.animate-out {
+    animation: slideOutRight 0.8s cubic-bezier(0.7, 0, 0.84, 0) forwards; // Courbe de décélération améliorée
+  }
+  
+  // Version mobile (675px et moins)
+  @media (max-width: 675px) {
+    transform: translateX(100px); // Distance initiale plus courte pour mobile
+    
+    &.animate-in {
+      animation: slideInRightMobile 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    &.animate-out {
+      animation: slideOutRightMobile 0.6s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+    }
+  }
+  
+  &:hover {
+    box-shadow: $shadow-medium;
+  }
+  
+  &__header {
+    display: flex;
+    align-items: center;
+    padding: $spacing-lg;
+    background-color: $color-blue;
+    color: $color-light !important;
+    border-bottom: 1px solid rgba($color-dark, 0.1);
+    border-radius: $border-radius-lg $border-radius-lg 0 0;
+    position: relative;
+    
+    .logo {
+      width: 60px;
+      height: 60px;
+      margin-right: $spacing-md;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      border-radius: $border-radius-md;
+      padding: $spacing-xs;
+      box-shadow: $shadow-small;
+      cursor: pointer;
+      transition: transform $transition-normal;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+      
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+    }
+    
+    // Positionnement relatif pour le header pour contenir l'image agrandie
+    position: relative;
+
+    // Effet de survol pour le logo
+    .logo, .company-name {
+      position: relative;
+      z-index: 2;
+      cursor: pointer;
+      
+      &:hover ~ .logo-preview,
+      &:focus ~ .logo-preview {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+    
+    // Prévisualisation du logo au survol
+    .logo-preview {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      margin: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+      pointer-events: none; // Important pour que le hover fonctionne correctement
+      border-radius: $border-radius-lg;
+      
+      &:hover {
+        opacity: 1;
+        visibility: visible;
+      }
+      
+      img {
+        max-width: 80%;
+        max-height: 80%;
+        object-fit: contain;
+        border-radius: $border-radius-lg;
+        background-color: white;
+        padding: $spacing-lg;
+        box-shadow: $shadow-dark;
+      }
+    }
+    
+    .company-name {
+      h3 {
+        margin-bottom: $spacing-xs;
+        color: $color-light !important;
+        font-size: 1.5rem;
+      }
+    }
+  }
+  
+  &__body {
+    padding: 0;
+  }
+}
+
+// Carte d'expérience
+.experience-item {
+  position: relative;
+  padding: $spacing-lg;
+  border-bottom: 1px solid rgba($color-dark, 0.05);
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  &:hover {
+    background-color: rgba($color-dark, 0.01);
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: $color-blue;
+    top: 24px;
+    left: -30px;
+    z-index: 2;
+    transition: none !important;
+    animation: none !important;
+    
+    @media (min-width: $breakpoint-md) {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  
+  &__header {
+    margin-bottom: $spacing-md;
+    
+    .job-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: $color-dark;
+      margin-bottom: $spacing-xs;
+    }
+    
+    .employment-type {
+      display: inline-block;
+      padding: $spacing-xs $spacing-sm;
+      background-color: rgba($color-blue, 0.1);
+      color: $color-blue;
+      border-radius: $border-radius-sm;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: $spacing-xs;
+    }
+  }
+  
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+    font-size: 0.9rem;
+    color: rgba($color-dark, 0.7);
+    
+    .dates,
+    .location {
+      display: flex;
+      align-items: center;
+      
+      i {
+        margin-right: $spacing-xs;
+      }
+    }
+  }
+  
+  &__description {
+    color: rgba($color-dark, 0.9);
+    margin-bottom: $spacing-md;
+    
+    p {
+      margin-bottom: $spacing-sm;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    
+    ul {
+      padding-left: $spacing-lg;
+      margin-bottom: $spacing-sm;
+      
+      li {
+        margin-bottom: $spacing-xs;
+      }
+    }
+  }
+  
+  &__skills {
+    margin-top: $spacing-md;
+    
+    .skills-title {
+      font-weight: 600;
+      margin-bottom: $spacing-xs;
+      font-size: 0.95rem;
+    }
+    
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-xs;
+      
+      .skill-tag {
+        padding: $spacing-xs $spacing-sm;
+        background-color: rgba($color-dark, 0.05);
+        border-radius: $border-radius-sm;
+        font-size: 0.85rem;
+        color: $color-dark;
+      }
+    }
+  }
+  
+  // Timeline dot
+  &::before {
+    content: '';
+    position: absolute;
+    top: calc(#{$spacing-lg} + 10px);
+    left: -30px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: $color-blue;
+    border: 2px solid white;
+    box-shadow: $shadow-small;
+    z-index: 2;
+    
+    @media (max-width: $breakpoint-md) {
+      left: 18px;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .section-experience {
+    &__timeline {
+      padding-left: 50px;
+    }
+  }
+  
+  .company-card {
+    &__header {
+      .company-name {
+        h3 {
+          font-size: 1.3rem;
+        }
+      }
+    }
+  }
+  
+  .experience-item {
+    &__meta {
+      flex-direction: column;
+      gap: $spacing-xs;
+    }
+  }
+
+  .logo-preview {
+    display: none !important;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .company-card {
+    &__header {
+      flex-direction: column;
+      text-align: center;
+      
+      .logo {
+        margin-right: 0;
+        margin-bottom: $spacing-sm;
+      }
+    }
+  }
+}

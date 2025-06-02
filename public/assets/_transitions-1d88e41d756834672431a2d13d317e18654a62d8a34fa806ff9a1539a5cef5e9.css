@@ -1,0 +1,185 @@
+/* line 5, app/assets/stylesheets/_transitions.scss */
+.menu-item {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+  overflow: hidden;
+}
+
+/* line 10, app/assets/stylesheets/_transitions.scss */
+.menu-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* line 23, app/assets/stylesheets/_transitions.scss */
+.menu-item:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* line 27, app/assets/stylesheets/_transitions.scss */
+.menu-item:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* line 32, app/assets/stylesheets/_transitions.scss */
+.menu-item:hover i {
+  transform: scale(1.2) rotate(5deg);
+}
+
+/* line 39, app/assets/stylesheets/_transitions.scss */
+.animated-action-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out !important;
+  transform: translateZ(0);
+}
+
+/* line 45, app/assets/stylesheets/_transitions.scss */
+.animated-action-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1;
+}
+
+/* line 58, app/assets/stylesheets/_transitions.scss */
+.animated-action-button .icon-container, .animated-action-button .button-text {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* line 64, app/assets/stylesheets/_transitions.scss */
+.animated-action-button:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* line 68, app/assets/stylesheets/_transitions.scss */
+.animated-action-button:hover::before {
+  transform: translateX(0);
+}
+
+/* line 72, app/assets/stylesheets/_transitions.scss */
+.animated-action-button:hover .icon-container {
+  transform: scale(1.2) rotate(5deg);
+}
+
+/* line 76, app/assets/stylesheets/_transitions.scss */
+.animated-action-button:hover .button-text {
+  transform: translateX(3px);
+}
+
+/* line 81, app/assets/stylesheets/_transitions.scss */
+.animated-action-button:active {
+  transform: translateY(0) !important;
+}
+
+/* line 87, app/assets/stylesheets/_transitions.scss */
+.logo {
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+}
+
+/* line 90, app/assets/stylesheets/_transitions.scss */
+.logo i {
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+}
+
+/* line 94, app/assets/stylesheets/_transitions.scss */
+.logo:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* line 98, app/assets/stylesheets/_transitions.scss */
+.logo:hover i {
+  transform: scale(1.3) rotate(10deg) !important;
+  color: #192450 !important;
+}
+
+/* line 106, app/assets/stylesheets/_transitions.scss */
+.btn, .btn-primary, .animated-action-button {
+  transition: all 0.3s ease;
+}
+
+/* line 109, app/assets/stylesheets/_transitions.scss */
+.btn:hover, .btn-primary:hover, .animated-action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* line 114, app/assets/stylesheets/_transitions.scss */
+.btn:active, .btn-primary:active, .animated-action-button:active {
+  transform: translateY(0);
+}
+
+/* line 120, app/assets/stylesheets/_transitions.scss */
+.card-hover-effect {
+  transition: all 0.3s ease;
+}
+
+/* line 123, app/assets/stylesheets/_transitions.scss */
+.card-hover-effect:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* line 130, app/assets/stylesheets/_transitions.scss */
+.list-item-hover,
+.education-list__item,
+.home-section-card {
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+  position: relative;
+  transform-origin: center;
+}
+
+/* line 137, app/assets/stylesheets/_transitions.scss */
+.list-item-hover:hover,
+.education-list__item:hover,
+.home-section-card:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07) !important;
+  z-index: 10;
+  background-color: rgba(43, 63, 138, 0.05);
+}
+
+/* line 146, app/assets/stylesheets/_transitions.scss */
+.kebab-menu__button {
+  transition: all 0.3s ease-in-out !important;
+}
+
+/* line 149, app/assets/stylesheets/_transitions.scss */
+.kebab-menu__button .dot {
+  transition: all 0.3s ease-in-out !important;
+}
+
+/* line 153, app/assets/stylesheets/_transitions.scss */
+.kebab-menu__button:hover {
+  transform: rotate(90deg) !important;
+}
+
+/* line 156, app/assets/stylesheets/_transitions.scss */
+.kebab-menu__button:hover .dot:nth-child(1) {
+  transform: translateY(-2px) !important;
+}
+
+/* line 160, app/assets/stylesheets/_transitions.scss */
+.kebab-menu__button:hover .dot:nth-child(3) {
+  transform: translateY(2px) !important;
+}

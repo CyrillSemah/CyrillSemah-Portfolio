@@ -1,0 +1,207 @@
+// Styles pour les sections d'accueil dans l'administration
+@import 'variables';
+
+// Styles pour le formulaire et les options de fichier
+.current-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba($color-dark, 0.05);
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius-sm;
+  margin: $spacing-sm 0;
+  
+  .current-file-name {
+    margin: 0;
+    font-weight: 500;
+    color: $color-dark;
+  }
+  
+  .file-delete-option {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    
+    .form-check-input {
+      margin-right: $spacing-xs;
+    }
+  }
+  
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .file-delete-option {
+      margin-top: $spacing-xs;
+    }
+  }
+}
+
+.home-section-list {
+  margin-top: $spacing-lg;
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+    
+    h2 {
+      margin: 0;
+      color: $color-blue;
+    }
+  }
+  
+  &__group {
+    background-color: white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-small;
+    overflow: hidden;
+    margin-bottom: $spacing-lg;
+    
+    &-header {
+      display: flex;
+      align-items: center;
+      padding: $spacing-md;
+      background-color: $color-blue;
+      color: white;
+      
+      .logo {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: $spacing-md;
+        
+        i {
+          font-size: 1.5rem;
+          color: $color-blue;
+        }
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+      }
+      
+      .title {
+        flex: 1;
+        
+        h3 {
+          margin: 0;
+          font-size: 1.2rem;
+        }
+        
+        .meta {
+          display: flex;
+          align-items: center;
+          margin-top: $spacing-xs;
+          
+          .status-badge {
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            
+            &.active {
+              background-color: #4CAF50;
+              color: white;
+            }
+            
+            &.inactive {
+              background-color: #F44336;
+              color: white;
+            }
+          }
+        }
+      }
+    }
+    
+    &-items {
+      padding: $spacing-md;
+    }
+  }
+}
+
+// Styles pour les informations détaillées
+.detail-info {
+  background-color: #f8f9fa;
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  
+  .info-title {
+    color: $color-dark;
+    margin-top: 0;
+    margin-bottom: $spacing-md;
+    font-size: 1.2rem;
+  }
+  
+  .details-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-sm;
+  }
+  
+  .detail-item {
+    display: flex;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: $spacing-sm;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    .detail-label {
+      width: 200px;
+      font-weight: 600;
+      color: $color-gray;
+    }
+    
+    .detail-value {
+      flex: 1;
+      
+      &.blue-text {
+        color: $color-blue;
+      }
+    }
+  }
+}
+
+// Styles pour l'image de la section d'accueil
+.home-section-image {
+  margin-bottom: $spacing-md;
+  
+  .image-title {
+    color: $color-dark;
+    margin-top: 0;
+    margin-bottom: $spacing-md;
+    font-size: 1.2rem;
+  }
+  
+  .image-container {
+    background-color: #f8f9fa;
+    border-radius: $border-radius-md;
+    padding: $spacing-md;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    
+    img {
+      max-width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: $border-radius-sm;
+    }
+    
+    .no-image {
+      color: $color-gray;
+      font-style: italic;
+    }
+  }
+}

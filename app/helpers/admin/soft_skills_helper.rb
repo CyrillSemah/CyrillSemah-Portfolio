@@ -1,0 +1,2 @@
+module Admin::SoftSkillsHelper
+end

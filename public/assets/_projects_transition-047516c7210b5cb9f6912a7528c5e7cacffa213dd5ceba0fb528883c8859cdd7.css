@@ -1,0 +1,248 @@
+/* line 5, app/assets/stylesheets/_projects_transition.scss */
+.main-sections {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+/* line 11, app/assets/stylesheets/_projects_transition.scss */
+#projects-section {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  min-height: 100vh;
+  padding-top: 20px;
+}
+
+/* line 18, app/assets/stylesheets/_projects_transition.scss */
+#projects-section .section-projects__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* line 22, app/assets/stylesheets/_projects_transition.scss */
+#projects-section .section-projects__header h2 {
+  color: #202f66;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+  display: inline-block;
+  background-color: #eeedec;
+  padding: 10px 70px;
+  border-radius: 15px 50px 15px 50px;
+}
+
+/* line 32, app/assets/stylesheets/_projects_transition.scss */
+#projects-section .section-projects__header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background-color: #2b3f8a;
+}
+
+/* line 44, app/assets/stylesheets/_projects_transition.scss */
+#projects-section .section-projects__header .section-projects__subtitle {
+  color: #6c757d;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* line 53, app/assets/stylesheets/_projects_transition.scss */
+.section {
+  transition: opacity 0.8s ease;
+}
+
+/* line 58, app/assets/stylesheets/_projects_transition.scss */
+.btn-back-to-portfolio {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  color: #2b3f8a;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* line 67, app/assets/stylesheets/_projects_transition.scss */
+.btn-back-to-portfolio i {
+  margin-right: 0.5rem;
+}
+
+/* line 71, app/assets/stylesheets/_projects_transition.scss */
+.btn-back-to-portfolio:hover {
+  color: #1f2d63;
+  transform: translateX(-5px);
+}
+
+/* line 78, app/assets/stylesheets/_projects_transition.scss */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* line 86, app/assets/stylesheets/_projects_transition.scss */
+.project-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: calc(var(--animation-order, 0) * 0.1s);
+}
+
+/* line 97, app/assets/stylesheets/_projects_transition.scss */
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* line 102, app/assets/stylesheets/_projects_transition.scss */
+.project-card__image {
+  height: 200px;
+  overflow: hidden;
+}
+
+/* line 106, app/assets/stylesheets/_projects_transition.scss */
+.project-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+/* line 113, app/assets/stylesheets/_projects_transition.scss */
+.project-card__image .project-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  color: #2b3f8a;
+  font-size: 3rem;
+}
+
+/* line 125, app/assets/stylesheets/_projects_transition.scss */
+.project-card:hover .project-card__image img {
+  transform: scale(1.05);
+}
+
+/* line 129, app/assets/stylesheets/_projects_transition.scss */
+.project-card__content {
+  padding: 1.5rem;
+}
+
+/* line 133, app/assets/stylesheets/_projects_transition.scss */
+.project-card__title {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #202f66;
+  font-size: 1.2rem;
+}
+
+/* line 140, app/assets/stylesheets/_projects_transition.scss */
+.project-card__technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 1rem;
+}
+
+/* line 146, app/assets/stylesheets/_projects_transition.scss */
+.project-card__technologies .technology-tag {
+  background-color: rgba(43, 63, 138, 0.1);
+  color: #2b3f8a;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+/* line 155, app/assets/stylesheets/_projects_transition.scss */
+.project-card__description {
+  color: #6c757d;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+/* line 161, app/assets/stylesheets/_projects_transition.scss */
+.project-card__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* line 165, app/assets/stylesheets/_projects_transition.scss */
+.project-card__actions .btn {
+  padding: 0.25rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* line 174, app/assets/stylesheets/_projects_transition.scss */
+.project-card__actions .btn i {
+  margin-right: 0.25rem;
+}
+
+/* line 179, app/assets/stylesheets/_projects_transition.scss */
+.project-card__actions .btn-primary {
+  background-color: #2b3f8a;
+  color: white;
+}
+
+/* line 183, app/assets/stylesheets/_projects_transition.scss */
+.project-card__actions .btn-primary:hover {
+  background-color: #1f2d63;
+}
+
+/* line 188, app/assets/stylesheets/_projects_transition.scss */
+.project-card__actions .btn-secondary {
+  background-color: #eeedec;
+  color: #202f66;
+}
+
+/* line 192, app/assets/stylesheets/_projects_transition.scss */
+.project-card__actions .btn-secondary:hover {
+  background-color: #e2e0df;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* line 212, app/assets/stylesheets/_projects_transition.scss */
+.loading-spinner {
+  text-align: center;
+  padding: 3rem;
+  color: #2b3f8a;
+}
+
+/* line 217, app/assets/stylesheets/_projects_transition.scss */
+.loading-spinner i {
+  margin-bottom: 1rem;
+}
+
+/* line 223, app/assets/stylesheets/_projects_transition.scss */
+.error-message {
+  text-align: center;
+  padding: 3rem;
+  color: #c13733;
+}

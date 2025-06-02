@@ -1,0 +1,132 @@
+<div class="experience-list__group">
+  <div class="experience-list__group-header">
+    <div class="logo">
+      <% if professional_experience.logo.attached? %>
+        <%= image_tag professional_experience.logo %>
+      <% else %>
+        <div class="no-logo"><%= professional_experience.company_name.present? ? professional_experience.company_name[0].upcase : "?" %></div>
+      <% end %>
+    </div>
+    <h3><%= professional_experience.company_name.present? ? professional_experience.company_name : "Nouvelle entreprise" %></h3>
+  </div>
+  
+  <div class="experience-list__group-items">
+    <div class="experience-list__item">
+      <div class="experience-list__item-body">
+        <%= form_with(model: [:admin, professional_experience], local: true) do |form| %>
+          <% if professional_experience.errors.any? %>
+            <div class="alert alert-danger">
+              <h4><%= pluralize(professional_experience.errors.count, "erreur") %> :</h4>
+              <ul>
+                <% professional_experience.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+      
+      <div class="form-group">
+        <%= form.label :company_name, "Nom de l'entreprise", for: "professional_experience_company_name" %>
+        <%= form.text_field :company_name, required: true, id: "professional_experience_company_name" %>
+      </div>
+      
+      <div class="form-group">
+        <%= form.label :job_title, "Intitulé du poste", for: "professional_experience_job_title" %>
+        <%= form.text_field :job_title, required: true, id: "professional_experience_job_title" %>
+      </div>
+      
+      <div class="form-group">
+        <%= form.label :employment_type, "Type d'emploi", for: "professional_experience_employment_type" %>
+        <%= form.select :employment_type, [
+          ["CDI", "CDI"],
+          ["CDD", "CDD"],
+          ["Freelance", "Freelance"],
+          ["Stage", "Stage"],
+          ["Alternance", "Alternance"],
+          ["Autre", "Autre"]
+        ], { include_blank: "Sélectionnez un type d'emploi" }, { required: true, id: "professional_experience_employment_type" } %>
+        <span class="hint">Ex: CDI, CDD, Freelance, Stage, etc.</span>
+      </div>
+      
+      <div class="form-group">
+        <div class="checkbox-group">
+          <div class="checkbox-wrapper">
+            <%= form.check_box :currently_working_here, onchange: "toggleEndDateField(this)", id: "professional_experience_currently_working_here" %>
+            <%= form.label :currently_working_here, "J'occupe actuellement ce poste", for: "professional_experience_currently_working_here" %>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div class="date-group">
+          <div class="date-field">
+            <%= form.label :start_date, "Date de début", for: "professional_experience_start_date" %>
+            <%= form.date_field :start_date, required: true, id: "professional_experience_start_date" %>
+          </div>
+          
+          <div class="date-field">
+            <%= form.label :end_date, "Date de fin", for: "professional_experience_end_date" %>
+            <%= form.date_field :end_date, disabled: professional_experience.currently_working_here, 
+                               id: "professional_experience_end_date" %>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div class="location-group">
+          <div class="location-field">
+            <%= form.label :location, "Lieu", for: "professional_experience_location" %>
+            <%= form.text_field :location, required: true, id: "professional_experience_location" %>
+            <span class="hint">Ex: Paris, France</span>
+          </div>
+          
+          <div class="location-field">
+            <%= form.label :workplace_type, "Type de lieu", for: "professional_experience_workplace_type" %>
+            <%= form.select :workplace_type, [
+              ["Sur site", "Sur site"],
+              ["Hybride", "Hybride"],
+              ["À distance", "À distance"]
+            ], { include_blank: "Sélectionnez un type de lieu" }, { required: true, id: "professional_experience_workplace_type" } %>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <%= form.label :description, "Description", for: "professional_experience_description" %>
+        <%= form.text_area :description, required: true, id: "professional_experience_description" %>
+        <span class="hint">Décrivez vos responsabilités, réalisations et compétences utilisées</span>
+      </div>
+      
+      <div class="form-group">
+        <%= form.label :logo, "Logo de l'entreprise", for: "professional_experience_logo" %>
+        <%= form.file_field :logo, accept: "image/png,image/jpeg,image/gif", id: "professional_experience_logo" %>
+        
+        <div class="logo-preview">
+          <% if professional_experience.logo.attached? %>
+            <%= image_tag professional_experience.logo %>
+          <% else %>
+            <div class="no-logo">Aucun logo</div>
+          <% end %>
+        </div>
+      </div>
+      
+          <div class="experience-list__item-actions">
+            <%= link_to "Annuler", admin_professional_experiences_path, class: "btn btn-view" %>
+            <%= form.submit professional_experience.persisted? ? "Mettre à jour" : "Créer", class: "btn btn-edit" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleEndDateField(checkbox) {
+    const endDateField = document.getElementById('professional_experience_end_date');
+    endDateField.disabled = checkbox.checked;
+    
+    if (checkbox.checked) {
+      endDateField.value = '';
+    }
+  }
+</script>

@@ -1,0 +1,85 @@
+<div class="experience-list__group">
+  <div class="experience-list__group-header">
+    <div class="logo">
+      <% if skill.logo.attached? %>
+        <%= image_tag skill.logo %>
+      <% else %>
+        <div class="no-logo"><%= skill.name.present? ? skill.name[0].upcase : "?" %></div>
+      <% end %>
+    </div>
+    <h3><%= skill.name.present? ? skill.name : "Nouvelle compétence" %></h3>
+  </div>
+  
+  <div class="experience-list__group-items">
+    <div class="experience-list__item">
+      <div class="experience-list__item-body">
+        <%= form_with(model: [:admin, skill], local: true) do |form| %>
+          <% if skill.errors.any? %>
+            <div class="alert alert-danger">
+              <h4><%= pluralize(skill.errors.count, "erreur") %> :</h4>
+              <ul>
+                <% skill.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+      
+          <div class="form-group">
+            <%= form.label :name, "Nom de la compétence" %>
+            <%= form.text_field :name, required: true, placeholder: "Ex: JavaScript, Photoshop, Ruby on Rails..." %>
+          </div>
+          
+          <div class="form-group">
+            <%= form.label :skill_group_id, "Groupe de compétences" %>
+            <% if @from_group %>
+              <%= form.collection_select :skill_group_id, @skill_groups, :id, :name, {}, { class: "form-select", disabled: true } %>
+              <%= form.hidden_field :skill_group_id %>
+              <span class="hint">Cette compétence sera ajoutée au groupe sélectionné</span>
+            <% else %>
+              <%= form.collection_select :skill_group_id, @skill_groups, :id, :name, { include_blank: "Aucun groupe" }, { class: "form-select" } %>
+              <span class="hint">Vous pouvez associer cette compétence à un groupe pour une meilleure organisation</span>
+              <div class="add-group-link">
+                <%= link_to "+ Créer un nouveau groupe", new_admin_skill_group_path, target: "_blank" %>
+              </div>
+            <% end %>
+          </div>
+          
+          <div class="form-group">
+            <div class="date-group">
+              <div class="date-field">
+                <%= form.label :start_date, "Date de début d'utilisation" %>
+                <%= form.date_field :start_date, required: true %>
+                <span class="hint">Cette date sera utilisée pour calculer votre expérience avec cette compétence.</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <%= form.label :description, "Description" %>
+            <%= form.text_area :description, required: true, rows: 5, placeholder: "Décrivez brièvement cette compétence et votre niveau d'expertise..." %>
+            <span class="hint">Précisez votre niveau d'expertise et comment vous utilisez cette compétence</span>
+          </div>
+          
+          <div class="form-group">
+            <%= form.label :logo, "Logo" %>
+            <%= form.file_field :logo, accept: "image/png,image/jpeg,image/gif" %>
+            
+            <div class="logo-preview">
+              <% if skill.logo.attached? %>
+                <%= image_tag skill.logo %>
+              <% else %>
+                <div class="no-logo">Aucun logo</div>
+              <% end %>
+            </div>
+          </div>
+          
+          <div class="experience-list__item-actions">
+            <%= link_to "Annuler", admin_skills_path, class: "btn btn-view" %>
+            <%= form.submit skill.new_record? ? "Créer" : "Mettre à jour", class: "btn btn-edit" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+// Styles pour les boutons d'action dans les formulaires
+@import 'variables';
+
+.experience-list__item-actions,
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: $spacing-lg;
+  padding-top: $spacing-md;
+  border-top: 1px solid rgba($color-dark, 0.1);
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: $border-radius-md;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    min-width: 120px;
+    
+    &:first-child {
+      margin-right: $spacing-md;
+    }
+    
+    &:last-child {
+      margin-left: 0;
+    }
+  }
+  
+  .btn-view {
+    background-color: white;
+    color: $color-dark;
+    border: 1px solid rgba($color-dark, 0.2);
+    
+    &:hover {
+      background-color: rgba($color-dark, 0.05);
+      border-color: rgba($color-dark, 0.3);
+    }
+  }
+  
+  .btn-edit {
+    background-color: $color-blue;
+    color: white;
+    
+    &:hover {
+      background-color: darken($color-blue, 10%);
+      transform: translateY(-2px);
+    }
+  }
+  
+  .btn-delete {
+    background-color: $color-red;
+    color: white;
+    
+    &:hover {
+      background-color: darken($color-red, 10%);
+    }
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-sm) {
+  .experience-list__item-actions,
+  .form-actions {
+    flex-direction: column;
+    
+    .btn {
+      width: 100%;
+      margin: 0 0 $spacing-sm 0;
+      
+      &:first-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+// Suppression de la marge inférieure pour admin-form
+.admin-form {
+  margin-bottom: 0;
+}

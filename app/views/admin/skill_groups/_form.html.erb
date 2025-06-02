@@ -1,0 +1,42 @@
+<div class="education-list__group">
+  <div class="education-list__group-header">
+    <div class="logo">
+      <div class="no-logo"><%= skill_group.name.present? ? skill_group.name[0].upcase : "?" %></div>
+    </div>
+    <h3><%= skill_group.name.present? ? skill_group.name : "Nouveau groupe" %></h3>
+  </div>
+  
+  <div class="education-list__group-items">
+    <div class="education-list__item">
+      <div class="education-list__item-body">
+        <%= form_with(model: [:admin, skill_group], local: true) do |form| %>
+          <% if skill_group.errors.any? %>
+            <div class="alert alert-danger">
+              <h4><%= pluralize(skill_group.errors.count, "erreur") %> :</h4>
+              <ul>
+                <% skill_group.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+      
+          <div class="form-group">
+            <%= form.label :name, "Nom du groupe" %>
+            <%= form.text_field :name, required: true, placeholder: "Ex: Développement Web, Design, Bureautique..." %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :description, "Description" %>
+            <%= form.text_area :description, rows: 4, placeholder: "Description des compétences de ce groupe (optionnel)" %>
+          </div>
+
+          <div class="experience-list__item-actions">
+            <%= link_to "Annuler", admin_skills_path, class: "btn btn-view" %>
+            <%= form.submit skill_group.persisted? ? "Mettre à jour" : "Créer", class: "btn btn-edit" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,409 @@
+@charset "UTF-8";
+/* line 4, app/assets/stylesheets/_navbar.scss */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem 0;
+  margin-top: 0;
+  width: 100%;
+}
+
+/* line 16, app/assets/stylesheets/_navbar.scss */
+.navbar .container {
+  position: relative;
+  z-index: 1001;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* line 24, app/assets/stylesheets/_navbar.scss */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+}
+
+/* line 28, app/assets/stylesheets/_navbar.scss */
+.navbar__logo img {
+  height: 40px;
+  margin-right: 0.5rem;
+}
+
+/* line 33, app/assets/stylesheets/_navbar.scss */
+.navbar__logo .logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #202f66;
+  position: relative;
+  overflow: hidden;
+  min-width: 150px;
+}
+
+/* line 41, app/assets/stylesheets/_navbar.scss */
+.navbar__logo .logo-text .text-original,
+.navbar__logo .logo-text .text-hover {
+  display: inline-block;
+  transition: 0.3s ease;
+  width: 100%;
+}
+
+/* line 48, app/assets/stylesheets/_navbar.scss */
+.navbar__logo .logo-text .text-hover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transform: translateY(100%);
+  white-space: nowrap;
+}
+
+/* line 58, app/assets/stylesheets/_navbar.scss */
+.navbar__logo .logo-text:hover .text-original {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+/* line 63, app/assets/stylesheets/_navbar.scss */
+.navbar__logo .logo-text:hover .text-hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* line 71, app/assets/stylesheets/_navbar.scss */
+.navbar__links {
+  display: flex;
+  align-items: center;
+}
+
+/* line 76, app/assets/stylesheets/_navbar.scss */
+.navbar__links .kebab-menu {
+  margin-left: 1rem;
+}
+
+/* line 79, app/assets/stylesheets/_navbar.scss */
+.navbar__links .kebab-menu .kebab-menu__button {
+  background-color: transparent;
+}
+
+/* line 82, app/assets/stylesheets/_navbar.scss */
+.navbar__links .kebab-menu .kebab-menu__button .dot {
+  background-color: #2b3f8a;
+}
+
+/* line 87, app/assets/stylesheets/_navbar.scss */
+.navbar__links .kebab-menu .kebab-menu__content {
+  top: 120%;
+  right: 0;
+}
+
+/* line 92, app/assets/stylesheets/_navbar.scss */
+.navbar__links .kebab-menu .kebab-menu__content .menu-item i {
+  width: 20px;
+  text-align: center;
+  margin-right: 8px;
+}
+
+/* line 101, app/assets/stylesheets/_navbar.scss */
+.navbar__links a:not(.js-contact-modal) {
+  margin-left: 1.5rem;
+  color: #202f66;
+  font-weight: 500;
+  position: relative;
+}
+
+/* line 107, app/assets/stylesheets/_navbar.scss */
+.navbar__links a:not(.js-contact-modal)::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #2b3f8a;
+  transition: 0.3s ease;
+}
+
+/* line 118, app/assets/stylesheets/_navbar.scss */
+.navbar__links a:not(.js-contact-modal):hover::after, .navbar__links a.active:not(.js-contact-modal)::after {
+  width: 100%;
+}
+
+/* line 125, app/assets/stylesheets/_navbar.scss */
+.navbar__links__separator {
+  height: 24px;
+  width: 1px;
+  background-color: #cbd5e1;
+  margin: 0 1rem;
+  align-self: center;
+}
+
+/* line 134, app/assets/stylesheets/_navbar.scss */
+.navbar__links__contact-btn {
+  margin-left: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.5rem;
+  background-color: #2b3f8a;
+  color: white !important;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: 500;
+  font-size: 1rem;
+  text-decoration: none !important;
+  height: 38px;
+  line-height: 1;
+}
+
+/* line 152, app/assets/stylesheets/_navbar.scss */
+.navbar__links__contact-btn:hover {
+  background-color: #1f2d63;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* line 158, app/assets/stylesheets/_navbar.scss */
+.navbar__links__contact-btn:active {
+  transform: translateY(0);
+}
+
+/* line 163, app/assets/stylesheets/_navbar.scss */
+.navbar__links .btn-secondary {
+  margin-left: 1.5rem;
+  background-color: #2b3f8a;
+  color: white;
+}
+
+/* line 168, app/assets/stylesheets/_navbar.scss */
+.navbar__links .btn-secondary:hover {
+  background-color: #1f2d63;
+}
+
+/* line 173, app/assets/stylesheets/_navbar.scss */
+.navbar__links .btn-outline {
+  margin-left: 1.5rem;
+  background-color: transparent;
+  color: #202f66;
+  border: 1px solid #202f66;
+  padding: 0.25rem 1rem;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+/* line 182, app/assets/stylesheets/_navbar.scss */
+.navbar__links .btn-outline:hover {
+  background-color: #202f66;
+  color: white;
+}
+
+/* line 189, app/assets/stylesheets/_navbar.scss */
+.navbar__burger {
+  display: none;
+  /* Par défaut, le burger est caché */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 15px;
+  /* Zone cliquable plus grande */
+  margin: -15px;
+  /* Compensation pour maintenir la taille visuelle */
+  position: relative;
+  /* Assurer que le z-index fonctionne */
+  box-sizing: content-box;
+  /* Garantir que le padding n'affecte pas la taille */
+}
+
+/* line 202, app/assets/stylesheets/_navbar.scss */
+.navbar__burger span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: #202f66;
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+}
+
+/* line 213, app/assets/stylesheets/_navbar.scss */
+.navbar__burger.active span:nth-child(1) {
+  transform: translateY(8.5px) rotate(45deg);
+}
+
+/* line 217, app/assets/stylesheets/_navbar.scss */
+.navbar__burger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+/* line 221, app/assets/stylesheets/_navbar.scss */
+.navbar__burger.active span:nth-child(3) {
+  transform: translateY(-8.5px) rotate(-45deg);
+}
+
+/* line 227, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile {
+  display: none;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 70px);
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem 0;
+  flex-direction: column;
+  align-items: center;
+  z-index: 990;
+  overflow-y: auto;
+}
+
+/* line 236, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile .mobile-kebab {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* line 241, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile .mobile-kebab .kebab-menu__button {
+  background-color: transparent;
+}
+
+/* line 244, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile .mobile-kebab .kebab-menu__button .dot {
+  background-color: #2b3f8a;
+}
+
+/* line 249, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile .mobile-kebab .kebab-menu__content {
+  top: 120%;
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* line 256, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile .mobile-kebab .kebab-menu__content .menu-item i {
+  width: 20px;
+  text-align: center;
+  margin-right: 8px;
+}
+
+/* line 272, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile.active {
+  display: flex !important;
+}
+
+/* line 276, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile a:not(.navbar__btn-contact) {
+  margin: 1rem 0;
+  color: #202f66;
+  font-weight: 500;
+}
+
+/* line 281, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile a.active:not(.navbar__btn-contact) {
+  color: #2b3f8a;
+}
+
+/* line 286, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile__btn-contact {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.5rem;
+  background-color: #2b3f8a;
+  color: white !important;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: 500;
+  font-size: 1rem;
+  text-decoration: none !important;
+  position: static !important;
+}
+
+/* line 303, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile__btn-contact:hover {
+  background-color: #1f2d63;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* line 309, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile__btn-contact:active {
+  transform: translateY(0);
+}
+
+/* line 314, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile .btn-secondary {
+  margin-top: 1rem;
+  background-color: #2b3f8a;
+  color: white;
+}
+
+/* line 319, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile .btn-secondary:hover {
+  background-color: #1f2d63;
+}
+
+/* line 324, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile .btn-outline {
+  margin-top: 1rem;
+  background-color: transparent;
+  color: #202f66;
+  border: 1px solid #202f66;
+  padding: 0.25rem 1rem;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+/* line 333, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile .btn-outline:hover {
+  background-color: #202f66;
+  color: white;
+}
+
+/* line 339, app/assets/stylesheets/_navbar.scss */
+.navbar__mobile form {
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  /* line 348, app/assets/stylesheets/_navbar.scss */
+  .navbar:not(.admin-mode) .navbar__links {
+    display: none;
+  }
+  /* line 352, app/assets/stylesheets/_navbar.scss */
+  .navbar:not(.admin-mode) .navbar__burger {
+    display: flex;
+  }
+}
+
+@media (max-width: 1009px) {
+  /* line 361, app/assets/stylesheets/_navbar.scss */
+  .navbar.admin-mode .navbar__links {
+    display: none;
+  }
+  /* line 365, app/assets/stylesheets/_navbar.scss */
+  .navbar.admin-mode .navbar__burger {
+    display: flex;
+  }
+}
+
+/* line 372, app/assets/stylesheets/_navbar.scss */
+.burger-visible span {
+  background-color: #2b3f8a !important;
+  height: 4px !important;
+}

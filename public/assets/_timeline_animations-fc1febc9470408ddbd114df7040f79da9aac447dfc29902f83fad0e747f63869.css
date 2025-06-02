@@ -1,0 +1,44 @@
+@keyframes zoomInPoint {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulsePoint {
+  0% {
+    box-shadow: 0 0 0 0 rgba(43, 63, 138, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(43, 63, 138, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(43, 63, 138, 0);
+  }
+}
+
+/* line 33, app/assets/stylesheets/_timeline_animations.scss */
+.timeline-point {
+  opacity: 0;
+  transform: scale(0);
+  animation-fill-mode: forwards;
+}
+
+/* line 38, app/assets/stylesheets/_timeline_animations.scss */
+.timeline-point.animate {
+  animation: zoomInPoint 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 0.8s;
+}
+
+/* line 43, app/assets/stylesheets/_timeline_animations.scss */
+.timeline-point.pulse {
+  animation: pulsePoint 2s infinite;
+  animation-delay: 1.3s;
+}

@@ -1,0 +1,92 @@
+/* line 4, app/assets/stylesheets/_animated_buttons.scss */
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  /* line 4, app/assets/stylesheets/_animated_buttons.scss */
+  .header-actions {
+    justify-content: flex-end;
+    margin-top: 15px;
+  }
+}
+
+/* line 16, app/assets/stylesheets/_animated_buttons.scss */
+.animated-action-button {
+  display: flex;
+  align-items: center;
+  background-color: #2b3f8a;
+  color: #eeedec;
+  border-radius: 30px;
+  text-decoration: none;
+  overflow: hidden;
+  position: relative;
+  height: 44px;
+  min-width: 44px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  padding-right: 0;
+}
+
+/* line 31, app/assets/stylesheets/_animated_buttons.scss */
+.animated-action-button:hover, .animated-action-button:focus {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  padding-right: 1rem;
+}
+
+/* line 35, app/assets/stylesheets/_animated_buttons.scss */
+.animated-action-button:hover .button-text, .animated-action-button:focus .button-text {
+  max-width: 300px;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* line 41, app/assets/stylesheets/_animated_buttons.scss */
+.animated-action-button:hover .icon-container, .animated-action-button:focus .icon-container {
+  background-color: #253677;
+}
+
+/* line 46, app/assets/stylesheets/_animated_buttons.scss */
+.animated-action-button .icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #253677;
+  transition: all 0.3s ease;
+}
+
+/* line 56, app/assets/stylesheets/_animated_buttons.scss */
+.animated-action-button .icon-container i {
+  font-size: 1.2rem;
+  color: #eeedec;
+}
+
+/* line 62, app/assets/stylesheets/_animated_buttons.scss */
+.animated-action-button .button-text {
+  padding: 0 0 0 0.5rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  max-width: 0;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  color: #eeedec;
+}
+
+/* line 76, app/assets/stylesheets/_animated_buttons.scss */
+.animated-action-button:nth-child(1) {
+  background-color: #2b3f8a;
+}
+
+/* line 80, app/assets/stylesheets/_animated_buttons.scss */
+.animated-action-button:nth-child(2) {
+  background-color: #2b3f8a;
+}

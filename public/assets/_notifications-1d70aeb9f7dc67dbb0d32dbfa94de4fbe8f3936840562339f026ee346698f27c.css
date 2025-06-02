@@ -1,0 +1,87 @@
+/* line 4, app/assets/stylesheets/_notifications.scss */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 12px 20px;
+  z-index: 9999;
+  max-width: 350px;
+  animation: slide-in 0.3s ease-out forwards;
+}
+
+/* line 16, app/assets/stylesheets/_notifications.scss */
+.notification.success {
+  border-left: 4px solid #28a745;
+}
+
+/* line 20, app/assets/stylesheets/_notifications.scss */
+.notification.error {
+  border-left: 4px solid #dc3545;
+}
+
+/* line 24, app/assets/stylesheets/_notifications.scss */
+.notification.fade-out {
+  animation: fade-out 0.5s ease-out forwards;
+}
+
+/* line 28, app/assets/stylesheets/_notifications.scss */
+.notification .notification-content {
+  display: flex;
+  align-items: center;
+}
+
+/* line 32, app/assets/stylesheets/_notifications.scss */
+.notification .notification-content i {
+  margin-right: 12px;
+  font-size: 1.5rem;
+}
+
+/* line 36, app/assets/stylesheets/_notifications.scss */
+.success .notification .notification-content i {
+  color: #28a745;
+}
+
+/* line 40, app/assets/stylesheets/_notifications.scss */
+.error .notification .notification-content i {
+  color: #dc3545;
+}
+
+/* line 45, app/assets/stylesheets/_notifications.scss */
+.notification .notification-content p {
+  margin: 0;
+  color: #202f66;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  /* line 76, app/assets/stylesheets/_notifications.scss */
+  .notification {
+    left: 20px;
+    right: 20px;
+    max-width: none;
+  }
+}

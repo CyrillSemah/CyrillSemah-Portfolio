@@ -1,0 +1,148 @@
+<div class="experience-list__group">
+  <div class="experience-list__group-header">
+    <div class="logo">
+      <% if education.image.attached? %>
+        <%= image_tag education.image %>
+      <% else %>
+        <div class="no-logo"><%= education.school.present? ? education.school[0].upcase : "?" %></div>
+      <% end %>
+    </div>
+    <h3><%= education.school.present? ? education.school : "Nouvel établissement" %></h3>
+  </div>
+  
+  <div class="experience-list__group-items">
+    <div class="experience-list__item">
+      <div class="experience-list__item-body">
+        <%= form_with(model: [:admin, education], local: true) do |form| %>
+          <% if education.errors.any? %>
+            <div class="alert alert-danger">
+              <h4><%= pluralize(education.errors.count, "erreur") %> :</h4>
+              <ul>
+                <% education.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+      
+          <div class="form-group">
+            <%= form.label :school, "Établissement" %>
+            <%= form.text_field :school, required: true %>
+          </div>
+          
+          <div class="form-group">
+            <%= form.label :degree, "Diplôme" %>
+            <%= form.text_field :degree, required: true %>
+          </div>
+          
+          <div class="form-group">
+            <%= form.label :field_of_study, "Domaine d'études" %>
+            <%= form.text_field :field_of_study, required: true %>
+          </div>
+          
+          <div class="form-group">
+            <div class="date-group">
+              <div class="date-field">
+                <%= form.label :start_month, "Mois de début" %>
+                <%= form.select :start_month, 
+                    options_for_select((0..11).map { |m| [Date::MONTHNAMES[m+1], m] }, education.start_month), 
+                    { include_blank: "Sélectionnez un mois" }, 
+                    { required: true } %>
+              </div>
+              
+              <div class="date-field">
+                <%= form.label :start_year, "Année de début" %>
+                <%= form.number_field :start_year, min: 1950, max: Date.today.year, required: true %>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="date-group">
+              <div class="date-field">
+                <%= form.label :end_month, "Mois de fin (optionnel)" %>
+                <%= form.select :end_month, 
+                    options_for_select((0..11).map { |m| [Date::MONTHNAMES[m+1], m] }, education.end_month), 
+                    { include_blank: "Sélectionnez un mois" } %>
+              </div>
+              
+              <div class="date-field">
+                <%= form.label :end_year, "Année de fin (optionnel)" %>
+                <%= form.number_field :end_year, min: 1950, max: Date.today.year + 5 %>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <%= form.label :activities, "Activités" %>
+            <div class="activities-container">
+              <%= form.text_area :activities, class: "activities-textarea" %>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <%= form.label :description, "Description (optionnel)" %>
+            <%= form.text_area :description %>
+            <span class="hint">Décrivez votre formation, les compétences acquises, etc.</span>
+          </div>
+          
+          <div class="form-group">
+            <%= form.label :diploma_id, "ID du Diplôme (optionnel)" %>
+            <%= form.text_field :diploma_id %>
+            <span class="hint">Identifiant unique du diplôme (ex: 12345-AB)</span>
+          </div>
+          
+          <div class="form-group">
+            <%= form.label :diploma_url, "URL du Diplôme (optionnel)" %>
+            <%= form.text_field :diploma_url %>
+            <span class="hint">Lien vers la page de vérification du diplôme</span>
+          </div>
+          
+          <div class="form-group">
+            <%= form.label :image, "Logo de l'établissement (optionnel)" %>
+            <%= form.file_field :image, accept: "image/png,image/jpeg,image/gif" %>
+            
+            <div class="logo-preview">
+              <% if education.image.attached? %>
+                <%= image_tag education.image %>
+              <% else %>
+                <div class="no-logo">Aucun logo</div>
+              <% end %>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <%= form.label :image_1, "Image supplémentaire 1 (optionnel)" %>
+            <%= form.file_field :image_1, accept: "image/png,image/jpeg,image/gif" %>
+            
+            <div class="logo-preview">
+              <% if education.image_1.attached? %>
+                <%= image_tag education.image_1 %>
+              <% else %>
+                <div class="no-logo">Aucune image</div>
+              <% end %>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <%= form.label :image_2, "Image supplémentaire 2 (optionnel)" %>
+            <%= form.file_field :image_2, accept: "image/png,image/jpeg,image/gif" %>
+            
+            <div class="logo-preview">
+              <% if education.image_2.attached? %>
+                <%= image_tag education.image_2 %>
+              <% else %>
+                <div class="no-logo">Aucune image</div>
+              <% end %>
+            </div>
+          </div>
+      
+          <div class="experience-list__item-actions">
+            <%= link_to "Annuler", admin_educations_path, class: "btn btn-view" %>
+            <%= form.submit education.persisted? ? "Mettre à jour" : "Créer", class: "btn btn-edit" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+// Fichier de réponse JS pour la soumission du formulaire de contact
+const formResponse = document.getElementById('formResponse');
+const successMessage = formResponse.querySelector('.success-message');
+const errorMessage = formResponse.querySelector('.error-message');
+const contactForm = document.getElementById('contactForm');
+
+formResponse.style.display = 'block';
+
+<% if @success %>
+  // Succès
+  successMessage.classList.add('active');
+  errorMessage.classList.remove('active');
+  successMessage.querySelector('p').textContent = "<%= j @message %>";
+  contactForm.style.display = 'none'; // Cacher le formulaire
+<% else %>
+  // Erreur
+  errorMessage.classList.add('active');
+  successMessage.classList.remove('active');
+  errorMessage.querySelector('p').textContent = "<%= j @message %>";
+<% end %>
+
+// Réactiver le bouton d'envoi
+const submitButton = contactForm.querySelector('button[type="submit"], input[type="submit"]');
+if (submitButton) {
+  submitButton.disabled = false;
+  if (submitButton.tagName === 'BUTTON') {
+    submitButton.innerHTML = 'Envoyer';
+  }
+}

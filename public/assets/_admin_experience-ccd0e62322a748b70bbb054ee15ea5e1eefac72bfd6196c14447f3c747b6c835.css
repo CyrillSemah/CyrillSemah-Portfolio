@@ -1,0 +1,594 @@
+@charset "UTF-8";
+/* line 5, app/assets/stylesheets/_admin_experience.scss */
+.admin-nav {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(32, 47, 102, 0.1);
+}
+
+/* line 9, app/assets/stylesheets/_admin_experience.scss */
+.admin-nav__list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 16, app/assets/stylesheets/_admin_experience.scss */
+.admin-nav__item {
+  margin-right: 1rem;
+  padding: 1rem 1.5rem;
+  position: relative;
+}
+
+/* line 21, app/assets/stylesheets/_admin_experience.scss */
+.admin-nav__item a {
+  text-decoration: none;
+  color: #202f66;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+/* line 28, app/assets/stylesheets/_admin_experience.scss */
+.admin-nav__item:hover a {
+  color: #2b3f8a;
+}
+
+/* line 33, app/assets/stylesheets/_admin_experience.scss */
+.admin-nav__item.active a {
+  color: #2b3f8a;
+}
+
+/* line 37, app/assets/stylesheets/_admin_experience.scss */
+.admin-nav__item.active:after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #2b3f8a;
+}
+
+/* line 51, app/assets/stylesheets/_admin_experience.scss */
+.admin-experience-container,
+.admin-education-container {
+  background-color: #f5f5f7;
+  padding: 2rem 0;
+  min-height: calc(100vh - 80px);
+}
+
+/* line 57, app/assets/stylesheets/_admin_experience.scss */
+.admin-experience-container .container,
+.admin-education-container .container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* line 66, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__header,
+.education-list__header {
+  margin-bottom: 2rem;
+  padding-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  /* line 66, app/assets/stylesheets/_admin_experience.scss */
+  .experience-list__header,
+.education-list__header {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) {
+  /* line 66, app/assets/stylesheets/_admin_experience.scss */
+  .experience-list__header,
+.education-list__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+/* line 80, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__header h2,
+.education-list__header h2 {
+  color: #202f66;
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+/* line 86, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__header .subtitle,
+.education-list__header .subtitle {
+  color: #202f66;
+  margin: 0.25rem 0 0 0;
+  font-size: 1rem;
+}
+
+/* line 92, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__header .btn-primary,
+.education-list__header .btn-primary {
+  background-color: #2b3f8a;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+/* line 101, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__header .btn-primary:hover,
+.education-list__header .btn-primary:hover {
+  background-color: #1f2d63;
+}
+
+/* line 111, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__group,
+.education-list__group {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+/* line 118, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__group-header,
+.education-list__group-header {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: #2b3f8a;
+  color: white;
+}
+
+/* line 125, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__group-header .logo,
+.education-list__group-header .logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 1rem;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 500px) {
+  /* line 125, app/assets/stylesheets/_admin_experience.scss */
+  .experience-list__group-header .logo,
+.education-list__group-header .logo {
+    display: none;
+  }
+}
+
+/* line 140, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__group-header .logo img,
+.education-list__group-header .logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* line 146, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__group-header .logo .no-logo,
+.education-list__group-header .logo .no-logo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eeedec;
+  color: #202f66;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 500px) {
+  /* line 146, app/assets/stylesheets/_admin_experience.scss */
+  .experience-list__group-header .logo .no-logo,
+.education-list__group-header .logo .no-logo {
+    display: none;
+  }
+}
+
+/* line 163, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__group-header h3,
+.education-list__group-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+/* line 169, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__group-items,
+.education-list__group-items {
+  padding: 1rem;
+  padding-left: 16px;
+  margin-left: 0;
+}
+
+/* line 177, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item,
+.education-list__item {
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* line 185, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item:last-child,
+.education-list__item:last-child {
+  margin-bottom: 0;
+}
+
+/* line 190, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item .kebab-menu,
+.education-list__item .kebab-menu {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+}
+
+/* line 196, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item .kebab-menu .dot,
+.education-list__item .kebab-menu .dot {
+  background-color: #2b3f8a;
+}
+
+/* line 201, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-body,
+.education-list__item-body {
+  flex: 1;
+}
+
+/* line 204, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-body .position,
+.education-list__item-body .position {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #202f66;
+  margin-bottom: 0.25rem;
+}
+
+/* line 211, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-body .meta,
+.education-list__item-body .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: rgba(32, 47, 102, 0.7);
+}
+
+/* line 219, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-body .meta span,
+.education-list__item-body .meta span {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* line 223, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-body .meta span:not(:last-child)::after,
+.education-list__item-body .meta span:not(:last-child)::after {
+  content: "•";
+  margin-left: 0.5rem;
+}
+
+/* line 230, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-body .description,
+.education-list__item-body .description {
+  color: #202f66;
+  margin-bottom: 1.5rem;
+}
+
+/* line 236, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-actions,
+.education-list__item-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-top: 1px solid rgba(32, 47, 102, 0.1);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+/* line 244, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-actions .btn,
+.education-list__item-actions .btn {
+  flex: 1;
+  display: block;
+  padding: 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  margin: 0 0.25rem;
+}
+
+/* line 257, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-actions .btn:first-child,
+.education-list__item-actions .btn:first-child {
+  margin-left: 0;
+}
+
+/* line 261, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-actions .btn:last-child,
+.education-list__item-actions .btn:last-child {
+  margin-right: 0;
+}
+
+/* line 265, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-actions .btn-view,
+.education-list__item-actions .btn-view {
+  background-color: #2b3f8a;
+  color: white;
+}
+
+/* line 269, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-actions .btn-view:hover,
+.education-list__item-actions .btn-view:hover {
+  background-color: #1f2d63;
+}
+
+/* line 274, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-actions .btn-edit,
+.education-list__item-actions .btn-edit {
+  background-color: white;
+  color: #2b3f8a;
+  border: 1px solid #2b3f8a;
+}
+
+/* line 279, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-actions .btn-edit:hover,
+.education-list__item-actions .btn-edit:hover {
+  background-color: rgba(43, 63, 138, 0.1);
+}
+
+/* line 284, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-actions .btn-delete,
+.education-list__item-actions .btn-delete {
+  background-color: #c13733;
+  color: white;
+}
+
+/* line 288, app/assets/stylesheets/_admin_experience.scss */
+.experience-list__item-actions .btn-delete:hover,
+.education-list__item-actions .btn-delete:hover {
+  background-color: #992c28;
+}
+
+/* line 298, app/assets/stylesheets/_admin_experience.scss */
+.alert {
+  background-color: rgba(43, 63, 138, 0.1);
+  border-left: 4px solid #2b3f8a;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* line 305, app/assets/stylesheets/_admin_experience.scss */
+.alert p {
+  margin: 0;
+  color: #202f66;
+}
+
+@media (max-width: 768px) {
+  /* line 315, app/assets/stylesheets/_admin_experience.scss */
+  .experience-list__header,
+.education-list__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  /* line 321, app/assets/stylesheets/_admin_experience.scss */
+  .experience-list__item,
+.education-list__item {
+    flex-direction: column;
+  }
+  /* line 324, app/assets/stylesheets/_admin_experience.scss */
+  .experience-list__item-actions,
+.education-list__item-actions {
+    flex-direction: row;
+    margin-top: 1rem;
+    justify-content: flex-start;
+  }
+}
+
+/* line 334, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail,
+.education-detail {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* line 341, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__header,
+.education-detail__header {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: #2b3f8a;
+  color: white;
+}
+
+/* line 348, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__header .logo,
+.education-detail__header .logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+/* line 359, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__header .logo img,
+.education-detail__header .logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* line 365, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__header .logo .no-logo,
+.education-detail__header .logo .no-logo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eeedec;
+  color: #202f66;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* line 378, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__header h2,
+.education-detail__header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* line 384, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__content,
+.education-detail__content {
+  padding: 1.5rem;
+}
+
+/* line 387, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__content .detail-group,
+.education-detail__content .detail-group {
+  margin-bottom: 1.5rem;
+}
+
+/* line 390, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__content .detail-group:last-child,
+.education-detail__content .detail-group:last-child {
+  margin-bottom: 0;
+}
+
+/* line 394, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__content .detail-group h3,
+.education-detail__content .detail-group h3 {
+  margin: 0 0 0.25rem 0;
+  color: #202f66;
+}
+
+/* line 399, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__content .detail-group h4,
+.education-detail__content .detail-group h4 {
+  margin: 0 0 0.25rem 0;
+  color: #202f66;
+  font-size: 1.1rem;
+}
+
+/* line 405, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__content .detail-group p,
+.education-detail__content .detail-group p {
+  margin: 0;
+}
+
+/* line 408, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__content .detail-group p.date,
+.education-detail__content .detail-group p.date {
+  color: #202f66;
+  font-size: 0.9rem;
+}
+
+/* line 416, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__actions,
+.education-detail__actions {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(32, 47, 102, 0.1);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* line 423, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__actions .btn,
+.education-detail__actions .btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+/* line 428, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__actions .btn-edit,
+.education-detail__actions .btn-edit {
+  background-color: #2b3f8a;
+  color: white;
+}
+
+/* line 433, app/assets/stylesheets/_admin_experience.scss */
+.experience-detail__actions .btn-delete,
+.education-detail__actions .btn-delete {
+  background-color: #c13733;
+  color: white;
+}
+
+/* line 442, app/assets/stylesheets/_admin_experience.scss */
+.admin-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* line 450, app/assets/stylesheets/_admin_experience.scss */
+.admin-container .admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(32, 47, 102, 0.1);
+}
+
+/* line 457, app/assets/stylesheets/_admin_experience.scss */
+.admin-container .admin-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #202f66;
+}
+
+/* line 463, app/assets/stylesheets/_admin_experience.scss */
+.admin-container .admin-header .header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* line 468, app/assets/stylesheets/_admin_experience.scss */
+.admin-container .admin-header .btn-secondary {
+  background-color: #eeedec;
+  color: #202f66;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+/* line 477, app/assets/stylesheets/_admin_experience.scss */
+.admin-container .admin-header .btn-secondary:hover {
+  background-color: #d6d4d1;
+}

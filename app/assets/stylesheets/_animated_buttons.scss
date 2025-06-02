@@ -1,0 +1,83 @@
+// Styles pour les boutons d'action animés - Version classique
+@import 'variables';
+
+.header-actions {
+  display: flex;
+  gap: $spacing-md;
+  justify-content: flex-end;
+  align-items: center;
+  
+  @media (max-width: 768px) {
+    justify-content: flex-end;
+    margin-top: 15px;
+  }
+}
+
+.animated-action-button {
+  display: flex;
+  align-items: center;
+  background-color: $color-blue;
+  color: $color-light;
+  border-radius: 30px;
+  text-decoration: none;
+  overflow: hidden;
+  position: relative;
+  height: 44px;
+  min-width: 44px;
+  box-shadow: $shadow-small;
+  transition: all 0.3s ease;
+  padding-right: 0;
+  
+  &:hover, &:focus {
+    box-shadow: $shadow-medium;
+    padding-right: $spacing-md;
+    
+    .button-text {
+      max-width: 300px;
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .icon-container {
+      background-color: darken($color-blue, 5%);
+    }
+  }
+  
+  .icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: darken($color-blue, 5%);
+    transition: all 0.3s ease;
+    
+    i {
+      font-size: 1.2rem;
+      color: $color-light;
+    }
+  }
+  
+  .button-text {
+    padding: 0 0 0 $spacing-sm;
+    font-weight: 500;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    max-width: 0;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    color: $color-light;
+  }
+  
+  // Styles spécifiques pour les différents boutons
+  &:nth-child(1) {
+    background-color: $color-blue;
+  }
+  
+  &:nth-child(2) {
+    background-color: $color-blue;
+  }
+}

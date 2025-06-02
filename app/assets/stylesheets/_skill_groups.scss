@@ -1,0 +1,168 @@
+// Import des variables
+@import 'variables';
+
+// Styles pour les groupes de compétences
+.skill-groups-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  
+  .skill-group-item {
+    background-color: white;
+    border-radius: $border-radius-md;
+    box-shadow: $shadow-small;
+    padding: $spacing-md;
+    
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: $spacing-sm;
+      
+      h3 {
+        margin: 0;
+        color: $color-blue;
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+      
+      .skill-count {
+        background-color: rgba($color-blue, 0.1);
+        color: $color-blue;
+        padding: 0.2rem 0.5rem;
+        border-radius: $border-radius-sm;
+        font-size: 0.85rem;
+      }
+      
+      .skill-group-actions {
+        display: flex;
+        gap: $spacing-xs;
+      }
+    }
+    
+    &__description {
+      color: rgba($color-dark, 0.8);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-top: $spacing-sm;
+      padding-top: $spacing-sm;
+      border-top: 1px solid rgba($color-dark, 0.1);
+    }
+  }
+}
+
+// Styles pour la grille de compétences dans la vue détaillée d'un groupe
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: $spacing-md;
+  margin-top: $spacing-md;
+  
+  .skill-card {
+    background-color: white;
+    border-radius: $border-radius-md;
+    box-shadow: $shadow-small;
+    padding: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    
+    &__logo {
+      width: 50px;
+      height: 50px;
+      margin-bottom: $spacing-sm;
+      
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+      
+      .no-logo {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        background-color: #0a192f;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #61dafb;
+        font-weight: 700;
+        font-size: 1.5rem;
+      }
+    }
+    
+    &__info {
+      flex: 1;
+      
+      h5 {
+        margin: 0 0 $spacing-xs 0;
+        color: $color-blue;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+    }
+    
+    &__meta {
+      font-size: 0.85rem;
+      color: rgba($color-dark, 0.7);
+      margin-bottom: $spacing-sm;
+    }
+    
+    &__actions {
+      margin-top: $spacing-sm;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+
+// Styles pour l'en-tête des groupes dans la liste des compétences
+.experience-list__group-header {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg;
+  background-color: $color-blue;
+  color: white;
+  
+  h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .group-actions {
+    display: flex;
+    gap: $spacing-xs;
+  }
+}
+
+// Styles pour le formulaire de sélection de groupe
+.form-select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid rgba($color-dark, 0.2);
+  border-radius: $border-radius-sm;
+  background-color: white;
+  font-size: 1rem;
+  color: $color-dark;
+  
+  &:focus {
+    outline: none;
+    border-color: $color-blue;
+    box-shadow: 0 0 0 2px rgba($color-blue, 0.2);
+  }
+}
+
+.add-group-link {
+  margin-top: $spacing-xs;
+  font-size: 0.9rem;
+  
+  a {
+    color: $color-blue;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+<div class="admin-nav">
+  <ul class="admin-nav__list">
+    <li class="admin-nav__item <%= current_page?(admin_home_sections_path) ? 'active' : '' %>">
+      <%= link_to "Page d'accueil", admin_home_sections_path %>
+    </li>
+    <li class="admin-nav__item <%= current_page?(admin_professional_experiences_path) ? 'active' : '' %>">
+      <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
+    </li>
+    <li class="admin-nav__item <%= current_page?(admin_educations_path) ? 'active' : '' %>">
+      <%= link_to "Formations", admin_educations_path %>
+    </li>
+    <li class="admin-nav__item <%= current_page?(admin_skills_path) ? 'active' : '' %>">
+      <%= link_to "Compétences", admin_skills_path %>
+    </li>
+    <li class="admin-nav__item <%= current_page?(admin_projects_path) ? 'active' : '' %>">
+      <%= link_to "Projets", admin_projects_path %>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,353 @@
+/* line 5, app/assets/stylesheets/_projects.scss */
+.section-projects {
+  background-color: #eeedec;
+  padding: 3rem 0;
+}
+
+/* line 9, app/assets/stylesheets/_projects.scss */
+.section-projects__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* line 13, app/assets/stylesheets/_projects.scss */
+.section-projects__header h1 {
+  position: relative;
+  display: inline-block;
+  color: #202f66;
+  margin-bottom: 1rem;
+}
+
+/* line 19, app/assets/stylesheets/_projects.scss */
+.section-projects__header h1:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background-color: #2b3f8a;
+}
+
+/* line 31, app/assets/stylesheets/_projects.scss */
+.section-projects__header__subtitle {
+  color: rgba(32, 47, 102, 0.8);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* line 39, app/assets/stylesheets/_projects.scss */
+.section-projects__content {
+  margin-top: 2rem;
+}
+
+/* line 45, app/assets/stylesheets/_projects.scss */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  /* line 45, app/assets/stylesheets/_projects.scss */
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* line 56, app/assets/stylesheets/_projects.scss */
+.project-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 66, app/assets/stylesheets/_projects.scss */
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* line 71, app/assets/stylesheets/_projects.scss */
+.project-card__image {
+  height: 200px;
+  overflow: hidden;
+}
+
+/* line 75, app/assets/stylesheets/_projects.scss */
+.project-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* line 82, app/assets/stylesheets/_projects.scss */
+.project-card__image .project-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(43, 63, 138, 0.1);
+  color: #2b3f8a;
+  font-size: 3rem;
+}
+
+/* line 94, app/assets/stylesheets/_projects.scss */
+.project-card__content {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 101, app/assets/stylesheets/_projects.scss */
+.project-card__title {
+  font-size: 1.4rem;
+  color: #202f66;
+  margin-bottom: 0.5rem;
+}
+
+/* line 107, app/assets/stylesheets/_projects.scss */
+.project-card__technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+/* line 113, app/assets/stylesheets/_projects.scss */
+.project-card__technologies .technology-tag {
+  background-color: rgba(43, 63, 138, 0.1);
+  color: #2b3f8a;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* line 123, app/assets/stylesheets/_projects.scss */
+.project-card__description {
+  color: rgba(32, 47, 102, 0.8);
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+/* line 129, app/assets/stylesheets/_projects.scss */
+.project-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+/* line 134, app/assets/stylesheets/_projects.scss */
+.project-card__actions .btn {
+  padding: 0.25rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+/* line 141, app/assets/stylesheets/_projects.scss */
+.project-card__actions .btn-primary {
+  background-color: #2b3f8a;
+  color: white;
+}
+
+/* line 145, app/assets/stylesheets/_projects.scss */
+.project-card__actions .btn-primary:hover {
+  background-color: #1f2d63;
+}
+
+/* line 150, app/assets/stylesheets/_projects.scss */
+.project-card__actions .btn-outline {
+  border: 1px solid #2b3f8a;
+  color: #2b3f8a;
+  background-color: transparent;
+}
+
+/* line 155, app/assets/stylesheets/_projects.scss */
+.project-card__actions .btn-outline:hover {
+  background-color: rgba(43, 63, 138, 0.1);
+}
+
+/* line 164, app/assets/stylesheets/_projects.scss */
+.section-project-detail {
+  background-color: #eeedec;
+  padding: 3rem 0;
+}
+
+/* line 168, app/assets/stylesheets/_projects.scss */
+.section-project-detail__header {
+  margin-bottom: 2rem;
+}
+
+/* line 171, app/assets/stylesheets/_projects.scss */
+.section-project-detail__header h1 {
+  font-size: 2.5rem;
+  color: #202f66;
+  margin-bottom: 1rem;
+}
+
+/* line 177, app/assets/stylesheets/_projects.scss */
+.section-project-detail__header .project-technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+/* line 182, app/assets/stylesheets/_projects.scss */
+.section-project-detail__header .project-technologies .technology-tag {
+  background-color: rgba(43, 63, 138, 0.1);
+  color: #2b3f8a;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* line 193, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+/* line 200, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content .project-image {
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* line 206, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content .project-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* line 212, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content .project-image .project-placeholder {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(43, 63, 138, 0.1);
+  color: #2b3f8a;
+  font-size: 5rem;
+}
+
+/* line 221, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content .project-image .project-placeholder.large {
+  height: 400px;
+}
+
+/* line 227, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content .project-description {
+  color: rgba(32, 47, 102, 0.8);
+  line-height: 1.6;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+/* line 233, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content .project-description p {
+  margin-bottom: 1rem;
+}
+
+/* line 238, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content .project-links {
+  display: flex;
+  gap: 1rem;
+}
+
+/* line 242, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content .project-links .btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* line 251, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content .project-links .btn i {
+  margin-right: 0.25rem;
+}
+
+/* line 255, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content .project-links .btn-primary {
+  background-color: #2b3f8a;
+  color: white;
+}
+
+/* line 259, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content .project-links .btn-primary:hover {
+  background-color: #1f2d63;
+}
+
+/* line 264, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content .project-links .btn-outline {
+  border: 1px solid #2b3f8a;
+  color: #2b3f8a;
+  background-color: transparent;
+}
+
+/* line 269, app/assets/stylesheets/_projects.scss */
+.section-project-detail__content .project-links .btn-outline:hover {
+  background-color: rgba(43, 63, 138, 0.1);
+}
+
+/* line 278, app/assets/stylesheets/_projects.scss */
+.section-project-detail__footer .btn-back {
+  display: inline-flex;
+  align-items: center;
+  color: #2b3f8a;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* line 285, app/assets/stylesheets/_projects.scss */
+.section-project-detail__footer .btn-back i {
+  margin-right: 0.25rem;
+}
+
+/* line 289, app/assets/stylesheets/_projects.scss */
+.section-project-detail__footer .btn-back:hover {
+  text-decoration: underline;
+}
+
+/* line 297, app/assets/stylesheets/_projects.scss */
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* line 304, app/assets/stylesheets/_projects.scss */
+.empty-state p {
+  color: rgba(32, 47, 102, 0.7);
+  margin-bottom: 1rem;
+}
+
+/* line 308, app/assets/stylesheets/_projects.scss */
+.empty-state p:last-child {
+  margin-bottom: 0;
+}
