@@ -1,24 +1,28 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Cyrill Semah – Portfolio
 
-Things you may want to cover:
+Bienvenue sur mon portfolio en ligne.
 
-* Ruby version
+Je m'appelle **Cyrill Semah**, Chef de Projet Digital avec plus de 20 ans d'expérience en graphisme, retouche photo et UX/UI design, récemment formé au développement web (Ruby on Rails, JavaScript, HTML/CSS).
 
-* System dependencies
+Ce site a été conçu pour présenter :
+- Mon parcours et mes expériences
+- Une sélection de projets réalisés
+- Un accès à mon CV
+- Un formulaire de contact
 
-* Configuration
+## 🛠️ Stack technique
 
-* Database creation
+- Ruby on Rails
+- HTML / CSS (sans framework CSS externe)
+- JavaScript
+- Déploiement : Heroku + nom de domaine personnalisé
 
-* Database initialization
+> 🔗 [Voir le site en ligne](https://www.cyrillsemah.website)
 
-* How to run the test suite
+---
 
-* Services (job queues, cache servers, search engines, etc.)
+## 📬 Contact
 
-* Deployment instructions
-
-* ...
+📫 Pour toute question, collaboration ou projet, vous pouvez me contacter via le formulaire présent sur le site.
