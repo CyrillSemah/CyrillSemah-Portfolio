@@ -605,14 +605,9 @@
   }
 }
 
-// État vide
-.empty-state {
-  padding: $spacing-lg;
-  text-align: center;
-  background-color: rgba($color-blue, 0.05);
-  border-radius: $border-radius-md;
-  margin: $spacing-lg 0;
-  
+// État vide - Utilise les styles communs définis dans _admin_header_icon.scss
+
+.admin-home-empty-state {
   .icon {
     font-size: 3rem;
     color: rgba($color-blue, 0.3);

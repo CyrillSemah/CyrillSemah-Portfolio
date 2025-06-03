@@ -10,7 +10,14 @@ Rails.application.routes.draw do
   
   # Routes pour les expériences professionnelles, formations et compétences (CRUD protégé par authentification)
   namespace :admin do
-    resources :projects
+    resources :projects do
+      collection do
+        get :choose_type
+      end
+      member do
+        post :add_visual
+      end
+    end
     resources :home_sections do
       member do
         match :activate, via: [:get, :post]

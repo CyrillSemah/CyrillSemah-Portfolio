@@ -1,0 +1,986 @@
+// Styles pour la section d'administration des projets
+@import 'variables';
+
+// Conteneur principal pour la page admin des projets
+.admin-projects-container {
+  background-color: #f5f5f7; // Gris clair neutre
+  min-height: calc(100vh - 150px); // Hauteur minimale en tenant compte de la navbar et du footer
+  padding: 32px 0; // Ajout du padding en haut et en bas comme dans admin-home-container
+  
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+// En-tête de la liste des projets
+.projects-list {
+  &__header {
+    margin-bottom: $spacing-xl;
+    padding-top: $spacing-xl; // Espacement harmonisé avec la page d'accueil
+    
+    @media (max-width: 768px) {
+      display: block;
+    }
+    
+    @media (min-width: 769px) {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    h2 {
+      color: $color-dark;
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 600;
+      padding-bottom: $spacing-sm;
+      /* Trait supprimé pour harmoniser avec les autres sections admin */
+    }
+    
+    /* Les styles du bouton sont maintenant définis dans _animated_buttons.scss */
+  }
+  
+  &__content {
+    background-color: white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-small;
+    overflow: hidden;
+    margin-bottom: $spacing-xl;
+  }
+  
+  // Tableau des projets
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    
+    thead th {
+      background-color: #f8f9fa;
+      border-bottom: 2px solid #e9ecef;
+      color: $color-dark;
+      font-weight: 600;
+      padding: 15px;
+      text-align: left;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    tbody tr {
+      transition: background-color $transition-fast;
+      border-bottom: 1px solid #e9ecef;
+      
+      &:hover {
+        background-color: #f8f9fa;
+      }
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    
+    tbody td {
+      padding: 15px;
+      vertical-align: middle;
+      color: $color-dark;
+      font-size: 0.95rem;
+    }
+  }
+  
+  // Badges pour les types de projets
+  .project-type-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    &.type-development {
+      background-color: rgba($color-blue, 0.1);
+      color: $color-blue;
+    }
+    
+    &.type-retouche {
+      background-color: rgba($color-green, 0.1);
+      color: $color-green;
+    }
+  }
+  
+  // Badges de technologies
+  .tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    
+    .tech-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: $border-radius-sm;
+      font-size: 0.7rem;
+      background-color: #f1f3f5;
+      color: $color-gray-dark;
+      
+      &.tech-badge-more {
+        background-color: #e9ecef;
+        color: $color-gray;
+      }
+    }
+  }
+  
+  // Cellule d'image
+  .image-cell {
+    width: 100px;
+    
+    img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: $border-radius-sm;
+      box-shadow: $shadow-small;
+    }
+    
+    .placeholder-image {
+      width: 80px;
+      height: 80px;
+      background-color: #f8f9fa;
+      border-radius: $border-radius-sm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e9ecef;
+      
+      i {
+        font-size: 24px;
+        color: $color-blue;
+      }
+    }
+  }
+  
+  // Cellule d'actions
+  .actions-cell {
+    width: 130px;
+    
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .action-button {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all $transition-fast;
+      background-color: rgba(#f8f9fa, 0.8);
+      border: 1px solid #e9ecef;
+      color: $color-gray;
+      
+      i {
+        font-size: 0.875rem;
+      }
+      
+      &.view:hover {
+        background-color: rgba($color-blue, 0.1);
+        color: $color-blue;
+        border-color: rgba($color-blue, 0.2);
+        transform: translateY(-2px);
+      }
+      
+      &.edit:hover {
+        background-color: rgba($color-green, 0.1);
+        color: $color-green;
+        border-color: rgba($color-green, 0.2);
+        transform: translateY(-2px);
+      }
+      
+      &.delete:hover {
+        background-color: rgba($color-red, 0.1);
+        color: $color-red;
+        border-color: rgba($color-red, 0.2);
+        transform: translateY(-2px);
+      }
+    }
+  }
+  
+  // État vide - Utilise les styles communs définis dans _admin_header_icon.scss
+  // Pas besoin de définir des styles spécifiques ici
+  
+  // Les boutons primaires utilisent les styles communs définis dans _base.scss
+}
+
+// Styles pour la page de détail d'un projet
+.project-detail {
+  background-color: white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-small;
+  margin-bottom: $spacing-xl;
+  overflow: hidden;
+  
+  &__header {
+    padding: $spacing-lg;
+    border-bottom: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    h2 {
+      color: $color-dark;
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    .project-type-badge {
+      margin-left: $spacing-md;
+    }
+    
+    .header-actions {
+      display: flex;
+      gap: $spacing-sm;
+      
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 15px;
+        border-radius: $border-radius-sm;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all $transition-fast;
+        
+        i {
+          margin-right: 6px;
+        }
+        
+        &-primary {
+          background-color: $color-blue;
+          color: white;
+          
+          &:hover {
+            background-color: darken($color-blue, 10%);
+          }
+        }
+        
+        &-danger {
+          background-color: $color-red;
+          color: white;
+          
+          &:hover {
+            background-color: darken($color-red, 10%);
+          }
+        }
+        
+        &-outline {
+          border: 1px solid $color-gray;
+          color: $color-gray-dark;
+          
+          &:hover {
+            background-color: $color-gray;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+  
+  &__main-image {
+    padding: $spacing-lg;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    text-align: center;
+    
+    img {
+      max-width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      border-radius: $border-radius-md;
+      box-shadow: $shadow-small;
+    }
+  }
+  
+  &__content {
+    padding: $spacing-lg;
+  }
+  
+  &__section {
+    margin-bottom: $spacing-xl;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    h3 {
+      color: $color-dark;
+      font-size: 1.2rem;
+      margin-bottom: $spacing-md;
+      font-weight: 600;
+      padding-bottom: $spacing-xs;
+      border-bottom: 2px solid #e9ecef;
+    }
+    
+    p {
+      color: $color-dark;
+      line-height: 1.6;
+    }
+  }
+  
+  // Styles pour les liens externes
+  .external-links {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    
+    .external-link-item {
+      display: flex;
+      align-items: flex-start;
+      padding: $spacing-md;
+      background-color: #f8f9fa;
+      border-radius: $border-radius-md;
+      border-left: 3px solid $color-blue;
+      transition: all $transition-fast;
+      
+      &:hover {
+        background-color: #e9ecef;
+        transform: translateX(3px);
+      }
+      
+      .external-link-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba($color-blue, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: $spacing-md;
+        flex-shrink: 0;
+        
+        i {
+          font-size: 1.2rem;
+          color: $color-blue;
+        }
+      }
+      
+      .external-link-content {
+        flex-grow: 1;
+        
+        .external-link-label {
+          display: block;
+          font-weight: 500;
+          color: $color-dark;
+          margin-bottom: 2px;
+        }
+        
+        .external-link-url {
+          color: $color-blue;
+          text-decoration: none;
+          word-break: break-all;
+          
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+  
+  // Galerie d'images
+  &__gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: $spacing-md;
+    margin-top: $spacing-md;
+    
+    &-item {
+      border-radius: $border-radius-sm;
+      overflow: hidden;
+      box-shadow: $shadow-small;
+      aspect-ratio: 16/9;
+      position: relative;
+      transition: all $transition-fast;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: $shadow-medium;
+        
+        &:after {
+          opacity: 0.2;
+        }
+      }
+      
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: $color-blue;
+        opacity: 0;
+        transition: opacity $transition-fast;
+        pointer-events: none;
+      }
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+  
+  // Visuels avant/après
+  &__before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-lg;
+    margin-top: $spacing-md;
+    
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+    
+    &-item {
+      border-radius: $border-radius-md;
+      overflow: hidden;
+      box-shadow: $shadow-small;
+      transition: all $transition-fast;
+      position: relative;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: $shadow-medium;
+      }
+      
+      h4 {
+        background-color: #f8f9fa;
+        padding: $spacing-sm $spacing-md;
+        margin: 0;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: $color-dark;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        align-items: center;
+        
+        &:before {
+          content: '';
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          margin-right: 8px;
+        }
+      }
+      
+      &:first-child h4:before {
+        background-color: $color-red;
+      }
+      
+      &:last-child h4:before {
+        background-color: $color-green;
+      }
+      
+      img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        transition: all $transition-fast;
+      }
+      
+      .comparison-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity $transition-fast;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        
+        .comparison-icon {
+          color: white;
+          font-size: 2rem;
+          transform: scale(0.8);
+          transition: transform $transition-fast;
+        }
+      }
+      
+      &:hover .comparison-overlay {
+        opacity: 1;
+        
+        .comparison-icon {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+  
+  // Styles pour les cartes de visuels
+  .project-visual-card {
+    background-color: white;
+    border-radius: $border-radius-md;
+    box-shadow: $shadow-small;
+    overflow: hidden;
+    
+    &__header {
+      h4 {
+        color: $color-dark;
+      }
+    }
+    
+    &__description {
+      color: $color-dark;
+      line-height: 1.5;
+    }
+    
+    &__images {
+      .project-detail__gallery-item {
+        margin-bottom: $spacing-md;
+        
+        img {
+          width: 100%;
+          border-radius: $border-radius-sm;
+          box-shadow: $shadow-small;
+        }
+      }
+    }
+  }
+  
+  // Conteneur des visuels
+  .project-visuals-container {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+}
+
+// Styles pour la page de choix du type de projet
+.project-type-selection {
+  margin: $spacing-xl 0;
+  
+  &__header {
+    margin-bottom: $spacing-xl;
+    text-align: center;
+    
+    h2 {
+      color: $color-dark;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: $spacing-md;
+    }
+    
+    p {
+      color: $color-gray;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+  
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: $spacing-lg;
+    
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .project-type-card {
+    height: 100%;
+    transition: all $transition-normal;
+    
+    &__inner {
+      background-color: white;
+      border-radius: $border-radius-lg;
+      box-shadow: $shadow-small;
+      padding: $spacing-xl;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      transition: all $transition-normal;
+      position: relative;
+      overflow: hidden;
+      
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background-color: $color-blue;
+        opacity: 0;
+        transition: opacity $transition-normal;
+      }
+    }
+    
+    &:hover &__inner {
+      transform: translateY(-5px);
+      box-shadow: $shadow-medium;
+      
+      &:before {
+        opacity: 1;
+      }
+    }
+    
+    &__icon {
+      font-size: 3rem;
+      color: $color-blue;
+      margin-bottom: $spacing-lg;
+      text-align: center;
+      
+      .icon-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: rgba($color-blue, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+      }
+    }
+    
+    &__title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: $spacing-md;
+      text-align: center;
+      color: $color-dark;
+    }
+    
+    &__description {
+      color: $color-gray;
+      margin-bottom: $spacing-lg;
+      flex-grow: 1;
+      text-align: center;
+    }
+    
+    &__features {
+      margin-bottom: $spacing-lg;
+      
+      ul {
+        list-style: none;
+        padding-left: 0;
+      }
+      
+      li {
+        margin-bottom: $spacing-sm;
+        color: $color-dark;
+        display: flex;
+        align-items: flex-start;
+      }
+      
+      i {
+        color: $color-green;
+        margin-right: $spacing-sm;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+    }
+    
+    &__action {
+      text-align: center;
+      
+      .btn {
+        display: inline-block;
+        background-color: $color-blue;
+        color: white;
+        padding: $spacing-sm $spacing-lg;
+        border-radius: $border-radius-md;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all $transition-fast;
+        border: none;
+        
+        &:hover {
+          background-color: darken($color-blue, 10%);
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
+
+// Styles pour le formulaire de projet
+.project-form {
+  background-color: white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-small;
+  margin-bottom: $spacing-xl;
+  overflow: hidden;
+  
+  &__header {
+    padding: $spacing-lg;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    h2 {
+      color: $color-dark;
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: $spacing-xs;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background-color: $color-blue;
+      }
+    }
+    
+    .btn-back {
+      color: $color-gray;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      transition: all $transition-fast;
+      padding: 8px 15px;
+      border-radius: $border-radius-sm;
+      border: 1px solid $color-gray;
+      
+      &:hover {
+        color: $color-dark;
+        background-color: #f1f3f5;
+        border-color: $color-dark;
+      }
+      
+      i {
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  &__content {
+    padding: $spacing-lg;
+  }
+  
+  &__section {
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-lg;
+    border-bottom: 1px solid #e9ecef;
+    
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    h3 {
+      color: $color-dark;
+      font-size: 1.2rem;
+      margin-bottom: $spacing-md;
+      font-weight: 600;
+    }
+  }
+  
+  .form-group {
+    margin-bottom: $spacing-lg;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: $spacing-xs;
+      font-weight: 500;
+      color: $color-dark;
+      font-size: 0.95rem;
+    }
+    
+    .form-text {
+      display: block;
+      margin-top: 5px;
+      font-size: 0.85rem;
+      color: $color-gray;
+    }
+    
+    input[type="text"],
+    input[type="url"],
+    input[type="number"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1px solid #ced4da;
+      border-radius: $border-radius-sm;
+      background-color: white;
+      font-size: 0.95rem;
+      transition: border-color $transition-fast, box-shadow $transition-fast;
+      color: $color-dark;
+      
+      &:focus {
+        border-color: $color-blue;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba($color-blue, 0.2);
+      }
+    }
+    
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+  }
+  
+  .form-actions {
+    margin-top: $spacing-xl;
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-md;
+    padding-top: $spacing-lg;
+    border-top: 1px solid #e9ecef;
+    
+    .btn {
+      padding: 10px 20px;
+      border-radius: $border-radius-md;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all $transition-fast;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      
+      i {
+        margin-right: 8px;
+      }
+      
+      &-primary {
+        background-color: $color-blue;
+        color: white;
+        border: none;
+        
+        &:hover {
+          background-color: darken($color-blue, 10%);
+          transform: translateY(-2px);
+          box-shadow: $shadow-small;
+        }
+      }
+      
+      &-secondary {
+        background-color: #f8f9fa;
+        color: $color-dark;
+        border: 1px solid #ced4da;
+        
+        &:hover {
+          background-color: #e9ecef;
+          transform: translateY(-2px);
+        }
+      }
+      
+      &-danger {
+        background-color: white;
+        color: $color-red;
+        border: 1px solid $color-red;
+        
+        &:hover {
+          background-color: $color-red;
+          color: white;
+        }
+      }
+    }
+  }
+  
+  // Styles pour les champs de fichier
+  .custom-file-input {
+    position: relative;
+    
+    input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    
+    .file-input-label {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      background-color: #f8f9fa;
+      border: 1px dashed #ced4da;
+      border-radius: $border-radius-sm;
+      color: $color-gray;
+      cursor: pointer;
+      transition: all $transition-fast;
+      
+      i {
+        margin-right: 10px;
+        font-size: 1.2rem;
+      }
+      
+      &:hover {
+        background-color: #e9ecef;
+        border-color: $color-blue;
+        color: $color-blue;
+      }
+    }
+    
+    .file-preview {
+      margin-top: $spacing-sm;
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-sm;
+      
+      .preview-item {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        border-radius: $border-radius-sm;
+        overflow: hidden;
+        box-shadow: $shadow-small;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .remove-preview {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          width: 20px;
+          height: 20px;
+          background-color: rgba(255, 255, 255, 0.8);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: $color-red;
+          font-size: 12px;
+          
+          &:hover {
+            background-color: white;
+          }
+        }
+      }
+    }
+  }
+}

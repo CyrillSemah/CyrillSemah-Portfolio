@@ -1,0 +1,73 @@
+<%= turbo_stream.append "project_visuals" do %>
+  <div class="visual-form-container mb-4 p-3 border rounded">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="h6 mb-0">Nouveau visuel</h4>
+    </div>
+    
+    <%= fields_for @project do |form| %>
+      <%= form.fields_for :project_visuals, @visual do |visual_form| %>
+        <%= visual_form.hidden_field :position %>
+        
+        <div class="form-group">
+          <%= visual_form.label :company, "Entreprise" %>
+          <div class="input-group" data-controller="company-field">
+            <%= visual_form.text_field :company, class: 'form-control', placeholder: "Nom de l'entreprise", data: { action: "input->company-field#checkOther", "company-field-target": "input" } %>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="other_company_new" data-action="change->company-field#toggleOther" data-company-field-target="checkbox">
+                  <label class="form-check-label" for="other_company_new">Autre</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <%= visual_form.label :description, "Description" %>
+          <%= visual_form.text_area :description, class: 'form-control', rows: 3 %>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <%= visual_form.label :visual_type, "Type de visuel" %>
+            <%= visual_form.select :visual_type, ProjectVisual.visual_types.keys.map { |k| [k.humanize, k] }, {}, class: 'form-control', data: { action: "change->project-form#toggleVisualType", "project-form-target": "visualType" } %>
+          </div>
+          
+          <div class="form-group col-md-6">
+            <%= visual_form.label :display_type, "Méthode d'affichage" %>
+            <%= visual_form.select :display_type, ProjectVisual.display_types.keys.map { |k| [k.humanize, k] }, {}, class: 'form-control', data: { "project-form-target": "displayType" } %>
+          </div>
+        </div>
+        
+        <div class="visual-images" data-project-form-target="visualImages">
+          <div class="form-row">
+            <div class="form-group col-md-6 before-image-group" data-project-form-target="beforeImageGroup">
+              <%= visual_form.label :before_image, "Image avant" %>
+              <%= visual_form.file_field :before_image, class: 'form-control-file', direct_upload: true %>
+            </div>
+            
+            <div class="form-group col-md-6 after-image-group" data-project-form-target="afterImageGroup">
+              <%= visual_form.label :after_image, "Image après" %>
+              <%= visual_form.file_field :after_image, class: 'form-control-file', direct_upload: true %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
+<script>
+  // Initialiser le contrôleur Stimulus pour le nouveau visuel
+  document.addEventListener('turbo:load', function() {
+    const application = window.Stimulus;
+    if (application) {
+      application.controllers.forEach(controller => {
+        if (controller.identifier === 'project-form') {
+          controller.initializeVisualTypes();
+        }
+      });
+    }
+  });
+</script>

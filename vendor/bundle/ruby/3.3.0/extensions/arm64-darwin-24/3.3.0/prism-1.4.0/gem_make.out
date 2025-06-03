@@ -6,10 +6,10 @@ checking for whether -fvisibility=hidden is accepted as CFLAGS... yes
 creating Makefile
 
 current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/prism-1.4.0/ext/prism
-make DESTDIR\= sitearchdir\=./.gem.20250530-44350-adxo8c sitelibdir\=./.gem.20250530-44350-adxo8c clean
+make DESTDIR\= sitearchdir\=./.gem.20250603-65575-xx2gv9 sitelibdir\=./.gem.20250603-65575-xx2gv9 clean
 
 current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/prism-1.4.0/ext/prism
-make DESTDIR\= sitearchdir\=./.gem.20250530-44350-adxo8c sitelibdir\=./.gem.20250530-44350-adxo8c
+make DESTDIR\= sitearchdir\=./.gem.20250603-65575-xx2gv9 sitelibdir\=./.gem.20250603-65575-xx2gv9
 compiling api_node.c
 compiling api_pack.c
 compiling extension.c
@@ -37,8 +37,8 @@ compiling ./../../src/util/pm_strpbrk.c
 linking shared-object prism/prism.bundle
 
 current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/prism-1.4.0/ext/prism
-make DESTDIR\= sitearchdir\=./.gem.20250530-44350-adxo8c sitelibdir\=./.gem.20250530-44350-adxo8c install
-/usr/bin/install -c -m 0755 prism.bundle ./.gem.20250530-44350-adxo8c/prism
+make DESTDIR\= sitearchdir\=./.gem.20250603-65575-xx2gv9 sitelibdir\=./.gem.20250603-65575-xx2gv9 install
+/usr/bin/install -c -m 0755 prism.bundle ./.gem.20250603-65575-xx2gv9/prism
 
 current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/prism-1.4.0/ext/prism
-make DESTDIR\= sitearchdir\=./.gem.20250530-44350-adxo8c sitelibdir\=./.gem.20250530-44350-adxo8c clean
+make DESTDIR\= sitearchdir\=./.gem.20250603-65575-xx2gv9 sitelibdir\=./.gem.20250603-65575-xx2gv9 clean
