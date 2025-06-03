@@ -1,88 +1,164 @@
-<div class="admin-education-container">
+<div class="admin-experience-container">
   <div class="container">
     <!-- Menu de navigation admin -->
-    <div class="admin-nav">
-      <ul class="admin-nav__list">
-        <li class="admin-nav__item">
-          <%= link_to "Page d'accueil", admin_home_sections_path %>
-        </li>
-        <li class="admin-nav__item">
-          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
-        </li>
-        <li class="admin-nav__item">
-          <%= link_to "Formations", admin_educations_path %>
-        </li>
-        <li class="admin-nav__item">
-          <%= link_to "Compétences", admin_skills_path %>
-        </li>
-        <li class="admin-nav__item active">
-          <%= link_to "Projets", admin_projects_path %>
-        </li>
-      </ul>
-    </div>
+    <%= render 'admin/shared/admin_nav' %>
     
-    <div class="education-form">
-      <div class="education-form__header">
-        <h2>Nouveau projet</h2>
-        <%= link_to admin_projects_path, class: "btn-back" do %>
-          <i class="fas fa-arrow-left"></i> Retour à la liste
-        <% end %>
+    <div class="content-section">
+      <div class="content-header">
+        <div>
+          <h2>
+          <% if @project.development? %>
+            Nouveau projet de développement
+          <% else %>
+            Nouveau projet de retouche & création
+          <% end %>
+        </h2>
+        <p class="subtitle">
+          <% if @project.development? %>
+            Renseignez les détails de votre nouveau projet de développement
+          <% else %>
+            Renseignez les détails de votre nouveau projet de retouche & création
+          <% end %>
+        </p>
+        </div>
+        <div class="header-actions">
+          <%= link_to admin_projects_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+            <span class="button-text">Retour à la liste</span>
+          <% end %>
+        </div>
       </div>
   
-  <div class="admin-content">
-    <%= form_with(model: [:admin, @project], local: true, html: { class: 'form', multipart: true }) do |form| %>
-      <% if @project.errors.any? %>
-        <div class="alert alert-danger">
-          <h2><%= pluralize(@project.errors.count, "erreur") %> :</h2>
-          <ul>
-            <% @project.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-      
-      <div class="form-group">
-        <%= form.label :title, "Titre" %>
-        <%= form.text_field :title, class: 'form-control' %>
+      <div class="form-content" data-controller="project-form">
+        <%= form_with(model: [:admin, @project], local: true, html: { class: 'form', multipart: true }) do |form| %>
+          <% if @project.errors.any? %>
+            <div class="alert alert-danger">
+              <h2><%= pluralize(@project.errors.count, "erreur") %> :</h2>
+              <ul>
+                <% @project.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          
+          <%= form.hidden_field :project_type %>
+
+          <!-- Bloc pour les champs communs -->
+          <div class="experience-list__group mb-4">
+            <div class="experience-list__group-header">
+              <h3 class="mb-0">Informations générales du projet</h3>
+            </div>
+            <div class="experience-list__group-items">
+              <div class="experience-list__item">
+                <div class="experience-list__item-body">
+                  <!-- Champs communs aux deux types de projets -->
+                  <div class="form-group">
+                    <%= form.label :title, "Titre" %>
+                    <%= form.text_field :title, class: 'form-control' %>
+                  </div>
+                  
+                  <div class="form-group">
+                    <%= form.label :technologies, "Technologies (séparées par des virgules)" %>
+                    <%= form.text_field :technologies, class: 'form-control', placeholder: "Ruby on Rails, JavaScript, PostgreSQL" %>
+                  </div>
+                  
+                  <div class="form-group">
+                    <%= form.label :description, "Description" %>
+                    <%= form.text_area :description, class: 'form-control', rows: 6 %>
+                  </div>
+                  
+                  <div class="form-group">
+                    <%= form.label :position, "Position" %>
+                    <%= form.number_field :position, class: 'form-control' %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Champs spécifiques au type Développement -->
+          <% if @project.development? %>
+            <div class="experience-list__group mb-4">
+              <div class="experience-list__group-header">
+                <h3 class="mb-0">Informations spécifiques au projet de développement</h3>
+              </div>
+              <div class="experience-list__group-items">
+                <div class="experience-list__item">
+                  <div class="experience-list__item-body">
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <%= form.label :github_url, "URL GitHub (optionnel)" %>
+                        <%= form.url_field :github_url, class: 'form-control', placeholder: "https://github.com/username/project" %>
+                      </div>
+                      
+                      <div class="form-group col-md-6">
+                        <%= form.label :live_url, "URL Démo (optionnel)" %>
+                        <%= form.url_field :live_url, class: 'form-control', placeholder: "https://example.com" %>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group">
+                      <%= form.label :image, "Image principale du projet" %>
+                      <%= form.file_field :image, class: 'form-control-file', direct_upload: true %>
+                    </div>
+                    
+                    <div class="form-group">
+                      <%= form.label :development_images, "Images additionnelles (carrousel)" %>
+                      <%= form.file_field :development_images, multiple: true, class: 'form-control-file', direct_upload: true %>
+                      <small class="form-text text-muted">Vous pouvez sélectionner plusieurs images pour le carrousel</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          
+          <!-- Champs spécifiques au type Retouche & Création -->
+          <% if @project.retouche_creation? %>
+            <div class="experience-list__group mb-4">
+              <div class="experience-list__group-header">
+                <h3 class="mb-0">Informations spécifiques au projet de retouche & création</h3>
+              </div>
+              <div class="experience-list__group-items">
+                <div class="experience-list__item">
+                  <div class="experience-list__item-body">
+                    <p class="text-muted mb-4">Après avoir créé le projet, vous pourrez ajouter des visuels (images avant/après ou simples) avec leurs descriptions.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          
+          <div class="experience-list__item-actions">
+            <%= link_to "Annuler", admin_projects_path, class: "btn btn-view" %>
+            <%= form.submit "Créer le projet", class: "btn btn-edit" %>
+          </div>
+        <% end %>
       </div>
-      
-      <div class="form-group">
-        <%= form.label :technologies, "Technologies (séparées par des virgules)" %>
-        <%= form.text_field :technologies, class: 'form-control', placeholder: "Ruby on Rails, JavaScript, PostgreSQL" %>
-      </div>
-      
-      <div class="form-group">
-        <%= form.label :description, "Description" %>
-        <%= form.text_area :description, class: 'form-control', rows: 6 %>
-      </div>
-      
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <%= form.label :github_url, "URL GitHub" %>
-          <%= form.url_field :github_url, class: 'form-control', placeholder: "https://github.com/username/project" %>
-        </div>
-        
-        <div class="form-group col-md-6">
-          <%= form.label :live_url, "URL Démo" %>
-          <%= form.url_field :live_url, class: 'form-control', placeholder: "https://example.com" %>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <%= form.label :position, "Position" %>
-        <%= form.number_field :position, class: 'form-control' %>
-      </div>
-      
-      <div class="form-group">
-        <%= form.label :image, "Image du projet" %>
-        <%= form.file_field :image, class: 'form-control-file', direct_upload: true %>
-      </div>
-      
-      <div class="form-actions">
-        <%= form.submit "Créer le projet", class: "btn btn-primary" %>
-        <%= link_to "Annuler", admin_projects_path, class: "btn btn-outline" %>
-      </div>
-    <% end %>
+    </div>
   </div>
 </div>
+
+<% content_for :styles do %>
+  <style>
+    .card-header {
+      border-radius: 0.25rem 0.25rem 0 0;
+    }
+    
+    .form-actions {
+      margin-top: 2rem;
+    }
+  </style>
+<% end %>
+
+<% content_for :scripts do %>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialisation du contrôleur Stimulus pour le formulaire de projet
+      // (sera implémenté plus tard)
+    });
+  </script>
+<% end %>

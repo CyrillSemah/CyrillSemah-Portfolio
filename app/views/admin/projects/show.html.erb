@@ -1,0 +1,397 @@
+<div class="admin-projects-container">
+  <div class="container">
+    <!-- Menu de navigation admin -->
+    <%= render 'admin/shared/admin_nav' %>
+    
+    <div class="projects-list">
+      <div class="projects-list__header">
+        <h2>Détails du projet</h2>
+        <div class="header-actions">
+          <%= link_to admin_projects_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+            <span class="button-text">Retour à la liste</span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="project-detail">
+        <div class="project-detail__header">
+          <div class="d-flex align-items-center">
+            <h2><%= @project.title %></h2>
+            <span class="project-type-badge <%= @project.development? ? 'type-development' : 'type-retouche' %>">
+              <%= @project.development? ? 'Développement' : 'Retouche & Création' %>
+            </span>
+          </div>
+          <div class="header-actions">
+            <%= link_to edit_admin_project_path(@project), class: "btn btn-primary" do %>
+              <i class="fas fa-edit"></i> Modifier
+            <% end %>
+            <%= link_to "#", 
+                      data: { delete_url: admin_project_path(@project) },
+                      class: "btn btn-danger btn-delete-project" do %>
+              <i class="fas fa-trash"></i> Supprimer
+            <% end %>
+          </div>
+        </div>
+        
+        <div class="project-detail__content">
+          <div class="project-detail__section">
+            <h3>Description</h3>
+            <p><%= simple_format(@project.description) %></p>
+          </div>
+          
+          <div class="project-detail__section">
+            <h3>Technologies</h3>
+            <div class="tech-badges">
+              <% @project.technologies.split(',').each do |tech| %>
+                <span class="tech-badge"><%= tech.strip %></span>
+              <% end %>
+            </div>
+          </div>
+            
+            <% if @project.development? %>
+              <% if @project.github_url.present? || @project.live_url.present? %>
+                <div class="project-detail__section">
+                  <h3>Liens externes</h3>
+                  <div class="external-links">
+                    <% if @project.github_url.present? %>
+                      <div class="external-link-item">
+                        <div class="external-link-icon">
+                          <i class="fab fa-github"></i>
+                        </div>
+                        <div class="external-link-content">
+                          <span class="external-link-label">GitHub</span>
+                          <%= link_to @project.github_url, @project.github_url, target: "_blank", class: "external-link-url" %>
+                        </div>
+                      </div>
+                    <% end %>
+                    
+                    <% if @project.live_url.present? %>
+                      <div class="external-link-item">
+                        <div class="external-link-icon">
+                          <i class="fas fa-external-link-alt"></i>
+                        </div>
+                        <div class="external-link-content">
+                          <span class="external-link-label">Site en ligne</span>
+                          <%= link_to @project.live_url, @project.live_url, target: "_blank", class: "external-link-url" %>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          
+          <% if @project.image.attached? %>
+            <div class="project-detail__section">
+              <h3>Image principale</h3>
+              <div class="project-detail__main-image mb-3">
+                <%= image_tag @project.image, class: "img-fluid rounded shadow-sm" %>
+              </div>
+            </div>
+          <% end %>
+            
+          <% if @project.development? && @project.development_images.attached? %>
+            <div class="project-detail__section">
+              <h3>Images supplémentaires</h3>
+              <div class="project-detail__gallery">
+                <% @project.development_images.each do |image| %>
+                  <div class="project-detail__gallery-item">
+                    <%= image_tag image, class: "img-fluid" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+            
+            <% if @project.retouche_creation? && @project.project_visuals.any? %>
+              <div class="project-detail__section">
+                <h3>Visuels du projet</h3>
+                <div class="project-visuals-container">
+                  <% @project.project_visuals.ordered.each do |visual| %>
+                    <div class="project-visual-card mb-4">
+                      <div class="project-visual-card__header p-3 bg-light border-bottom">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <% if visual.company.present? && visual.company != "Autre" %>
+                            <h4 class="mb-0 fs-5"><%= visual.company %></h4>
+                          <% else %>
+                            <h4 class="mb-0 fs-5">Visuel <%= visual.position + 1 %></h4>
+                          <% end %>
+                          <span class="badge bg-info text-white"><%= visual.display_type.humanize %></span>
+                        </div>
+                      </div>
+                      
+                      <% if visual.description.present? %>
+                        <div class="project-visual-card__description p-3 border-bottom">
+                          <%= visual.description %>
+                        </div>
+                      <% end %>
+                      
+                      <div class="project-visual-card__images p-3">
+                        <% if visual.before_after? %>
+                          <div class="project-detail__before-after">
+                            <div class="project-detail__before-after-item">
+                              <h4>Avant</h4>
+                              <% if visual.before_image.attached? %>
+                                <%= image_tag visual.before_image %>
+                                <div class="comparison-overlay">
+                                  <div class="comparison-icon">
+                                    <i class="fas fa-search-plus"></i>
+                                  </div>
+                                </div>
+                              <% else %>
+                                <div class="alert alert-warning">Image avant non disponible</div>
+                              <% end %>
+                            </div>
+                            <div class="project-detail__before-after-item">
+                              <h4>Après</h4>
+                              <% if visual.after_image.attached? %>
+                                <%= image_tag visual.after_image %>
+                                <div class="comparison-overlay">
+                                  <div class="comparison-icon">
+                                    <i class="fas fa-search-plus"></i>
+                                  </div>
+                                </div>
+                              <% else %>
+                                <div class="alert alert-warning">Image après non disponible</div>
+                              <% end %>
+                            </div>
+                          </div>
+                        <% else %>
+                          <div class="project-detail__gallery-item">
+                            <% if visual.after_image.attached? %>
+                              <%= image_tag visual.after_image %>
+                            <% else %>
+                              <div class="alert alert-warning">Image non disponible</div>
+                            <% end %>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/delete_confirmation_modal' %>
+
+<% content_for :styles do %>
+  <style>
+    /* Styles pour la page de détails du projet */
+    .project-details {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      margin-bottom: 30px;
+    }
+    
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .project-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+      margin: 0;
+    }
+    
+    .project-type {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .type-development {
+      background-color: #e3f2fd;
+      color: #0d47a1;
+    }
+    
+    .type-retouche {
+      background-color: #e8f5e9;
+      color: #1b5e20;
+    }
+    
+    .project-info {
+      margin-bottom: 30px;
+    }
+    
+    .info-section {
+      margin-bottom: 20px;
+    }
+    
+    .info-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    
+    .info-content {
+      color: #666;
+      line-height: 1.6;
+    }
+    
+    .technologies-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .technology-tag {
+      background-color: #f5f5f5;
+      color: #555;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    .external-link {
+      color: #3f51b5;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    .external-link:hover {
+      color: #1a237e;
+      text-decoration: underline;
+    }
+    
+    .project-visuals {
+      margin-top: 30px;
+    }
+    
+    .visual-section {
+      margin-bottom: 25px;
+    }
+    
+    .visual-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 15px;
+    }
+    
+    .main-image {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .main-image img {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .gallery-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+    
+    .gallery-item img:hover {
+      transform: scale(1.03);
+    }
+    
+    .project-visuals-list {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    
+    .visual-item {
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    
+    .visual-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .visual-company {
+      font-size: 18px;
+      font-weight: 500;
+      color: #444;
+      margin: 0;
+    }
+    
+    .visual-type-badge {
+      padding: 4px 8px;
+      background-color: #e0e0e0;
+      color: #555;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .visual-description {
+      color: #666;
+      margin-bottom: 15px;
+      font-style: italic;
+    }
+    
+    .before-after-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    
+    .before-image h6, .after-image h6 {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: #555;
+    }
+    
+    .before-image img, .after-image img, .single-image img {
+      width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .alert-warning {
+      background-color: #fff3e0;
+      color: #e65100;
+      border: 1px solid #ffe0b2;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    @media (max-width: 768px) {
+      .before-after-images {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+<% end %>

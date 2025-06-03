@@ -50,12 +50,28 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background-color: darken($color-blue, 5%);
+    background-color: $color-blue;
     transition: all 0.3s ease;
+    position: relative;
+    
+    &:before {
+      content: '';
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: white;
+    }
     
     i {
-      font-size: 1.2rem;
-      color: $color-light;
+      font-size: 1rem;
+      color: $color-blue;
+      position: relative;
+      z-index: 1;
+      
+      &.fa-folder-plus {
+        font-size: 0.9rem;
+      }
     }
   }
   

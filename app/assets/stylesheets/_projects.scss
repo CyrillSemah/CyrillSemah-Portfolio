@@ -4,52 +4,66 @@
 // Styles pour la liste des projets
 .section-projects {
   background-color: $color-light;
-  padding: 0;
   
   &__header {
     text-align: center;
     margin-bottom: $spacing-xl;
     
-    h1 {
-      position: relative;
+    h2 {
       display: inline-block;
       color: $color-dark;
       margin-bottom: $spacing-md;
-      
-      &:after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 50px;
-        height: 3px;
-        background-color: $color-blue;
-      }
+      font-size: 2rem;
+      font-weight: 600;
+      /* Trait complètement supprimé */
     }
+  }
+  
+  &__filters {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $spacing-xl;
     
-    &__subtitle {
-      color: rgba($color-dark, 0.8);
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto;
+    .filters-list {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background-color: white;
+      border-radius: $border-radius-lg;
+      box-shadow: $shadow-small;
+      overflow: hidden;
+      
+      .filter-item {
+        padding: $spacing-md $spacing-lg;
+        cursor: pointer;
+        color: $color-gray;
+        font-weight: 500;
+        transition: all $transition-fast;
+        border-bottom: 3px solid transparent;
+        
+        &:hover {
+          color: $color-dark;
+        }
+        
+        &.active {
+          color: $color-blue;
+          border-bottom-color: $color-blue;
+        }
+      }
     }
   }
   
   &__content {
-    margin-top: $spacing-xl;
+    margin-top: 0;
   }
 }
 
-// Grille de projets
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+// Conteneur de projets
+.projects-container {
+  display: flex;
+  flex-direction: column;
   gap: $spacing-xl;
-  
-  @media (max-width: $breakpoint-md) {
-    grid-template-columns: 1fr;
-  }
 }
 
 // Carte de projet
@@ -58,44 +72,143 @@
   border-radius: $border-radius-lg;
   overflow: hidden;
   box-shadow: $shadow-small;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  transition: box-shadow $transition-fast;
   
   &:hover {
-    transform: translateY(-10px);
     box-shadow: $shadow-medium;
   }
   
-  &__image {
-    height: 200px;
-    overflow: hidden;
+  &__header {
+    display: flex;
+    align-items: center;
+    padding: $spacing-md;
+    border-bottom: 1px solid #eaeaea;
+    background-color: #f8f9fa;
     
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
+    .project-image {
+      width: 80px;
+      height: 80px;
+      border-radius: $border-radius-md;
+      overflow: hidden;
+      margin-right: $spacing-md;
+      flex-shrink: 0;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      .placeholder-image {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #e9ecef;
+        color: $color-blue;
+        font-size: 2rem;
+      }
     }
     
-    .project-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba($color-blue, 0.1);
-      color: $color-blue;
-      font-size: 3rem;
+    .project-info {
+      h3 {
+        margin: 0 0 $spacing-xs 0;
+        font-size: 1.2rem;
+        color: $color-dark;
+      }
     }
   }
   
-  &__content {
+  &__body {
     padding: $spacing-lg;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    
+    .project-description {
+      color: $color-gray-dark;
+      margin-bottom: $spacing-md;
+      line-height: 1.5;
+    }
+    
+    .project-technologies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-xs;
+      margin-bottom: $spacing-md;
+      
+      .technology-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        background-color: rgba($color-blue, 0.1);
+        color: $color-blue;
+        border-radius: $border-radius-sm;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+    }
+    
+    .project-actions {
+      display: flex;
+      gap: $spacing-sm;
+      margin-top: $spacing-md;
+      
+      .btn {
+        padding: 8px 16px;
+        border-radius: $border-radius-md;
+        font-weight: 500;
+        transition: all $transition-fast;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        
+        &-primary {
+          background-color: $color-blue;
+          color: white;
+          
+          &:hover {
+            background-color: darken($color-blue, 10%);
+          }
+        }
+        
+        &-icon {
+          width: 36px;
+          height: 36px;
+          padding: 0;
+          border-radius: 50%;
+          background-color: #f1f3f5;
+          color: $color-gray-dark;
+          
+          &:hover {
+            background-color: #e9ecef;
+            color: $color-blue;
+          }
+          
+          i {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+  
+  .project-type-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: $border-radius-sm;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    &.type-development {
+      background-color: rgba($color-blue, 0.1);
+      color: $color-blue;
+    }
+    
+    &.type-retouche {
+      background-color: rgba($color-green, 0.1);
+      color: $color-green;
+    }
   }
   
   &__title {
@@ -156,6 +269,43 @@
           background-color: rgba($color-blue, 0.1);
         }
       }
+    }
+  }
+}
+
+// Styles pour l'en-tête des formulaires d'administration des projets
+.admin-experience-container {
+  .content-section {
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      background-color: transparent;
+      color: $color-dark;
+      padding: 0;
+      margin-bottom: $spacing-xl;
+
+      div:first-child { 
+        h2 {
+          margin: 0;
+          font-size: 1.8rem;
+          color: $color-dark;
+          transition: none !important;
+        }
+
+        .subtitle {
+          margin: $spacing-xs 0 0 0;
+          font-size: 1rem;
+          color: $color-dark;
+          transition: none !important;
+        }
+      }
+
+      // .header-actions {
+      //   .animated-action-button {
+      //     // Ajustements si nécessaire pour le contraste du bouton "Retour"
+      //   }
+      // }
     }
   }
 }
@@ -289,24 +439,6 @@
       &:hover {
         text-decoration: underline;
       }
-    }
-  }
-}
-
-// Styles pour la page vide
-.empty-state {
-  text-align: center;
-  padding: $spacing-xl;
-  background-color: white;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-small;
-  
-  p {
-    color: rgba($color-dark, 0.7);
-    margin-bottom: $spacing-md;
-    
-    &:last-child {
-      margin-bottom: 0;
     }
   }
 }

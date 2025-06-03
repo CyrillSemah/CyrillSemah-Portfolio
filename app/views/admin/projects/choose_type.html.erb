@@ -1,0 +1,93 @@
+<div class="admin-projects-container">
+  <div class="container">
+    <!-- Menu de navigation admin -->
+    <div class="admin-nav">
+      <ul class="admin-nav__list">
+        <li class="admin-nav__item">
+          <%= link_to "Page d'accueil", admin_home_sections_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Formations", admin_educations_path %>
+        </li>
+        <li class="admin-nav__item">
+          <%= link_to "Compétences", admin_skills_path %>
+        </li>
+        <li class="admin-nav__item active">
+          <%= link_to "Projets", admin_projects_path %>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="project-type-selection-container">
+      <div class="project-type-selection__header">
+        <h2>Choisir le type de projet</h2>
+        <div class="header-actions">
+          <%= link_to admin_projects_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+            <span class="button-text">Retour à la liste</span>
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="admin-content">
+        <div class="project-type-selection">
+          <div class="project-type-cards-container">
+            <div class="project-type-card" data-controller="project-type">
+              <div class="project-type-card__inner">
+                  <div class="project-type-card__icon">
+                    <i class="fas fa-code"></i>
+                  </div>
+                  <h3 class="project-type-card__title">Développement</h3>
+                  <p class="project-type-card__description">
+                    Projets de développement web avec GitHub, démo en ligne, et technologies utilisées.
+                  </p>
+                  <div class="project-type-card__features">
+                    <ul>
+                      <li><i class="fas fa-check"></i> GitHub (optionnel)</li>
+                      <li><i class="fas fa-check"></i> URL de démo</li>
+                      <li><i class="fas fa-check"></i> Upload d'images multiples</li>
+                      <li><i class="fas fa-check"></i> Affichage carrousel</li>
+                    </ul>
+                  </div>
+                  <%= link_to "Choisir", new_admin_project_path(project_type: "development"), class: "btn btn-primary btn-block" %>
+                </div>
+              </div>
+            
+            <div class="project-type-card" data-controller="project-type">
+              <div class="project-type-card__inner">
+                  <div class="project-type-card__icon">
+                    <i class="fas fa-paint-brush"></i>
+                  </div>
+                  <h3 class="project-type-card__title">Retouche & Création</h3>
+                  <p class="project-type-card__description">
+                    Projets de design, retouche photo ou création graphique pour des entreprises.
+                  </p>
+                  <div class="project-type-card__features">
+                    <ul>
+                      <li><i class="fas fa-check"></i> Sélection d'entreprise</li>
+                      <li><i class="fas fa-check"></i> Images avant/après</li>
+                      <li><i class="fas fa-check"></i> Méthodes d'affichage variées</li>
+                      <li><i class="fas fa-check"></i> Descriptions par visuel</li>
+                    </ul>
+                  </div>
+                  <%= link_to "Choisir", new_admin_project_path(project_type: "retouche_creation"), class: "btn btn-primary btn-block" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :styles do %>
+  <style>
+    /* Les styles ont été déplacés dans le fichier _project_type_selection.scss */
+  </style>
+<% end %>

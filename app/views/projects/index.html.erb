@@ -1,48 +1,116 @@
-<section class="section section-projects">
+<section id="projects" class="section section-projects">
   <div class="container">
     <div class="section-projects__header">
-      <h1>Mes Projets</h1>
-      <p class="section-projects__subtitle">Découvrez mes réalisations et projets personnels</p>
+      <h2>Mes projets</h2>
     </div>
     
-    <div class="section-projects__content">
-      <% if @projects.any? %>
-        <div class="projects-grid">
-          <% @projects.each do |project| %>
-            <div class="project-card">
-              <div class="project-card__image">
-                <% if project.image.attached? %>
-                  <%= image_tag project.image, alt: project.title %>
-                <% else %>
-                  <div class="project-placeholder">
-                    <i class="fas fa-code"></i>
-                  </div>
-                <% end %>
-              </div>
-              <div class="project-card__content">
-                <h3 class="project-card__title"><%= project.title %></h3>
-                <div class="project-card__technologies">
-                  <% project.technologies.split(',').each do |tech| %>
-                    <span class="technology-tag"><%= tech.strip %></span>
+    <div class="section-projects__filters">
+      <ul class="filters-list">
+        <li class="filter-item active" data-filter="all">Tous</li>
+        <li class="filter-item" data-filter="development">Développement</li>
+        <li class="filter-item" data-filter="retouche">Retouche & Création</li>
+      </ul>
+    </div>
+    
+    <div class="section-projects__content" style="margin: 0; padding: 0;">
+      <% if @projects.empty? %>
+        <div class="empty-state" style="margin: 0; padding: 40px 20px; background-color: #f8f9fa; border-radius: 12px;">
+          <div class="empty-icon">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <h3>Aucun projet n'a encore été ajouté</h3>
+          <p>Créez votre premier projet pour personnaliser la page des projets de votre portfolio.</p>
+          <%= link_to new_project_path, class: "btn btn-primary" do %>
+            <i class="fas fa-plus"></i> Créer un projet
+          <% end %>
+        </div>
+      <% else %>
+        <div class="projects-container">
+          <!-- Projets de développement -->
+          <% @development_projects.each do |project| %>
+            <div class="project-card" data-type="development">
+              <div class="project-card__header">
+                <div class="project-image">
+                  <% if project.image.attached? %>
+                    <%= image_tag project.image, alt: project.title %>
+                  <% else %>
+                    <div class="placeholder-image">
+                      <i class="fas fa-code"></i>
+                    </div>
                   <% end %>
                 </div>
-                <p class="project-card__description"><%= truncate(project.description, length: 150) %></p>
-                <div class="project-card__actions">
-                  <%= link_to "Voir détails", projet_path(project), class: "btn btn-primary" %>
-                  <% if project.github_url.present? %>
-                    <%= link_to "GitHub", project.github_url, target: "_blank", class: "btn btn-outline" %>
+                <div class="project-info">
+                  <h3><%= project.title %></h3>
+                  <span class="project-type-badge type-development">Développement</span>
+                </div>
+              </div>
+              
+              <div class="project-card__body">
+                <div class="project-description">
+                  <%= truncate(project.description, length: 150) %>
+                </div>
+                
+                <div class="project-technologies">
+                  <% project.technologies.split(',').each do |tech| %>
+                    <span class="technology-badge"><%= tech.strip %></span>
                   <% end %>
+                </div>
+                
+                <div class="project-actions">
+                  <%= link_to "Voir détails", projet_path(project), class: "btn btn-primary" %>
+                  
+                  <% if project.github_url.present? %>
+                    <%= link_to project.github_url, target: "_blank", class: "btn btn-icon" do %>
+                      <i class="fab fa-github"></i>
+                    <% end %>
+                  <% end %>
+                  
                   <% if project.live_url.present? %>
-                    <%= link_to "Démo", project.live_url, target: "_blank", class: "btn btn-outline" %>
+                    <%= link_to project.live_url, target: "_blank", class: "btn btn-icon" do %>
+                      <i class="fas fa-external-link-alt"></i>
+                    <% end %>
                   <% end %>
                 </div>
               </div>
             </div>
           <% end %>
-        </div>
-      <% else %>
-        <div class="empty-state">
-          <p>Aucun projet n'a encore été ajouté.</p>
+          
+          <!-- Projets de retouche & création -->
+          <% @retouche_creation_projects.each do |project| %>
+            <div class="project-card" data-type="retouche">
+              <div class="project-card__header">
+                <div class="project-image">
+                  <% if project.image.attached? %>
+                    <%= image_tag project.image, alt: project.title %>
+                  <% else %>
+                    <div class="placeholder-image">
+                      <i class="fas fa-paint-brush"></i>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="project-info">
+                  <h3><%= project.title %></h3>
+                  <span class="project-type-badge type-retouche">Retouche & Création</span>
+                </div>
+              </div>
+              
+              <div class="project-card__body">
+                <div class="project-description">
+                  <%= truncate(project.description, length: 150) %>
+                </div>
+                
+                <div class="project-technologies">
+                  <% project.technologies.split(',').each do |tech| %>
+                    <span class="technology-badge"><%= tech.strip %></span>
+                  <% end %>
+                </div>
+                
+                <div class="project-actions">
+                  <%= link_to "Voir détails", projet_path(project), class: "btn btn-primary" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
       <% end %>
     </div>

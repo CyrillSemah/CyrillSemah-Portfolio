@@ -1,0 +1,175 @@
+// Styles pour la page de sélection du type de projet
+@import 'variables';
+.project-type-selection-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+  
+  &__header, .project-type-selection__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-xl; // Modifié de $spacing-lg à $spacing-xl (32px)
+    padding-top: $spacing-xl; // Ajouté (32px)
+    
+    h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: $color-dark;
+      margin: 0;
+    }
+  }
+}
+
+// Conteneur pour les cartes de type de projet
+.project-type-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin: 0 auto;
+  
+  @media (min-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+// Améliorations pour les cartes de type de projet
+.project-type-card {
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+  
+  @media (min-width: 768px) {
+    width: calc(50% - 15px);
+    max-width: 500px;
+  }
+  
+  &__inner {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+  }
+  
+  &:hover &__inner {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+  
+  &__icon {
+    font-size: 2.5rem;
+    color: $color-blue;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  &__description {
+    color: #666;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+  
+  &__features {
+    margin-bottom: 1.5rem;
+    
+    ul {
+      list-style: none;
+      padding-left: 0;
+      
+      li {
+        margin-bottom: 0.5rem;
+        
+        i {
+          color: #2ecc71;
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+  
+  .btn-block {
+    display: block;
+    width: 100%;
+  }
+  
+  // Styles spécifiques pour les boutons dans les cartes de type de projet
+  .btn-primary {
+    background-color: $color-blue;
+    border-color: $color-blue;
+    color: white;
+    font-weight: 500;
+    transition: all $transition-normal;
+    
+    &:hover, &:focus {
+      background-color: lighten($color-blue, 10%);
+      border-color: lighten($color-blue, 10%);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    &:active {
+      background-color: darken($color-blue, 5%);
+      border-color: darken($color-blue, 5%);
+      color: white;
+      transform: translateY(0);
+    }
+  }
+  &:hover {
+    .project-type-card__icon .icon-circle {
+      transform: scale(1.05);
+      background-color: rgba($color-blue, 0.15);
+    }
+    
+    .project-type-card__action .btn {
+      background-color: darken($color-blue, 5%);
+    }
+  }
+  
+  &__icon {
+    .icon-circle {
+      transition: all $transition-fast;
+    }
+  }
+  
+  &__features {
+    ul {
+      li {
+        i {
+          width: 16px;
+          height: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: rgba($color-green, 0.1);
+          border-radius: 50%;
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+  
+  &__action {
+    .btn {
+      font-weight: 500;
+      transition: all $transition-fast;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+  }
+}
