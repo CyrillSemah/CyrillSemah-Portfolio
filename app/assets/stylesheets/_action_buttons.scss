@@ -1,0 +1,66 @@
+// Styles dédiés pour les boutons d'action dans l'admin
+// Utilisés à la fois dans la liste des projets et dans l'édition des images du carrousel
+
+// Conteneur des actions
+.actions-cell {
+  width: 130px;
+  
+  .action-buttons {
+    display: flex;
+    flex-direction: row; // Assure que les boutons sont horizontaux
+    gap: 8px;
+    justify-content: flex-start;
+  }
+  
+  .action-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    background-color: rgba(#f8f9fa, 0.8);
+    border: 1px solid #e9ecef;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0;
+    
+    i {
+      font-size: 0.875rem;
+    }
+    
+    &.view:hover {
+      background-color: rgba(#0d6efd, 0.1);
+      color: #0d6efd;
+      border-color: rgba(#0d6efd, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    &.edit:hover {
+      background-color: rgba(#1d9f62, 0.1);
+      color: #1d9f62;
+      border-color: rgba(#1d9f62, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    &.delete:hover {
+      background-color: rgba(#dc3545, 0.1);
+      color: #dc3545;
+      border-color: rgba(#dc3545, 0.2);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Styles spécifiques pour les boutons dans le carrousel d'images
+.development-image-item {
+  .actions-cell {
+    margin-top: 8px;
+    width: 100%;
+    
+    .action-buttons {
+      justify-content: center; // Centre les boutons horizontalement sous l'image
+    }
+  }
+}

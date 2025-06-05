@@ -17,6 +17,7 @@ import './toggle_group'; // Réduction/expansion des groupes
 import './image_modal'; // Gestion des modales d'images pour les formations
 import './section_transition'; // Effet de transition entre les sections
 import './tag_canvas_fix'; // Correctif pour les événements non passifs de TagCanvas
+import './carousel_images'; // Gestion des images du carrousel dans le formulaire d'édition de projet
 
 document.addEventListener('DOMContentLoaded', function() {
   // Message informatif uniquement en mode admin
