@@ -160,53 +160,7 @@
     }
   }
   
-  // Cellule d'actions
-  .actions-cell {
-    width: 130px;
-    
-    .action-buttons {
-      display: flex;
-      gap: 8px;
-    }
-    
-    .action-button {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all $transition-fast;
-      background-color: rgba(#f8f9fa, 0.8);
-      border: 1px solid #e9ecef;
-      color: $color-gray;
-      
-      i {
-        font-size: 0.875rem;
-      }
-      
-      &.view:hover {
-        background-color: rgba($color-blue, 0.1);
-        color: $color-blue;
-        border-color: rgba($color-blue, 0.2);
-        transform: translateY(-2px);
-      }
-      
-      &.edit:hover {
-        background-color: rgba($color-green, 0.1);
-        color: $color-green;
-        border-color: rgba($color-green, 0.2);
-        transform: translateY(-2px);
-      }
-      
-      &.delete:hover {
-        background-color: rgba($color-red, 0.1);
-        color: $color-red;
-        border-color: rgba($color-red, 0.2);
-        transform: translateY(-2px);
-      }
-    }
-  }
+  // Cellule d'actions - Les styles ont été déplacés dans _action_buttons.scss
   
   // État vide - Utilise les styles communs définis dans _admin_header_icon.scss
   // Pas besoin de définir des styles spécifiques ici

@@ -291,14 +291,31 @@
     .section-info {
       flex: 1;
       
-      .section-title {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: $color-dark;
+      .section-title-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin-bottom: $spacing-xs;
+        width: 100%;
         
-        &.active-title {
-          color: $color-red;
+        .section-title {
+          font-size: 1.2rem;
+          font-weight: 600;
+          color: $color-dark;
+          flex: 1;
+          
+          &.active-title {
+            color: $color-red;
+          }
+        }
+        
+        .actions-cell {
+          margin-left: $spacing-md;
+          position: static;
+          
+          .action-buttons {
+            justify-content: flex-end;
+          }
         }
       }
       
@@ -357,59 +374,19 @@
   }
 }
 
-// Boutons d'action
-.action-button {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  color: $color-dark;
-  box-shadow: $shadow-small;
-  position: relative;
-  z-index: 20;
-  border: none;
-  cursor: pointer;
-  transition: all $transition-fast;
-  
+// Les styles des boutons d'action ont été déplacés dans _action_buttons.scss
+
+.action-button.activate {
   &:hover {
-    transform: scale(1.1);
-    background-color: rgba($color-blue, 0.1);
+    color: darken($color-blue, 15%);
+    transform: translateY(-2px);
   }
-  
-  i {
-    font-size: 14px;
-  }
-  
-  &.view-button {
-    color: $color-blue;
-  }
-  
-  &.edit-button {
-    color: $color-dark;
-  }
-  
-  &.delete-button {
-    color: $color-red;
-  }
-  
-  &.activate-button {
-    color: $color-blue;
-    cursor: pointer;
-    transition: all $transition-fast;
-    
-    &:hover {
-      color: darken($color-blue, 15%);
-      transform: scale(1.15);
-    }
-    
-    &.js-activate-section {
-      position: relative;
-      z-index: 30;
-    }
-  }
+}
+
+// Style spécifique pour le bouton d'activation JavaScript
+.js-activate-section {
+  position: relative;
+  z-index: 30;
 }
 
 // Styles pour la page de détail

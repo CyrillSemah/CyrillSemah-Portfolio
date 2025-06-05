@@ -1,17 +1,22 @@
-<div class="admin-projects-container">
+<div class="admin-experience-container">
   <div class="container">
     <!-- Menu de navigation admin -->
     <%= render 'admin/shared/admin_nav' %>
-    
-    <div class="project-form">
-      <div class="project-form__header">
-        <h2>
-          <% if @project.development? %>
-            Modifier le projet de développement
-          <% else %>
-            Modifier le projet de retouche & création
-          <% end %>
-        </h2>
+
+    <div class="content-section">
+      <div class="content-header">
+        <div>
+          <h2>
+            <% if @project.development? %>
+              Modifier le projet de développement
+            <% else %>
+              Modifier le projet de retouche & création
+            <% end %>
+          </h2>
+          <p class="subtitle">
+            Modifiez les informations de votre projet.
+          </p>
+        </div>
         <div class="header-actions">
           <%= link_to admin_projects_path, class: "animated-action-button" do %>
             <div class="icon-container">
@@ -21,95 +26,121 @@
           <% end %>
         </div>
       </div>
-  
-      <div class="admin-content" data-controller="project-form">
-        <%= form_with(model: [:admin, @project], local: true, html: { class: 'form', multipart: true }) do |form| %>
-          <% if @project.errors.any? %>
-            <div class="alert alert-danger">
-              <h2><%= pluralize(@project.errors.count, "erreur") %> :</h2>
-              <ul>
-                <% @project.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
+
+      <%= form_with(model: [:admin, @project], local: true, html: { class: 'form', multipart: true, data: { controller: 'project-form' } }) do |form| %>
+        <% if @project.errors.any? %>
+          <div class="alert alert-danger">
+            <h2><%= pluralize(@project.errors.count, "erreur") %> :</h2>
+            <ul>
+              <% @project.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <%= form.hidden_field :project_type %>
+
+        <!-- Champs communs aux deux types de projets -->
+        <div class="experience-list__group mb-4">
+          <div class="experience-list__group-header">
+            <h3 class="mb-0">Informations générales du projet</h3>
+          </div>
+          <div class="experience-list__group-items">
+            <div class="experience-list__item">
+              <div class="experience-list__item-body">
+                <div class="form-group">
+                  <%= form.label :title, "Titre" %>
+                  <%= form.text_field :title, class: 'form-control' %>
+                </div>
+
+                <div class="form-group">
+                  <%= form.label :technologies, "Technologies (séparées par des virgules)" %>
+                  <%= form.text_field :technologies, class: 'form-control', placeholder: "Ruby on Rails, JavaScript, PostgreSQL" %>
+                </div>
+
+                <div class="form-group">
+                  <%= form.label :description, "Description" %>
+                  <%= form.text_area :description, class: 'form-control', rows: 6 %>
+                </div>
+
+                <div class="form-group">
+                  <%= form.label :position, "Position" %>
+                  <%= form.number_field :position, class: 'form-control' %>
+                </div>
+              </div>
             </div>
-          <% end %>
-          
-          <%= form.hidden_field :project_type %>
-          
-          <!-- Champs communs aux deux types de projets -->
-          <div class="form-group">
-            <%= form.label :title, "Titre" %>
-            <%= form.text_field :title, class: 'form-control' %>
           </div>
-          
-          <div class="form-group">
-            <%= form.label :technologies, "Technologies (séparées par des virgules)" %>
-            <%= form.text_field :technologies, class: 'form-control', placeholder: "Ruby on Rails, JavaScript, PostgreSQL" %>
-          </div>
-          
-          <div class="form-group">
-            <%= form.label :description, "Description" %>
-            <%= form.text_area :description, class: 'form-control', rows: 6 %>
-          </div>
-          
-          <div class="form-group">
-            <%= form.label :position, "Position" %>
-            <%= form.number_field :position, class: 'form-control' %>
-          </div>
+        </div>
           
           <!-- Champs spécifiques au type Développement -->
           <% if @project.development? %>
-            <div class="card mb-4">
-              <div class="card-header bg-primary text-white">
-                <h3 class="h5 mb-0">Informations spécifiques au projet de développement</h3>
+            <div class="experience-list__group mb-4">
+              <div class="experience-list__group-header">
+                <h3 class="mb-0">Informations spécifiques au projet de développement</h3>
               </div>
-              <div class="card-body">
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <%= form.label :github_url, "URL GitHub (optionnel)" %>
-                    <%= form.url_field :github_url, class: 'form-control', placeholder: "https://github.com/username/project" %>
-                  </div>
-                  
-                  <div class="form-group col-md-6">
-                    <%= form.label :live_url, "URL Démo (optionnel)" %>
-                    <%= form.url_field :live_url, class: 'form-control', placeholder: "https://example.com" %>
-                  </div>
-                </div>
-                
-                <div class="form-group">
-                  <%= form.label :image, "Image principale du projet" %>
-                  
-                  <% if @project.image.attached? %>
-                    <div class="current-image mb-3">
-                      <%= image_tag @project.image.variant(resize_to_limit: [300, 200]), alt: @project.title %>
-                      <p class="text-muted">Image actuelle</p>
-                    </div>
-                  <% end %>
-                  
-                  <%= form.file_field :image, class: 'form-control-file', direct_upload: true %>
-                </div>
-                
-                <div class="form-group">
-                  <%= form.label :development_images, "Images additionnelles (carrousel)" %>
-                  
-                  <% if @project.development_images.attached? %>
-                    <div class="current-images mb-3">
-                      <div class="row">
-                        <% @project.development_images.each do |image| %>
-                          <div class="col-md-3 mb-2">
-                            <div class="image-preview">
-                              <%= image_tag image.variant(resize_to_limit: [150, 100]), alt: @project.title %>
-                            </div>
-                          </div>
-                        <% end %>
+              <div class="experience-list__group-items">
+                <div class="experience-list__item">
+                  <div class="experience-list__item-body">
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <%= form.label :github_url, "URL GitHub (optionnel)" %>
+                        <%= form.url_field :github_url, class: 'form-control', placeholder: "https://github.com/username/project" %>
                       </div>
-                      <p class="text-muted">Images actuelles du carrousel</p>
+                      
+                      <div class="form-group col-md-6">
+                        <%= form.label :live_url, "URL Démo (optionnel)" %>
+                        <%= form.url_field :live_url, class: 'form-control', placeholder: "https://example.com" %>
+                      </div>
                     </div>
-                  <% end %>
-                  
-                  <%= form.file_field :development_images, multiple: true, class: 'form-control-file', direct_upload: true %>
-                  <small class="form-text text-muted">Vous pouvez sélectionner plusieurs images pour le carrousel. Les nouvelles images seront ajoutées aux existantes.</small>
+                    
+                    <div class="form-group">
+                      <%= form.label :image, "Image principale du projet" %>
+                      
+                      <% if @project.image.attached? %>
+                        <div class="current-image mb-3">
+                          <%= image_tag @project.image.variant(resize_to_limit: [300, 200]), alt: @project.title %>
+                          <p class="text-muted">Image actuelle</p>
+                        </div>
+                      <% end %>
+                      
+                      <%= form.file_field :image, class: 'form-control-file', direct_upload: true %>
+                    </div>
+                    
+                    <div class="form-group">
+                      <%= form.label :development_images, "Images additionnelles (carrousel)" %>
+                      
+                      <% if @project.development_images.attached? %>
+                        <div class="current-development-images-container mb-3">
+                          <p class="text-muted mb-2">Images actuelles du carrousel :</p>
+                          <div class="current-development-images-list">
+                            <% @project.development_images_attachments.each_with_index do |attachment, index| %>
+                              <% image_blob = attachment.blob %>
+                              <div class="development-image-item" id="development_attachment_<%= attachment.id %>">
+                                <%= image_tag image_blob.variant(resize_to_limit: [150, 100]), alt: "#{@project.title} - Image Carrousel #{index + 1}", class: "carousel-thumbnail" %>
+                                <div class="actions-cell">
+                                  <div class="action-buttons">
+                                    <button type="button" class="action-button view btn-view-image" data-attachment-id="<%= attachment.id %>" data-project-id="<%= @project.id %>" data-image-url="<%= url_for(image_blob) %>">
+                                      <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button type="button" class="action-button edit btn-modify-image" data-attachment-id="<%= attachment.id %>" data-project-id="<%= @project.id %>">
+                                      <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button" class="action-button delete btn-delete-image" data-attachment-id="<%= attachment.id %>" data-project-id="<%= @project.id %>">
+                                      <i class="fas fa-trash"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            <% end %>
+                          </div>
+                        </div>
+                      <% end %>
+                      
+                      <%= form.file_field :development_images, multiple: true, class: 'form-control-file', direct_upload: true %>
+                      <small class="form-text text-muted">Vous pouvez sélectionner plusieurs images pour le carrousel. Les nouvelles images seront ajoutées aux existantes.</small>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -117,111 +148,117 @@
           
           <!-- Champs spécifiques au type Retouche & Création -->
           <% if @project.retouche_creation? %>
-            <div class="card mb-4">
-              <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-                <h3 class="h5 mb-0">Visuels du projet</h3>
+            <div class="experience-list__group mb-4">
+              <div class="experience-list__group-header">
+                <h3 class="mb-0">Visuels du projet</h3>
                 <%= link_to add_visual_admin_project_path(@project), class: "btn btn-sm btn-light", data: { turbo_method: :post, turbo_frame: "project_visuals" } do %>
                   <i class="fas fa-plus"></i> Ajouter un visuel
                 <% end %>
               </div>
-              <div class="card-body">
-                <div id="project_visuals">
-                  <%= form.fields_for :project_visuals do |visual_form| %>
-                    <div class="visual-form-container mb-4 p-3 border rounded">
-                      <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="h6 mb-0">Visuel #<%= visual_form.object.position + 1 %></h4>
-                        <div class="form-check">
-                          <%= visual_form.check_box :_destroy, class: "form-check-input", id: "delete_visual_#{visual_form.object.id}" unless visual_form.object.new_record? %>
-                          <%= visual_form.label :_destroy, "Supprimer ce visuel", class: "form-check-label text-danger", for: "delete_visual_#{visual_form.object.id}" unless visual_form.object.new_record? %>
-                        </div>
-                      </div>
-                      
-                      <%= visual_form.hidden_field :position %>
-                      
-                      <div class="form-group">
-                        <%= visual_form.label :company, "Entreprise" %>
-                        <div class="input-group" data-controller="company-field">
-                          <%= visual_form.text_field :company, class: 'form-control', placeholder: "Nom de l'entreprise", data: { action: "input->company-field#checkOther", "company-field-target": "input" } %>
-                          <div class="input-group-append">
-                            <div class="input-group-text">
-                              <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="other_company_<%= visual_form.index %>" data-action="change->company-field#toggleOther" data-company-field-target="checkbox">
-                                <label class="form-check-label" for="other_company_<%= visual_form.index %>">Autre</label>
+              <div class="experience-list__group-items">
+                <div class="experience-list__item">
+                  <div class="experience-list__item-body">
+                    <div id="project_visuals">
+                      <%= form.fields_for :project_visuals do |visual_form| %>
+                        <div class="visual-form-container mb-4 p-3 border rounded">
+                          <div class="development-images-header">
+                            <h4 class="h6 mb-0">Visuel #<%= visual_form.object.position + 1 %></h4>
+                            <div class="form-check">
+                              <%= visual_form.check_box :_destroy, class: "form-check-input", id: "delete_visual_#{visual_form.object.id}" unless visual_form.object.new_record? %>
+                              <%= visual_form.label :_destroy, "Supprimer ce visuel", class: "form-check-label text-danger", for: "delete_visual_#{visual_form.object.id}" unless visual_form.object.new_record? %>
+                            </div>
+                          </div>
+                          
+                          <%= visual_form.hidden_field :position %>
+                          
+                          <div class="form-group">
+                            <%= visual_form.label :company, "Entreprise" %>
+                            <div class="input-group" data-controller="company-field">
+                              <%= visual_form.text_field :company, class: 'form-control', placeholder: "Nom de l'entreprise", data: { action: "input->company-field#checkOther", "company-field-target": "input" } %>
+                              <div class="input-group-append">
+                                <div class="input-group-text">
+                                  <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="other_company_<%= visual_form.index %>" data-action="change->company-field#toggleOther" data-company-field-target="checkbox">
+                                    <label class="form-check-label" for="other_company_<%= visual_form.index %>">Autre</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="form-group">
+                            <%= visual_form.label :description, "Description" %>
+                            <%= visual_form.text_area :description, class: 'form-control', rows: 3 %>
+                          </div>
+                          
+                          <div class="form-row">
+                            <div class="form-group col-md-6">
+                              <%= visual_form.label :visual_type, "Type de visuel" %>
+                              <%= visual_form.select :visual_type, ProjectVisual.visual_types.keys.map { |k| [k.humanize, k] }, {}, class: 'form-control', data: { action: "change->project-form#toggleVisualType", "project-form-target": "visualType" } %>
+                            </div>
+                            
+                            <div class="form-group col-md-6">
+                              <%= visual_form.label :display_type, "Méthode d'affichage" %>
+                              <%= visual_form.select :display_type, ProjectVisual.display_types.keys.map { |k| [k.humanize, k] }, {}, class: 'form-control', data: { "project-form-target": "displayType" } %>
+                            </div>
+                          </div>
+                          
+                          <div class="visual-images" data-project-form-target="visualImages">
+                            <div class="form-row">
+                              <div class="form-group col-md-6 before-image-group" data-project-form-target="beforeImageGroup">
+                                <%= visual_form.label :before_image, "Image avant" %>
+                                
+                                <% if visual_form.object.before_image.attached? %>
+                                  <div class="current-image mb-3">
+                                    <%= image_tag visual_form.object.before_image.variant(resize_to_limit: [200, 150]), alt: "Image avant" %>
+                                    <p class="text-muted">Image avant actuelle</p>
+                                  </div>
+                                <% end %>
+                                
+                                <%= visual_form.file_field :before_image, class: 'form-control-file', direct_upload: true %>
+                              </div>
+                              
+                              <div class="form-group col-md-6 after-image-group" data-project-form-target="afterImageGroup">
+                                <%= visual_form.label :after_image, "Image après" %>
+                                
+                                <% if visual_form.object.after_image.attached? %>
+                                  <div class="current-image mb-3">
+                                    <%= image_tag visual_form.object.after_image.variant(resize_to_limit: [200, 150]), alt: "Image après" %>
+                                    <p class="text-muted">Image après actuelle</p>
+                                  </div>
+                                <% end %>
+                                
+                                <%= visual_form.file_field :after_image, class: 'form-control-file', direct_upload: true %>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                      <% end %>
                       
-                      <div class="form-group">
-                        <%= visual_form.label :description, "Description" %>
-                        <%= visual_form.text_area :description, class: 'form-control', rows: 3 %>
-                      </div>
-                      
-                      <div class="form-row">
-                        <div class="form-group col-md-6">
-                          <%= visual_form.label :visual_type, "Type de visuel" %>
-                          <%= visual_form.select :visual_type, ProjectVisual.visual_types.keys.map { |k| [k.humanize, k] }, {}, class: 'form-control', data: { action: "change->project-form#toggleVisualType", "project-form-target": "visualType" } %>
+                      <% if @project.project_visuals.empty? %>
+                        <div class="alert alert-info">
+                          <p>Aucun visuel n'a encore été ajouté à ce projet.</p>
+                          <p>Utilisez le bouton "Ajouter un visuel" ci-dessus pour commencer.</p>
                         </div>
-                        
-                        <div class="form-group col-md-6">
-                          <%= visual_form.label :display_type, "Méthode d'affichage" %>
-                          <%= visual_form.select :display_type, ProjectVisual.display_types.keys.map { |k| [k.humanize, k] }, {}, class: 'form-control', data: { "project-form-target": "displayType" } %>
-                        </div>
-                      </div>
-                      
-                      <div class="visual-images" data-project-form-target="visualImages">
-                        <div class="form-row">
-                          <div class="form-group col-md-6 before-image-group" data-project-form-target="beforeImageGroup">
-                            <%= visual_form.label :before_image, "Image avant" %>
-                            
-                            <% if visual_form.object.before_image.attached? %>
-                              <div class="current-image mb-3">
-                                <%= image_tag visual_form.object.before_image.variant(resize_to_limit: [200, 150]), alt: "Image avant" %>
-                                <p class="text-muted">Image avant actuelle</p>
-                              </div>
-                            <% end %>
-                            
-                            <%= visual_form.file_field :before_image, class: 'form-control-file', direct_upload: true %>
-                          </div>
-                          
-                          <div class="form-group col-md-6 after-image-group" data-project-form-target="afterImageGroup">
-                            <%= visual_form.label :after_image, "Image après" %>
-                            
-                            <% if visual_form.object.after_image.attached? %>
-                              <div class="current-image mb-3">
-                                <%= image_tag visual_form.object.after_image.variant(resize_to_limit: [200, 150]), alt: "Image après" %>
-                                <p class="text-muted">Image après actuelle</p>
-                              </div>
-                            <% end %>
-                            
-                            <%= visual_form.file_field :after_image, class: 'form-control-file', direct_upload: true %>
-                          </div>
-                        </div>
-                      </div>
+                      <% end %>
                     </div>
-                  <% end %>
-                  
-                  <% if @project.project_visuals.empty? %>
-                    <div class="alert alert-info">
-                      <p>Aucun visuel n'a encore été ajouté à ce projet.</p>
-                      <p>Cliquez sur "Ajouter un visuel" pour commencer.</p>
-                    </div>
-                  <% end %>
+                  </div>
                 </div>
               </div>
             </div>
           <% end %>
           
-          <div class="form-actions">
-            <%= form.submit "Mettre à jour le projet", class: "btn btn-primary" %>
-            <%= link_to "Annuler", admin_projects_path, class: "btn btn-outline" %>
+          <div class="experience-list__item-actions">
+            <%= link_to "Annuler", admin_projects_path, class: "btn btn-view" %>
+            <%= form.submit "Mettre à jour le projet", class: "btn btn-edit" %>
           </div>
         <% end %>
       </div>
     </div>
   </div>
 </div>
+
+<%= render 'shared/image_preview_modal' %>
 
 <% content_for :styles do %>
   <style>

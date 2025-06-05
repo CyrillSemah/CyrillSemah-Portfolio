@@ -16,6 +16,8 @@ Rails.application.routes.draw do
       end
       member do
         post :add_visual
+        delete 'delete_development_image/:image_id', to: 'projects#delete_development_image', as: :delete_development_image
+        patch 'replace_development_image/:image_id', to: 'projects#replace_development_image', as: :replace_development_image
       end
     end
     resources :home_sections do
