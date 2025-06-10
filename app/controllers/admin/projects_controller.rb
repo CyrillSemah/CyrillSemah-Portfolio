@@ -18,7 +18,7 @@ class Admin::ProjectsController < Admin::BaseController
       @project.project_visuals.build
       
       # Récupérer toutes les entreprises existantes pour le menu déroulant
-      @companies = ProfessionalExperience.select(:company_name).distinct.order(:company_name)
+      @companies = ProfessionalExperience.distinct.order(:company_name)
     end
   end
 
@@ -50,11 +50,14 @@ class Admin::ProjectsController < Admin::BaseController
       @project.project_visuals.build if @project.project_visuals.empty?
       
       # Récupérer toutes les entreprises existantes pour le menu déroulant
-      @companies = ProfessionalExperience.select(:company_name).distinct.order(:company_name)
+      @companies = ProfessionalExperience.distinct.order(:company_name)
     end
   end
 
   def update
+    Rails.logger.debug "Params reçus: #{params.inspect}"
+    Rails.logger.debug "project_params: #{project_params.inspect}"
+    
     if @project.update(project_params)
       redirect_to admin_projects_path, notice: 'Projet mis à jour avec succès.'
     else
@@ -214,29 +217,48 @@ class Admin::ProjectsController < Admin::BaseController
   end
   
   def project_params
-    # Paramètres de base pour tous les projets
-    base_params = [:title, :description, :technologies, :position, :project_type]
+    # Faire une copie des paramètres pour pouvoir les modifier
+    project_params = params.require(:project).permit(
+      :title, :description, :technologies, :position, :project_type,
+      development_images: [],
+      project_visuals_attributes: [
+        :id, :position, :description, :visual_type, :display_type, :company_name, :company_logo,
+        :professional_experience_id, :_destroy,
+        :before_image, :after_image
+      ]
+    )
     
-    # Paramètres spécifiques selon le type de projet
-    # Récupérer le type de projet actuel ou celui soumis dans les paramètres
-    current_project_type = @project&.project_type || params.dig(:project, :project_type)
-
-    
-    case current_project_type
-    when 'development'
-      base_params += [:github_url, :live_url, :image, development_images: []]
-    when 'retouche_creation'
-      base_params += [project_visuals_attributes: [:id, :description, :position, :display_type, :visual_type, :company, :company_name, :company_logo, :before_image, :after_image, :_destroy]]
+    # Si c'est un projet de type retouche_creation avec des visuels
+    if project_params[:project_visuals_attributes].present?
+      project_params[:project_visuals_attributes].each do |_, visual_attrs|
+        # Si l'utilisateur a choisi "Autre" comme entreprise
+        if visual_attrs[:professional_experience_id] == 'Autre'
+          # On met professional_experience_id à nil pour éviter l'erreur de clé étrangère
+          visual_attrs[:professional_experience_id] = nil
+          # On s'assure que le nom de l'entreprise est présent
+          if visual_attrs[:company_name].blank?
+            visual_attrs[:company_name] = 'Autre entreprise'
+          end
+          # On conserve le logo si présent
+          if visual_attrs[:company_logo].present?
+            visual_attrs[:company_logo] = visual_attrs[:company_logo]
+          end
+        else
+          # Si une entreprise existante est sélectionnée
+          if visual_attrs[:professional_experience_id].present?
+            # On s'assure que company_name est vide
+            visual_attrs[:company_name] = nil
+            # On supprime le logo car il sera récupéré depuis l'entreprise
+            visual_attrs.delete(:company_logo) if visual_attrs[:company_logo].present?
+          end
+        end
+      end
     end
     
-    # Assurons-nous que tous les paramètres sont inclus, quel que soit le type
-    # Cela évite les erreurs lors du changement de type de projet
-    all_params = params.require(:project).permit(base_params)
-    
     # Log pour débogage
-    Rails.logger.debug "Project params: #{all_params.inspect}"
+    Rails.logger.debug "Project params: #{project_params.inspect}"
     
-    all_params
+    project_params
   end
 
   # def authenticate_admin!

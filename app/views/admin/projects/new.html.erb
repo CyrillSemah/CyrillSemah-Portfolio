@@ -149,6 +149,16 @@
                           <div class="form-group">
                             <%= visual_form.label :company_logo, "Logo de l'entreprise" %>
                             <%= visual_form.file_field :company_logo, class: 'form-control-file', direct_upload: true, data: { "company-selector-target": "companyLogoField" } %>
+                            <% if visual_form.object.company_logo.attached? %>
+                              <div class="current-image mt-2">
+                                <% if visual_form.object.company_logo.content_type == 'image/svg+xml' %>
+                                  <%= image_tag visual_form.object.company_logo, style: 'max-width: 150px; max-height: 100px;', alt: "Logo entreprise" %>
+                                <% else %>
+                                  <%= image_tag visual_form.object.company_logo.variant(resize_to_limit: [150, 100]), alt: "Logo entreprise" %>
+                                <% end %>
+                                <p class="text-muted small">Format: <%= visual_form.object.company_logo.filename %></p>
+                              </div>
+                            <% end %>
                           </div>
                         </div>
                         
