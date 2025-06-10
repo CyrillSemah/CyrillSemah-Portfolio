@@ -350,15 +350,21 @@
   }
 }
 
-// Media query spécifique pour le mode admin (1009px)
+// Media query spécifique pour le mode admin
 @media (max-width: 1009px) {
   .navbar.admin-mode {
     .navbar__links {
-      display: none;
-    }
-    
-    .navbar__burger {
-      display: flex;
+      display: flex; // Toujours afficher les liens en mode admin
+      
+      a:not(.navbar__btn-contact) {
+        display: none; // Cacher les liens de navigation normaux
+      }
+      
+      // S'assurer que le kebab menu est toujours visible
+      .kebab-menu {
+        display: block;
+        margin-left: 0;
+      }
     }
   }
 }

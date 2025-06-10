@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_02_214104) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_10_103235) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -103,8 +103,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_02_214104) do
     t.string "company"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "company_name"
+    t.string "company_type", default: "existing"
+    t.bigint "professional_experience_id"
     t.index ["display_type"], name: "index_project_visuals_on_display_type"
     t.index ["position"], name: "index_project_visuals_on_position"
+    t.index ["professional_experience_id"], name: "index_project_visuals_on_professional_experience_id"
     t.index ["project_id"], name: "index_project_visuals_on_project_id"
     t.index ["visual_type"], name: "index_project_visuals_on_visual_type"
   end
@@ -163,6 +167,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_02_214104) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "home_images", "home_sections"
+  add_foreign_key "project_visuals", "professional_experiences"
   add_foreign_key "project_visuals", "projects"
   add_foreign_key "skills", "skill_groups"
 end

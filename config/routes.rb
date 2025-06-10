@@ -30,9 +30,13 @@ Rails.application.routes.draw do
         post :sort
       end
     end
-    resources :professional_experiences
-    resources :educations
     resources :skills
+    resources :professional_experiences do
+      member do
+        get :logo
+      end
+    end
+    resources :educations
     resources :soft_skills
   end
   

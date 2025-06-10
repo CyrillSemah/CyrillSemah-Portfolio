@@ -62,7 +62,7 @@
                   
                   <div class="form-group">
                     <%= form.label :technologies, "Technologies (séparées par des virgules)" %>
-                    <%= form.text_field :technologies, class: 'form-control', placeholder: "Ruby on Rails, JavaScript, PostgreSQL" %>
+                    <%= form.text_field :technologies, class: 'form-control', placeholder: "Ruby on Rails, JavaScript, PostgreSQL, Photoshop, Illustrator, InDesign" %>
                   </div>
                   
                   <div class="form-group">
@@ -125,7 +125,65 @@
               <div class="experience-list__group-items">
                 <div class="experience-list__item">
                   <div class="experience-list__item-body">
-                    <p class="text-muted mb-4">Après avoir créé le projet, vous pourrez ajouter des visuels (images avant/après ou simples) avec leurs descriptions.</p>
+                    <%= form.fields_for :project_visuals do |visual_form| %>
+                      <div class="visual-form-container mb-4 p-3 border rounded" id="visual-form-container">
+                        <%= visual_form.hidden_field :position, value: 0 %>
+                        
+                        <div class="form-group">
+                          <%= visual_form.label :professional_experience_id, "Entreprise" %>
+                          <%= visual_form.select :professional_experience_id, 
+                              options_for_select(@companies.map { |c| [c.company_name, c.id] } + [["Autre", "Autre"]]), 
+                              { include_blank: "Sélectionnez une entreprise" }, 
+                              { class: 'form-control', id: 'company-selector' } %>
+                          
+                          <!-- Prévisualisation du logo de l'entreprise sélectionnée -->
+                          <div class="company-logo-preview mt-3" data-company-selector-target="logoPreview" style="display: none;"></div>
+                        </div>
+                        
+                        <div class="other-company-fields" style="display: none;" id="other-company-fields">
+                          <div class="form-group">
+                            <%= visual_form.label :company_name, "Nom de l'entreprise" %>
+                            <%= visual_form.text_field :company_name, class: 'form-control', placeholder: "Nom de l'entreprise", data: { "company-selector-target": "companyNameField" } %>
+                          </div>
+                          
+                          <div class="form-group">
+                            <%= visual_form.label :company_logo, "Logo de l'entreprise" %>
+                            <%= visual_form.file_field :company_logo, class: 'form-control-file', direct_upload: true, data: { "company-selector-target": "companyLogoField" } %>
+                          </div>
+                        </div>
+                        
+                        <div class="form-group">
+                          <%= visual_form.label :description, "Description" %>
+                          <%= visual_form.text_area :description, class: 'form-control', rows: 3 %>
+                        </div>
+                        
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <%= visual_form.label :visual_type, "Type de visuel" %>
+                            <%= visual_form.select :visual_type, ProjectVisual.visual_types.keys.map { |k| [k.humanize, k] }, {}, class: 'form-control', data: { action: "change->project-form#toggleVisualType", "project-form-target": "visualType" } %>
+                          </div>
+                          
+                          <div class="form-group col-md-6">
+                            <%= visual_form.label :display_type, "Méthode d'affichage" %>
+                            <%= visual_form.select :display_type, ProjectVisual.display_types.keys.map { |k| [k.humanize, k] }, {}, class: 'form-control', data: { "project-form-target": "displayType" } %>
+                          </div>
+                        </div>
+                        
+                        <div class="visual-images" data-project-form-target="visualImages">
+                          <div class="form-row">
+                            <div class="form-group col-md-6 before-image-group" data-project-form-target="beforeImageGroup">
+                              <%= visual_form.label :before_image, "Image avant" %>
+                              <%= visual_form.file_field :before_image, class: 'form-control-file', direct_upload: true %>
+                            </div>
+                            
+                            <div class="form-group col-md-6 after-image-group" data-project-form-target="afterImageGroup">
+                              <%= visual_form.label :after_image, "Image après" %>
+                              <%= visual_form.file_field :after_image, class: 'form-control-file', direct_upload: true %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
                   </div>
                 </div>
               </div>
@@ -141,6 +199,38 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Sélectionner les éléments nécessaires
+    const companySelector = document.getElementById('company-selector');
+    const otherCompanyFields = document.getElementById('other-company-fields');
+    
+    if (companySelector && otherCompanyFields) {
+      // Fonction pour gérer l'affichage des champs conditionnels
+      function toggleOtherCompanyFields() {
+        console.log('Valeur sélectionnée:', companySelector.value);
+        
+        if (companySelector.value === 'Autre') {
+          otherCompanyFields.style.display = 'block';
+          console.log('Affichage des champs conditionnels');
+        } else {
+          otherCompanyFields.style.display = 'none';
+          console.log('Masquage des champs conditionnels');
+        }
+      }
+      
+      // Appliquer l'état initial
+      toggleOtherCompanyFields();
+      
+      // Ajouter un écouteur d'événement pour le changement de sélection
+      companySelector.addEventListener('change', toggleOtherCompanyFields);
+      console.log('Écouteur d\'événement ajouté au sélecteur d\'entreprise');
+    } else {
+      console.error('Éléments DOM non trouvés');
+    }
+  });
+</script>
 
 <% content_for :styles do %>
   <style>

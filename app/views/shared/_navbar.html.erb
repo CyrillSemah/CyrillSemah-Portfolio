@@ -45,11 +45,13 @@
       <% end %>
     </div>
     
+    <% if !request.path.start_with?('/admin') || !admin? %>
     <div class="navbar__burger burger-visible">
       <span></span>
       <span></span>
       <span></span>
     </div>
+    <% end %>
   </div>
   
   <div class="navbar__mobile">
