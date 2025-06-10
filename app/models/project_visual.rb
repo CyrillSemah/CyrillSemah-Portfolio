@@ -1,7 +1,9 @@
 class ProjectVisual < ApplicationRecord
   belongs_to :project
+  belongs_to :professional_experience, optional: true
   has_one_attached :before_image
   has_one_attached :after_image
+  has_one_attached :company_logo
   
   # Enum pour les types d'affichage
   enum :display_type, {

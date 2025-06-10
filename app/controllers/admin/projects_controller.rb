@@ -16,6 +16,9 @@ class Admin::ProjectsController < Admin::BaseController
     # Si c'est un projet de type retouche_creation, on prépare un visuel vide
     if @project.retouche_creation?
       @project.project_visuals.build
+      
+      # Récupérer toutes les entreprises existantes pour le menu déroulant
+      @companies = ProfessionalExperience.select(:company_name).distinct.order(:company_name)
     end
   end
 
@@ -43,8 +46,11 @@ class Admin::ProjectsController < Admin::BaseController
 
   def edit
     # S'assurer qu'il y a au moins un visuel pour les projets de retouche
-    if @project.retouche_creation? && @project.project_visuals.empty?
-      @project.project_visuals.build
+    if @project.retouche_creation?
+      @project.project_visuals.build if @project.project_visuals.empty?
+      
+      # Récupérer toutes les entreprises existantes pour le menu déroulant
+      @companies = ProfessionalExperience.select(:company_name).distinct.order(:company_name)
     end
   end
 
@@ -220,7 +226,7 @@ class Admin::ProjectsController < Admin::BaseController
     when 'development'
       base_params += [:github_url, :live_url, :image, development_images: []]
     when 'retouche_creation'
-      base_params += [project_visuals_attributes: [:id, :description, :position, :display_type, :visual_type, :company, :before_image, :after_image, :_destroy]]
+      base_params += [project_visuals_attributes: [:id, :description, :position, :display_type, :visual_type, :company, :company_name, :company_logo, :before_image, :after_image, :_destroy]]
     end
     
     # Assurons-nous que tous les paramètres sont inclus, quel que soit le type

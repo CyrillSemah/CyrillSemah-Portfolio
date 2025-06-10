@@ -1,6 +1,6 @@
 class Admin::ProfessionalExperiencesController < ApplicationController
   before_action :authenticate_admin!
-  before_action :set_professional_experience, only: [:show, :edit, :update, :destroy]
+  before_action :set_professional_experience, only: [:show, :edit, :update, :destroy, :logo]
   
   def index
     @professional_experiences = ProfessionalExperience.ordered_by_date
@@ -37,6 +37,16 @@ class Admin::ProfessionalExperiencesController < ApplicationController
   def destroy
     @professional_experience.destroy
     redirect_to admin_professional_experiences_path, notice: "L'expérience professionnelle a été supprimée avec succès."
+  end
+  
+  # Endpoint pour récupérer le logo d'une entreprise
+  def logo
+    if @professional_experience.logo.attached?
+      logo_url = rails_blob_path(@professional_experience.logo, only_path: true)
+      render json: { success: true, logo_url: logo_url, company_name: @professional_experience.company_name }
+    else
+      render json: { success: false, message: "Aucun logo disponible pour cette entreprise" }
+    end
   end
   
   private

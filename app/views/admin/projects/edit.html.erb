@@ -172,16 +172,39 @@
                           <%= visual_form.hidden_field :position %>
                           
                           <div class="form-group">
-                            <%= visual_form.label :company, "Entreprise" %>
-                            <div class="input-group" data-controller="company-field">
-                              <%= visual_form.text_field :company, class: 'form-control', placeholder: "Nom de l'entreprise", data: { action: "input->company-field#checkOther", "company-field-target": "input" } %>
-                              <div class="input-group-append">
-                                <div class="input-group-text">
-                                  <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="other_company_<%= visual_form.index %>" data-action="change->company-field#toggleOther" data-company-field-target="checkbox">
-                                    <label class="form-check-label" for="other_company_<%= visual_form.index %>">Autre</label>
-                                  </div>
+                            <%= visual_form.label :professional_experience_id, "Entreprise" %>
+                            <%= visual_form.select :professional_experience_id, 
+                                options_for_select(@companies.map { |c| [c.company_name, c.id] } + [["Autre", "Autre"]], visual_form.object.professional_experience_id), 
+                                { include_blank: "Sélectionnez une entreprise" }, 
+                                { class: 'form-control', id: "company-selector-#{visual_form.object.id || 'new'}" } %>
+                            
+                            <!-- Prévisualisation du logo de l'entreprise sélectionnée -->
+                            <div class="company-logo-preview mt-3" data-company-selector-target="logoPreview" style="<%= visual_form.object.professional_experience_id.present? ? '' : 'display: none;' %>">
+                              <% if visual_form.object.professional_experience&.logo&.attached? %>
+                                <div class="current-image mb-3">
+                                  <%= image_tag rails_blob_path(visual_form.object.professional_experience.logo, only_path: true), alt: "Logo entreprise", style: "max-width: 150px; max-height: 100px;" %>
+                                  <p class="text-muted">Logo de l'entreprise sélectionnée</p>
                                 </div>
+                              <% end %>
+                            </div>
+                            
+                            <div class="other-company-fields mt-3" style="<%= visual_form.object.professional_experience_id.nil? && visual_form.object.company_name.present? ? '' : 'display: none;' %>" id="other-company-fields-<%= visual_form.object.id || 'new' %>">
+                              <div class="form-group">
+                                <%= visual_form.label :company_name, "Nom de l'entreprise" %>
+                                <%= visual_form.text_field :company_name, class: 'form-control', placeholder: "Nom de l'entreprise", data: { "company-selector-target": "companyNameField" } %>
+                              </div>
+                              
+                              <div class="form-group">
+                                <%= visual_form.label :company_logo, "Logo de l'entreprise" %>
+                                
+                                <% if visual_form.object.company_logo.attached? %>
+                                  <div class="current-image mb-3">
+                                    <%= image_tag visual_form.object.company_logo.variant(resize_to_limit: [150, 100]), alt: "Logo entreprise" %>
+                                    <p class="text-muted">Logo actuel</p>
+                                  </div>
+                                <% end %>
+                                
+                                <%= visual_form.file_field :company_logo, class: 'form-control-file', direct_upload: true, data: { "company-selector-target": "companyLogoField" } %>
                               </div>
                             </div>
                           </div>
@@ -259,6 +282,38 @@
 </div>
 
 <%= render 'shared/image_preview_modal' %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Pour chaque formulaire de visuel dans l'édition
+    document.querySelectorAll('[id^="company-selector-"]').forEach(function(selector) {
+      const selectorId = selector.id;
+      const fieldId = selectorId.replace('company-selector-', 'other-company-fields-');
+      const otherFields = document.getElementById(fieldId);
+      
+      if (selector && otherFields) {
+        // Fonction pour gérer l'affichage des champs conditionnels
+        function toggleOtherFields() {
+          console.log('Valeur sélectionnée:', selector.value, 'pour', selectorId);
+          
+          if (selector.value === 'Autre') {
+            otherFields.style.display = 'block';
+            console.log('Affichage des champs conditionnels pour', fieldId);
+          } else {
+            otherFields.style.display = 'none';
+            console.log('Masquage des champs conditionnels pour', fieldId);
+          }
+        }
+        
+        // Appliquer l'état initial
+        toggleOtherFields();
+        
+        // Ajouter l'écouteur d'événement
+        selector.addEventListener('change', toggleOtherFields);
+      }
+    });
+  });
+</script>
 
 <% content_for :styles do %>
   <style>
