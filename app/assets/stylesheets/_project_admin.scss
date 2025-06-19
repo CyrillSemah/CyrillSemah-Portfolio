@@ -56,36 +56,65 @@
     width: 100%;
     border-collapse: collapse;
     
-    thead th {
-      background-color: #f8f9fa;
-      border-bottom: 2px solid #e9ecef;
-      color: $color-dark;
-      font-weight: 600;
-      padding: 15px;
-      text-align: left;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    tbody tr {
-      transition: background-color $transition-fast;
-      border-bottom: 1px solid #e9ecef;
-      
-      &:hover {
-        background-color: #f8f9fa;
+    thead {
+      tr {
+        background-color: $color-blue;
       }
       
-      &:last-child {
-        border-bottom: none;
+      th {
+        color: white;
+        font-weight: 600;
+        padding: 15px;
+        text-align: center; // Centrer les titres de colonnes
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+        
+        &:last-child {
+          border-right: none;
+        }
       }
     }
     
-    tbody td {
-      padding: 15px;
-      vertical-align: middle;
-      color: $color-dark;
-      font-size: 0.95rem;
+    tbody {
+      tr {
+        transition: background-color $transition-fast;
+        border-bottom: 2px solid #d1d9e6; // Bordure plus foncée entre les lignes
+        
+        // Couleurs de fond selon le type de projet
+        &.project-development {
+          background-color: rgba(47, 62, 133, 0.15);
+          
+          &:hover {
+            background-color: rgba(47, 62, 133, 0.25);
+          }
+        }
+        
+        &.project-retouche {
+          background-color: rgba(58, 156, 90, 0.15);
+          
+          &:hover {
+            background-color: rgba(58, 156, 90, 0.25);
+          }
+        }
+        
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+      
+      td {
+        padding: 15px;
+        vertical-align: middle;
+        color: $color-dark;
+        font-size: 0.95rem;
+        
+        // Centrer la colonne de position
+        &.position-cell {
+          text-align: center;
+        }
+      }
     }
   }
   
@@ -111,10 +140,23 @@
   }
   
   // Badges de technologies
+  .tech-badges-cell {
+    vertical-align: middle;
+  }
+  
+  // Style pour les badges de technologies dans le tableau (index)
   .tech-badges {
     display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: flex-start;
+    
+    .tech-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: flex-start;
+    }
     
     .tech-badge {
       display: inline-block;
@@ -123,10 +165,34 @@
       font-size: 0.7rem;
       background-color: #f1f3f5;
       color: $color-gray-dark;
+      white-space: nowrap;
       
       &.tech-badge-more {
         background-color: #e9ecef;
         color: $color-gray;
+      }
+    }
+  }
+  
+  // Style pour les badges de technologies dans la vue détaillée (show)
+  .project-detail__section {
+    .tech-badges {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      margin-top: 10px;
+      
+      .tech-badge {
+        display: inline-block !important;
+        padding: 6px 12px;
+        border-radius: $border-radius-sm;
+        font-size: 0.8rem;
+        background-color: #f1f3f5;
+        color: $color-gray-dark;
+        white-space: nowrap;
+        margin-bottom: 5px;
+        width: auto !important;
       }
     }
   }
@@ -175,14 +241,22 @@
   box-shadow: $shadow-small;
   margin-bottom: $spacing-xl;
   overflow: hidden;
+  padding: 0 !important;
   
   &__header {
     padding: $spacing-lg;
     border-bottom: 1px solid #e9ecef;
-    background-color: #f8f9fa;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
+    // Couleur par défaut (développement)
+    background-color: rgba(47, 62, 133, 0.15);
+    
+    // Couleur spécifique pour les projets de retouche
+    &.header-retouche {
+      background-color: rgba(58, 156, 90, 0.15);
+    }
     
     h2 {
       color: $color-dark;
@@ -483,31 +557,33 @@
   
   // Styles pour les cartes de visuels
   .project-visual-card {
-    background-color: white;
+    border: 1px solid $border-color;
     border-radius: $border-radius-md;
-    box-shadow: $shadow-small;
     overflow: hidden;
+    background-color: white;
+    box-shadow: $shadow-small;
     
     &__header {
-      h4 {
-        color: $color-dark;
-      }
+      background-color: #f8f9fa;
     }
     
     &__description {
-      color: $color-dark;
-      line-height: 1.5;
+      font-size: 0.9rem;
+      color: $color-gray-dark;
+      padding: 1rem !important;
     }
     
     &__images {
-      .project-detail__gallery-item {
-        margin-bottom: $spacing-md;
-        
-        img {
-          width: 100%;
-          border-radius: $border-radius-sm;
-          box-shadow: $shadow-small;
-        }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: $border-radius-sm;
+        box-shadow: $shadow-small;
       }
     }
   }

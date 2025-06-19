@@ -3,8 +3,12 @@ class Project < ApplicationRecord
   has_many :project_visuals, dependent: :destroy
   has_many_attached :development_images
   
-  # Enum pour les types de projets
-  enum :project_type, { development: 'development', retouche_creation: 'retouche_creation' }, default: 'development'
+  # Constantes pour les types de projets
+  DEVELOPMENT = 'development'
+  RETOUCHE_CREATION = 'retouche_creation'
+  
+  # Validations du type de projet
+  validates :project_type, inclusion: { in: [DEVELOPMENT, RETOUCHE_CREATION] }
   
   # Validations communes
   validates :title, presence: true
@@ -23,19 +27,19 @@ class Project < ApplicationRecord
   
   # Scopes
   scope :ordered, -> { order(position: :asc) }
-  scope :development_projects, -> { where(project_type: 'development') }
-  scope :retouche_creation_projects, -> { where(project_type: 'retouche_creation') }
+  scope :development_projects, -> { where(project_type: DEVELOPMENT) }
+  scope :retouche_creation_projects, -> { where(project_type: RETOUCHE_CREATION) }
   
   # Callbacks
   before_create :set_position
   
   # Méthodes d'instance
   def development?
-    project_type == 'development'
+    project_type == DEVELOPMENT
   end
   
   def retouche_creation?
-    project_type == 'retouche_creation'
+    project_type == RETOUCHE_CREATION
   end
   
   # Accepte les attributs imbriqués pour les visuels de projet

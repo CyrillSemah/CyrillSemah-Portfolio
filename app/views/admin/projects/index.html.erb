@@ -57,7 +57,7 @@
                 </thead>
                 <tbody>
                   <% @projects.each do |project| %>
-                    <tr>
+                    <tr class="<%= project.development? ? 'project-development' : 'project-retouche' %>">
                       <td class="image-cell">
                         <% if project.image.attached? %>
                           <%= image_tag project.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
@@ -73,15 +73,45 @@
                           <%= project.development? ? 'Développement' : 'Retouche & Création' %>
                         </span>
                       </td>
-                      <td class="tech-badges">
-                        <% project.technologies.split(',').take(3).each do |tech| %>
-                          <span class="tech-badge"><%= tech.strip %></span>
-                        <% end %>
-                        <% if project.technologies.split(',').size > 3 %>
-                          <span class="tech-badge tech-badge-more">+<%= project.technologies.split(',').size - 3 %></span>
-                        <% end %>
+                      <td class="tech-badges-cell">
+                        <div class="tech-badges">
+                          <% tech_array = project.technologies.split(',').map(&:strip) %>
+                          <% first_line = tech_array.take(3) %>
+                          <% second_line = tech_array.size > 3 ? tech_array[3..5] : [] %>
+                          <% third_line = tech_array.size > 6 ? tech_array[6..8] : [] %>
+                          <% remaining = tech_array.size > 9 ? tech_array.size - 9 : 0 %>
+                          
+                          <div class="tech-badges-row">
+                            <% first_line.each do |tech| %>
+                              <span class="tech-badge"><%= tech %></span>
+                            <% end %>
+                          </div>
+                          
+                          <% if second_line.any? %>
+                            <div class="tech-badges-row">
+                              <% second_line.each do |tech| %>
+                                <span class="tech-badge"><%= tech %></span>
+                              <% end %>
+                            </div>
+                          <% end %>
+                          
+                          <% if third_line.any? %>
+                            <div class="tech-badges-row">
+                              <% third_line.each do |tech| %>
+                                <span class="tech-badge"><%= tech %></span>
+                              <% end %>
+                              <% if remaining > 0 %>
+                                <span class="tech-badge tech-badge-more">+<%= remaining %></span>
+                              <% end %>
+                            </div>
+                          <% elsif remaining > 0 %>
+                            <div class="tech-badges-row">
+                              <span class="tech-badge tech-badge-more">+<%= remaining %></span>
+                            </div>
+                          <% end %>
+                        </div>
                       </td>
-                      <td><%= project.position %></td>
+                      <td class="position-cell"><%= project.position %></td>
                       <td class="actions-cell">
                         <div class="action-buttons">
                           <%= link_to admin_project_path(project), class: "action-button view" do %>

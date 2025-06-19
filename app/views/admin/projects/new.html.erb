@@ -130,67 +130,125 @@
                         <%= visual_form.hidden_field :position, value: 0 %>
                         
                         <div class="form-group">
-                          <%= visual_form.label :professional_experience_id, "Entreprise" %>
+                          <%= visual_form.label :professional_experience_id, "Entreprise", id: "label-professional-experience-#{visual_form.object.id || 'new'}" %>
                           <%= visual_form.select :professional_experience_id, 
-                              options_for_select(@companies.map { |c| [c.company_name, c.id] } + [["Autre", "Autre"]]), 
-                              { include_blank: "Sélectionnez une entreprise" }, 
-                              { class: 'form-control', id: 'company-selector' } %>
+                              options_for_select(
+                                (@companies || []).map { |c| [c.company_name, c.id] } + [["Autre", "Autre"]],
+                                visual_form.object.professional_experience_id
+                              ),
+                              { include_blank: "Sélectionnez une entreprise" },
+                              class: 'form-control',
+                              id: "company-selector-#{visual_form.object.id || 'new'}" %>
                           
                           <!-- Prévisualisation du logo de l'entreprise sélectionnée -->
-                          <div class="company-logo-preview mt-3" data-company-selector-target="logoPreview" style="display: none;"></div>
-                        </div>
-                        
-                        <div class="other-company-fields" style="display: none;" id="other-company-fields">
-                          <div class="form-group">
-                            <%= visual_form.label :company_name, "Nom de l'entreprise" %>
-                            <%= visual_form.text_field :company_name, class: 'form-control', placeholder: "Nom de l'entreprise", data: { "company-selector-target": "companyNameField" } %>
+                          <div class="company-logo-preview mt-3" data-company-selector-target="logoPreview" style="display: none;">
                           </div>
                           
-                          <div class="form-group">
-                            <%= visual_form.label :company_logo, "Logo de l'entreprise" %>
-                            <%= visual_form.file_field :company_logo, class: 'form-control-file', direct_upload: true, data: { "company-selector-target": "companyLogoField" } %>
-                            <% if visual_form.object.company_logo.attached? %>
-                              <div class="current-image mt-2">
-                                <% if visual_form.object.company_logo.content_type == 'image/svg+xml' %>
-                                  <%= image_tag visual_form.object.company_logo, style: 'max-width: 150px; max-height: 100px;', alt: "Logo entreprise" %>
-                                <% else %>
-                                  <%= image_tag visual_form.object.company_logo.variant(resize_to_limit: [150, 100]), alt: "Logo entreprise" %>
-                                <% end %>
-                                <p class="text-muted small">Format: <%= visual_form.object.company_logo.filename %></p>
-                              </div>
-                            <% end %>
+                          <!-- Affichage du nom de l'entreprise pour les entreprises "Autre" -->
+                          <div class="company-name-preview mt-2" style="display: none;">
+                          </div>
+                          
+                          <div class="other-company-fields mt-3" style="display: none;" id="other-company-fields-<%= visual_form.object.id || 'new' %>">
+                            <div class="form-group">
+                              <%= visual_form.label :company_name, "Nom de l'entreprise", id: "label-company-name-#{visual_form.object.id || 'new'}" %>
+                              <%= visual_form.text_field :company_name, class: 'form-control', placeholder: "Nom de l'entreprise", data: { "company-selector-target": "companyNameField" }, id: "company-name-#{visual_form.object.id || 'new'}" %>
+                            </div>
+                            
+                            <div class="form-group">
+                              <%= visual_form.label :company_logo, "Logo de l'entreprise", id: "label-company-logo-#{visual_form.object.id || 'new'}" %>
+                              <%= visual_form.file_field :company_logo, class: 'form-control-file', direct_upload: true, data: { "company-selector-target": "companyLogoField" }, id: "company-logo-#{visual_form.object.id || 'new'}" %>
+                            </div>
                           </div>
                         </div>
                         
                         <div class="form-group">
-                          <%= visual_form.label :description, "Description" %>
-                          <%= visual_form.text_area :description, class: 'form-control', rows: 3 %>
+                          <%= visual_form.label :description, "Description", id: "label-description-#{visual_form.object.id || 'new'}" %>
+                          <%= visual_form.text_area :description, class: 'form-control', rows: 3, id: "description-#{visual_form.object.id || 'new'}" %>
                         </div>
                         
                         <div class="form-row">
                           <div class="form-group col-md-6">
-                            <%= visual_form.label :visual_type, "Type de visuel" %>
-                            <%= visual_form.select :visual_type, ProjectVisual.visual_types.keys.map { |k| [k.humanize, k] }, {}, class: 'form-control', data: { action: "change->project-form#toggleVisualType", "project-form-target": "visualType" } %>
+                            <%= visual_form.label :visual_type, "Type de visuel", id: "label-visual-type-#{visual_form.object.id || 'new'}" %>
+                            <%= visual_form.select :visual_type, 
+                                options_for_select(
+                                  [["Sélectionner le type de visuel", ""]] +
+                                  [["Single", ProjectVisual::VISUAL_TYPE_SINGLE], ["Before after", ProjectVisual::VISUAL_TYPE_BEFORE_AFTER]],
+                                  ""
+                                ),
+                                { include_blank: false },
+                                class: 'form-control',
+                                data: { 
+                                  "project-form-target": "visualType",
+                                  action: "change->project-form#toggleVisualType"
+                                },
+                                id: "visual-type-#{visual_form.object.id || 'new'}" %>
                           </div>
                           
                           <div class="form-group col-md-6">
-                            <%= visual_form.label :display_type, "Méthode d'affichage" %>
-                            <%= visual_form.select :display_type, ProjectVisual.display_types.keys.map { |k| [k.humanize, k] }, {}, class: 'form-control', data: { "project-form-target": "displayType" } %>
+                            <%= visual_form.label :display_type, "Méthode d'affichage", id: "label-display-type-#{visual_form.object.id || 'new'}" %>
+                            <%= visual_form.select :display_type, 
+                                options_for_select(
+                                  [["Standard", ProjectVisual::DISPLAY_TYPE_STANDARD], ["Slider", ProjectVisual::DISPLAY_TYPE_SLIDER], ["Side by side", ProjectVisual::DISPLAY_TYPE_SIDE_BY_SIDE]],
+                                  ProjectVisual::DISPLAY_TYPE_STANDARD
+                                ),
+                                { include_blank: false },
+                                class: 'form-control',
+                                data: { "project-form-target": "displayType" },
+                                id: "display-type-#{visual_form.object.id || 'new'}" %>
                           </div>
                         </div>
                         
-                        <div class="visual-images" data-project-form-target="visualImages">
-                          <div class="form-row">
-                            <div class="form-group col-md-6 before-image-group" data-project-form-target="beforeImageGroup">
-                              <%= visual_form.label :before_image, "Image avant" %>
-                              <%= visual_form.file_field :before_image, class: 'form-control-file', direct_upload: true %>
+                        <div class="visual-images mt-3">
+                          <!-- Groupe pour le mode single -->
+                          <div class="form-group col-md-12" id="single-image-group-<%= visual_form.object.id || 'new' %>" style="display: none;">
+                            <%= visual_form.label :image, "Image du projet", id: "label-image-#{visual_form.object.id || 'new'}" %>
+                            <%= visual_form.file_field :image, class: 'form-control-file', direct_upload: true, id: "image-#{visual_form.object.id || 'new'}" %>
+                          </div>
+                          
+                          <!-- Groupes pour le mode before_after -->
+                          <div class="form-row" id="before-after-container-<%= visual_form.object.id || 'new' %>" style="display: none;">
+                            <div class="form-group col-md-6">
+                              <%= visual_form.label :before_image, "Image avant", id: "label-before-image-#{visual_form.object.id || 'new'}" %>
+                              <%= visual_form.file_field :before_image, class: 'form-control-file', direct_upload: true, id: "before-image-#{visual_form.object.id || 'new'}" %>
                             </div>
                             
-                            <div class="form-group col-md-6 after-image-group" data-project-form-target="afterImageGroup">
-                              <%= visual_form.label :after_image, "Image après" %>
-                              <%= visual_form.file_field :after_image, class: 'form-control-file', direct_upload: true %>
+                            <div class="form-group col-md-6">
+                              <%= visual_form.label :after_image, "Image après", id: "label-after-image-#{visual_form.object.id || 'new'}" %>
+                              <%= visual_form.file_field :after_image, class: 'form-control-file', direct_upload: true, id: "after-image-#{visual_form.object.id || 'new'}" %>
                             </div>
                           </div>
+                          
+                          <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                              // Récupérer le select et les conteneurs d'images
+                              const visualTypeSelect = document.getElementById('visual-type-<%= visual_form.object.id || "new" %>');
+                              const singleImageGroup = document.getElementById('single-image-group-<%= visual_form.object.id || "new" %>');
+                              const beforeAfterContainer = document.getElementById('before-after-container-<%= visual_form.object.id || "new" %>');
+                              
+                              // Fonction pour mettre à jour l'affichage des champs
+                              function updateImageFields() {
+                                const selectedValue = visualTypeSelect.value;
+                                console.log('Type visuel sélectionné:', selectedValue);
+                                
+                                // Masquer tous les conteneurs par défaut
+                                singleImageGroup.style.display = 'none';
+                                beforeAfterContainer.style.display = 'none';
+                                
+                                // Afficher le conteneur approprié selon la sélection
+                                if (selectedValue === '<%= ProjectVisual::VISUAL_TYPE_SINGLE %>') {
+                                  singleImageGroup.style.display = 'block';
+                                } else if (selectedValue === '<%= ProjectVisual::VISUAL_TYPE_BEFORE_AFTER %>') {
+                                  beforeAfterContainer.style.display = 'flex';
+                                }
+                              }
+                              
+                              // Ajouter l'écouteur d'événements
+                              visualTypeSelect.addEventListener('change', updateImageFields);
+                              
+                              // Exécuter une fois au chargement
+                              updateImageFields();
+                            });
+                          </script>
                         </div>
                       </div>
                     <% end %>
@@ -211,35 +269,37 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Sélectionner les éléments nécessaires
-    const companySelector = document.getElementById('company-selector');
-    const otherCompanyFields = document.getElementById('other-company-fields');
-    
-    if (companySelector && otherCompanyFields) {
-      // Fonction pour gérer l'affichage des champs conditionnels
-      function toggleOtherCompanyFields() {
-        console.log('Valeur sélectionnée:', companySelector.value);
+// Script de débogage pour le formulaire
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('form.form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      // Ne pas empêcher la soumission du formulaire, juste logger
+      
+      // Vérifier les technologies
+      const techField = document.querySelector('input[name="project[technologies]"]');
+      console.log('Champ technologies avant soumission:', techField ? techField.value : 'Non trouvé');
+      
+      // Vérifier les types de visuels
+      const visualTypeFields = document.querySelectorAll('select[name*="[visual_type]"]');
+      visualTypeFields.forEach((field, index) => {
+        console.log(`Type visuel ${index}:`, field.value);
         
-        if (companySelector.value === 'Autre') {
-          otherCompanyFields.style.display = 'block';
-          console.log('Affichage des champs conditionnels');
-        } else {
-          otherCompanyFields.style.display = 'none';
-          console.log('Masquage des champs conditionnels');
+        // Si c'est before_after, vérifier que les champs d'images sont présents
+        if (field.value === '<%= ProjectVisual::VISUAL_TYPE_BEFORE_AFTER %>') {
+          const container = field.closest('.nested-fields');
+          if (container) {
+            const beforeImage = container.querySelector('input[name*="[before_image]"]');
+            const afterImage = container.querySelector('input[name*="[after_image]"]');
+            
+            console.log('Before image field:', beforeImage ? (beforeImage.files.length > 0 ? 'Avec fichier' : 'Sans fichier') : 'Non trouvé');
+            console.log('After image field:', afterImage ? (afterImage.files.length > 0 ? 'Avec fichier' : 'Sans fichier') : 'Non trouvé');
+          }
         }
-      }
-      
-      // Appliquer l'état initial
-      toggleOtherCompanyFields();
-      
-      // Ajouter un écouteur d'événement pour le changement de sélection
-      companySelector.addEventListener('change', toggleOtherCompanyFields);
-      console.log('Écouteur d\'événement ajouté au sélecteur d\'entreprise');
-    } else {
-      console.error('Éléments DOM non trouvés');
-    }
-  });
+      });
+    });
+  }
+});
 </script>
 
 <% content_for :styles do %>
@@ -251,14 +311,27 @@
     .form-actions {
       margin-top: 2rem;
     }
+    
+    .visual-form-container {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+    }
+    
+    .company-logo-preview img {
+      max-width: 150px;
+      max-height: 100px;
+      margin-top: 0.5rem;
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+      padding: 0.25rem;
+    }
+    
+    .company-name-preview {
+      font-weight: 500;
+      color: #495057;
+      margin-top: 0.5rem;
+    }
   </style>
-<% end %>
-
-<% content_for :scripts do %>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialisation du contrôleur Stimulus pour le formulaire de projet
-      // (sera implémenté plus tard)
-    });
-  </script>
 <% end %>
