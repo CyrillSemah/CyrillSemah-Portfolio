@@ -1,5 +1,6 @@
 class Admin::ProjectsController < Admin::BaseController
   before_action :set_project, only: [:show, :edit, :update, :destroy, :add_visual, :delete_development_image, :replace_development_image] 
+  before_action :set_companies, only: [:new, :create, :edit, :update]
   
   def index
     @projects = Project.ordered
@@ -30,6 +31,11 @@ class Admin::ProjectsController < Admin::BaseController
       @project.project_type = params[:project][:project_type]
     end
     
+    # --- DEBUG ---
+    Rails.logger.debug "Project params: #{project_params.inspect}"
+    Rails.logger.debug "Project valid? #{@project.valid?}"
+    Rails.logger.debug "Project errors: #{@project.errors.full_messages}"
+    # -------------  
     if @project.save
       if @project.retouche_creation? && (!params[:project][:project_visuals_attributes] || params[:project][:project_visuals_attributes].blank?)
         # Rediriger vers l'édition pour ajouter des visuels si c'est un projet de retouche
@@ -71,10 +77,18 @@ class Admin::ProjectsController < Admin::BaseController
 
   def destroy
     begin
-      if @project.destroy
+      # Supprimer d'abord les visuels associés pour éviter les problèmes de dépendances
+      @project.project_visuals.destroy_all if @project.project_visuals.any?
+      
+      # Détacher les images pour éviter les problèmes avec ActiveStorage
+      @project.image.purge if @project.image.attached?
+      @project.development_images.purge if @project.development_images.attached?
+      
+      # Maintenant supprimer le projet lui-même
+      if Project.where(id: @project.id).delete_all > 0
         redirect_to admin_projects_path, notice: 'Projet supprimé avec succès.'
       else
-        redirect_to admin_projects_path, alert: 'Impossible de supprimer ce projet: ' + @project.errors.full_messages.join(', ')
+        redirect_to admin_projects_path, alert: 'Impossible de supprimer ce projet.'
       end
     rescue => e
       redirect_to admin_projects_path, alert: "Erreur lors de la suppression du projet: #{e.message}"
@@ -220,11 +234,12 @@ class Admin::ProjectsController < Admin::BaseController
     # Faire une copie des paramètres pour pouvoir les modifier
     project_params = params.require(:project).permit(
       :title, :description, :technologies, :position, :project_type,
+      :github_url, :live_url, :image, # Ajout des paramètres pour les projets de type development
       development_images: [],
       project_visuals_attributes: [
         :id, :position, :description, :visual_type, :display_type, :company_name, :company_logo,
         :professional_experience_id, :_destroy,
-        :before_image, :after_image
+        :image, :before_image, :after_image
       ]
     )
     
@@ -267,5 +282,10 @@ class Admin::ProjectsController < Admin::BaseController
   
   def authenticate_admin! # Assurez-vous que cette méthode est correctement définie si elle est utilisée comme before_action ailleurs.
     redirect_to root_path unless admin?
+  end
+
+  # Récupération des entreprises pour les menus déroulants
+  def set_companies
+    @companies = ProfessionalExperience.order(:company_name).distinct
   end
 end

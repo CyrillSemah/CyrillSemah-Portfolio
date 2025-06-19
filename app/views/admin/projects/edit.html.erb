@@ -27,7 +27,8 @@
         </div>
       </div>
 
-      <%= form_with(model: [:admin, @project], local: true, html: { class: 'form', multipart: true, data: { controller: 'project-form' } }) do |form| %>
+      <div class="form-content" data-controller="project-form">
+      <%= form_with(model: [:admin, @project], local: true, html: { class: 'form', multipart: true }) do |form| %>
         <% if @project.errors.any? %>
           <div class="alert alert-danger">
             <h2><%= pluralize(@project.errors.count, "erreur") %> :</h2>
@@ -222,41 +223,80 @@
                           <div class="form-row">
                             <div class="form-group col-md-6">
                               <%= visual_form.label :visual_type, "Type de visuel", id: "label-visual-type-#{visual_form.object.id || 'new'}" %>
-                              <%= visual_form.select :visual_type, ProjectVisual.visual_types.keys.map { |k| [k.humanize, k] }, {}, class: 'form-control', data: { action: "change->project-form#toggleVisualType", "project-form-target": "visualType" }, id: "visual-type-#{visual_form.object.id || 'new'}" %>
+                              <% selected_visual_type = visual_form.object.persisted? ? visual_form.object.visual_type : nil %>
+                              <%= visual_form.select :visual_type, 
+                                  options_for_select(
+                                    [["Sélectionner un type de visuel", ""]] + 
+                                    [["Single", ProjectVisual::VISUAL_TYPE_SINGLE], ["Before after", ProjectVisual::VISUAL_TYPE_BEFORE_AFTER]],
+                                    selected_visual_type
+                                  ), 
+                                  { include_blank: false },
+                                  class: 'form-control', 
+                                  data: { action: "change->project-form#toggleVisualType", "project-form-target": "visualType" }, 
+                                  id: "visual-type-#{visual_form.object.id || 'new'}" %>
                             </div>
                             
                             <div class="form-group col-md-6">
                               <%= visual_form.label :display_type, "Méthode d'affichage", id: "label-display-type-#{visual_form.object.id || 'new'}" %>
-                              <%= visual_form.select :display_type, ProjectVisual.display_types.keys.map { |k| [k.humanize, k] }, {}, class: 'form-control', data: { "project-form-target": "displayType" }, id: "display-type-#{visual_form.object.id || 'new'}" %>
+                              <%= visual_form.select :display_type, 
+                                  options_for_select(
+                                    [["Standard", ProjectVisual::DISPLAY_TYPE_STANDARD], ["Slider", ProjectVisual::DISPLAY_TYPE_SLIDER], ["Side by side", ProjectVisual::DISPLAY_TYPE_SIDE_BY_SIDE]],
+                                    visual_form.object.display_type || ProjectVisual::DISPLAY_TYPE_STANDARD
+                                  ), 
+                                  { include_blank: false },
+                                  class: 'form-control', 
+                                  data: { "project-form-target": "displayType" }, 
+                                  id: "display-type-#{visual_form.object.id || 'new'}" %>
                             </div>
                           </div>
                           
-                          <div class="visual-images" data-project-form-target="visualImages">
-                            <div class="form-row">
-                              <div class="form-group col-md-6 before-image-group" data-project-form-target="beforeImageGroup">
-                                <%= visual_form.label :before_image, "Image avant", id: "label-before-image-#{visual_form.object.id || 'new'}" %>
-                                
+                          <div class="visual-images mt-3" data-project-form-target="visualImages">
+                            <!-- Groupe pour le mode single -->
+                            <div class="form-group col-md-12" data-project-form-target="imageGroup" style="display: none;">
+                              <%= visual_form.label :image, "Image du projet", for: "image-#{visual_form.object.id}", id: "label-image-#{visual_form.object.id}" %>
+                              <%= visual_form.file_field :image, class: 'form-control-file', direct_upload: true, id: "image-#{visual_form.object.id}" %>
+                              <% if visual_form.object.image.attached? %>
+                                <div class="current-image mt-2">
+                                  <% begin %>
+                                    <%= image_tag visual_form.object.image.variant(resize_to_limit: [300, 200]), class: 'img-thumbnail' %>
+                                  <% rescue => e %>
+                                    <p class="text-danger">Erreur d'affichage de l'image: <%= e.message %></p>
+                                    <p>Image présente mais non affichable</p>
+                                  <% end %>
+                                </div>
+                              <% end %>
+                            </div>
+                            
+                            <!-- Groupes pour le mode before_after -->
+                            <div class="form-row" id="before-after-container">
+                              <div class="form-group col-md-6 before-image-group" data-project-form-target="beforeImageGroup" style="display: none;">
+                                <%= visual_form.label :before_image, "Image avant", for: "before-image-#{visual_form.object.id}", id: "label-before-image-#{visual_form.object.id}" %>
+                                <%= visual_form.file_field :before_image, class: 'form-control-file', direct_upload: true, id: "before-image-#{visual_form.object.id}" %>
                                 <% if visual_form.object.before_image.attached? %>
-                                  <div class="current-image mb-3">
-                                    <%= image_tag visual_form.object.before_image.variant(resize_to_limit: [200, 150]), alt: "Image avant" %>
-                                    <p class="text-muted">Image avant actuelle</p>
+                                  <div class="current-image mt-2">
+                                    <% begin %>
+                                      <%= image_tag visual_form.object.before_image.variant(resize_to_limit: [300, 200]), class: 'img-thumbnail' %>
+                                    <% rescue => e %>
+                                      <p class="text-danger">Erreur d'affichage de l'image: <%= e.message %></p>
+                                      <p>Image présente mais non affichable</p>
+                                    <% end %>
                                   </div>
                                 <% end %>
-
-                                <%= visual_form.file_field :before_image, class: 'form-control-file', direct_upload: true, id: "before-image-#{visual_form.object.id || 'new'}" %>
                               </div>
                               
-                              <div class="form-group col-md-6 after-image-group" data-project-form-target="afterImageGroup">
-                                <%= visual_form.label :after_image, "Image après", id: "label-after-image-#{visual_form.object.id || 'new'}" %>
-                                
+                              <div class="form-group col-md-6 after-image-group" data-project-form-target="afterImageGroup" style="display: none;">
+                                <%= visual_form.label :after_image, "Image après", for: "after-image-#{visual_form.object.id}", id: "label-after-image-#{visual_form.object.id}" %>
+                                <%= visual_form.file_field :after_image, class: 'form-control-file', direct_upload: true, id: "after-image-#{visual_form.object.id}" %>
                                 <% if visual_form.object.after_image.attached? %>
-                                  <div class="current-image mb-3">
-                                    <%= image_tag visual_form.object.after_image.variant(resize_to_limit: [200, 150]), alt: "Image après" %>
-                                    <p class="text-muted">Image après actuelle</p>
+                                  <div class="current-image mt-2">
+                                    <% begin %>
+                                      <%= image_tag visual_form.object.after_image.variant(resize_to_limit: [300, 200]), class: 'img-thumbnail' %>
+                                    <% rescue => e %>
+                                      <p class="text-danger">Erreur d'affichage de l'image: <%= e.message %></p>
+                                      <p>Image présente mais non affichable</p>
+                                    <% end %>
                                   </div>
                                 <% end %>
-
-                                <%= visual_form.file_field :after_image, class: 'form-control-file', direct_upload: true, id: "after-image-#{visual_form.object.id || 'new'}" %>
                               </div>
                             </div>
                           </div>
@@ -277,12 +317,123 @@
     </div>
   </div>
 </div>
+</div>
 
 <%= render 'shared/image_preview_modal' %>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Sélectionner les éléments nécessaires
+    // Fonction pour gérer l'affichage des champs selon le type visuel
+    function updateVisualFields(select) {
+      if (!select) return;
+      
+      const container = select.closest('.visual-form-container') || document.querySelector('.form-content');
+      if (!container) {
+        console.error('Conteneur parent non trouvé');
+        return;
+      }
+      
+      const type = select.value;
+      console.log('Mise à jour des champs pour le type:', type);
+      
+      // Trouver les groupes d'images
+      const imageGroup = container.querySelector('[data-project-form-target="imageGroup"]');
+      const beforeImageGroup = container.querySelector('[data-project-form-target="beforeImageGroup"]');
+      const afterImageGroup = container.querySelector('[data-project-form-target="afterImageGroup"]');
+      
+      console.log('Groupes trouvés:', {
+        imageGroup: !!imageGroup,
+        beforeImageGroup: !!beforeImageGroup,
+        afterImageGroup: !!afterImageGroup
+      });
+      
+      if (type === '<%= ProjectVisual::VISUAL_TYPE_SINGLE %>') {
+        // Mode single - afficher uniquement imageGroup
+        if (imageGroup) {
+          imageGroup.style.display = 'block';
+          // Rendre le champ obligatoire si pas d'image existante
+          const imageField = imageGroup.querySelector('input[type="file"]');
+          const hasExistingImage = imageGroup.querySelector('.current-image') !== null;
+          if (imageField) imageField.required = !hasExistingImage;
+        }
+        if (beforeImageGroup) {
+          beforeImageGroup.style.display = 'none';
+          // Rendre le champ non obligatoire
+          const beforeField = beforeImageGroup.querySelector('input[type="file"]');
+          if (beforeField) beforeField.required = false;
+        }
+        if (afterImageGroup) {
+          afterImageGroup.style.display = 'none';
+          // Rendre le champ non obligatoire
+          const afterField = afterImageGroup.querySelector('input[type="file"]');
+          if (afterField) afterField.required = false;
+        }
+      } else if (type === '<%= ProjectVisual::VISUAL_TYPE_BEFORE_AFTER %>') {
+        // Mode before_after - afficher beforeImageGroup et afterImageGroup
+        if (imageGroup) {
+          imageGroup.style.display = 'none';
+          // Rendre le champ non obligatoire
+          const imageField = imageGroup.querySelector('input[type="file"]');
+          if (imageField) imageField.required = false;
+        }
+        if (beforeImageGroup) {
+          beforeImageGroup.style.display = 'block';
+          // Rendre le champ obligatoire si pas d'image existante
+          const beforeField = beforeImageGroup.querySelector('input[type="file"]');
+          const hasExistingBeforeImage = beforeImageGroup.querySelector('.current-image') !== null;
+          if (beforeField) beforeField.required = !hasExistingBeforeImage;
+        }
+        if (afterImageGroup) {
+          afterImageGroup.style.display = 'block';
+          // Rendre le champ obligatoire si pas d'image existante
+          const afterField = afterImageGroup.querySelector('input[type="file"]');
+          const hasExistingAfterImage = afterImageGroup.querySelector('.current-image') !== null;
+          if (afterField) afterField.required = !hasExistingAfterImage;
+        }
+      } else {
+        // Aucun type sélectionné ou type non reconnu - tout masquer et rendre non obligatoire
+        if (imageGroup) {
+          imageGroup.style.display = 'none';
+          const imageField = imageGroup.querySelector('input[type="file"]');
+          if (imageField) imageField.required = false;
+        }
+        if (beforeImageGroup) {
+          beforeImageGroup.style.display = 'none';
+          const beforeField = beforeImageGroup.querySelector('input[type="file"]');
+          if (beforeField) beforeField.required = false;
+        }
+        if (afterImageGroup) {
+          afterImageGroup.style.display = 'none';
+          const afterField = afterImageGroup.querySelector('input[type="file"]');
+          if (afterField) afterField.required = false;
+        }
+      }
+    }
+    
+    // Trouver tous les sélecteurs de type visuel
+    const visualTypeSelects = document.querySelectorAll('select[data-project-form-target="visualType"]');
+    console.log('Nombre de sélecteurs de type visuel trouvés:', visualTypeSelects.length);
+    
+    // Appliquer la logique à chaque sélecteur
+    visualTypeSelects.forEach(function(select) {
+      // S'assurer qu'une valeur est sélectionnée par défaut si vide
+      if (!select.value) {
+        // Sélectionner 'single' par défaut
+        select.value = 'single';
+      }
+      
+      // Initialiser l'état
+      updateVisualFields(select);
+      
+      // Ajouter l'écouteur d'événements pour les changements
+      select.addEventListener('change', function(event) {
+        updateVisualFields(event.target);
+      });
+      
+      console.log('Écouteur ajouté à', select.id || 'select sans id');
+    });
+    
+    // Sélectionner les éléments nécessaires pour la gestion des entreprises
     const companySelectors = document.querySelectorAll('[id^="company-selector-"]');
 
     // Pour chaque selecteur d'entreprise

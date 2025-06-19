@@ -318,6 +318,20 @@
   &__header {
     margin-bottom: $spacing-xl;
     
+    // Couleur par défaut (développement)
+    &.header-development {
+      background-color: rgba(47, 62, 133, 0.15);
+      border-radius: $border-radius-lg;
+      padding: $spacing-md;
+    }
+    
+    // Couleur spécifique pour les projets de retouche
+    &.header-retouche {
+      background-color: rgba(47, 133, 75, 0.15);
+      border-radius: $border-radius-lg;
+      padding: $spacing-md;
+    }
+    
     h1 {
       font-size: 2.5rem;
       color: $color-dark;

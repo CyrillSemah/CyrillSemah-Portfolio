@@ -17,7 +17,7 @@
       </div>
 
       <div class="project-detail">
-        <div class="project-detail__header">
+        <div class="project-detail__header <%= @project.development? ? '' : 'header-retouche' %>">
           <div class="d-flex align-items-center">
             <h2><%= @project.title %></h2>
             <span class="project-type-badge <%= @project.development? ? 'type-development' : 'type-retouche' %>">
@@ -108,20 +108,25 @@
             
             <% if @project.retouche_creation? && @project.project_visuals.any? %>
               <div class="project-detail__section">
-                <h3>Visuels du projet</h3>
+                <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">
+                  <h3 style="margin-bottom: 0;">Visuel(s) du projet</h3>
+                  <% if @project.project_visuals.count == 1 %>
+                    <span class="badge bg-primary text-white"><%= @project.project_visuals.first.display_type.humanize %></span>
+                  <% end %>
+                </div>
                 <div class="project-visuals-container">
                   <% @project.project_visuals.ordered.each do |visual| %>
                     <div class="project-visual-card mb-4">
-                      <div class="project-visual-card__header p-3 bg-light border-bottom">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <% if visual.company.present? && visual.company != "Autre" %>
-                            <h4 class="mb-0 fs-5"><%= visual.company %></h4>
-                          <% else %>
-                            <h4 class="mb-0 fs-5">Visuel <%= visual.position + 1 %></h4>
-                          <% end %>
-                          <span class="badge bg-info text-white"><%= visual.display_type.humanize %></span>
+                      <% unless @project.project_visuals.count == 1 %>
+                        <div class="project-visual-card__header p-3 bg-light border-bottom">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <% if visual.company.present? && visual.company != "Autre" %>
+                              <h4><%= visual.company %></h4>
+                            <% end %>
+                            <span class="badge bg-primary text-white"><%= visual.display_type.humanize %></span>
+                          </div>
                         </div>
-                      </div>
+                      <% end %>
                       
                       <% if visual.description.present? %>
                         <div class="project-visual-card__description p-3 border-bottom">
@@ -130,7 +135,7 @@
                       <% end %>
                       
                       <div class="project-visual-card__images p-3">
-                        <% if visual.before_after? %>
+                        <% if visual.visual_type == 'before_after' %>
                           <div class="project-detail__before-after">
                             <div class="project-detail__before-after-item">
                               <h4>Avant</h4>
@@ -160,9 +165,9 @@
                             </div>
                           </div>
                         <% else %>
-                          <div class="project-detail__gallery-item">
-                            <% if visual.after_image.attached? %>
-                              <%= image_tag visual.after_image %>
+                          <div class="project-detail__main-image mb-3">
+                            <% if visual.image.attached? %>
+                              <%= image_tag visual.image, class: "img-fluid rounded shadow-sm" %>
                             <% else %>
                               <div class="alert alert-warning">Image non disponible</div>
                             <% end %>
