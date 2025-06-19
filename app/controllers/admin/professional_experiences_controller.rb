@@ -1,5 +1,4 @@
-class Admin::ProfessionalExperiencesController < ApplicationController
-  before_action :authenticate_admin!
+class Admin::ProfessionalExperiencesController < Admin::BaseController
   before_action :set_professional_experience, only: [:show, :edit, :update, :destroy, :logo]
   
   def index

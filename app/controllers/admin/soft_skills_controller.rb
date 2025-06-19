@@ -1,5 +1,4 @@
-class Admin::SoftSkillsController < ApplicationController
-  before_action :authenticate_admin!
+class Admin::SoftSkillsController < Admin::BaseController
   before_action :set_soft_skill, only: [:show, :edit, :update, :destroy]
   
   def index

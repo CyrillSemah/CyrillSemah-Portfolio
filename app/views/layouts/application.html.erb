@@ -420,7 +420,7 @@
     </script>
   </head>
 
-  <body>
+  <body class="<%= request.path.start_with?('/admin') ? 'admin' : '' %>">
     <% unless controller_path.start_with?('admin/') || controller_name == 'admin' %>
     <!-- Arrière-plan dynamique avec grille -->
     <div class="grid-background">
@@ -438,6 +438,11 @@
     
     <!-- Navbar -->
     <%= render 'shared/navbar' %>
+    
+    <!-- Messages Flash -->
+    <div class="container mt-3">
+      <%= render 'shared/flash_messages' %>
+    </div>
     
     <!-- Contenu principal -->
     <main>

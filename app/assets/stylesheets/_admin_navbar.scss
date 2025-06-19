@@ -1,0 +1,44 @@
+// Styles spécifiques pour la navbar en mode admin
+body.admin {
+  .navbar {
+    &__links {
+      // Masquer uniquement les liens directs dans la navbar, pas ceux dans le kebab-menu
+      > a:not(.kebab-menu__button) {
+        display: none !important;
+      }
+      
+      .navbar__separator {
+        display: none !important;
+      }
+      
+      // Afficher le kebab-menu et ses contenus
+      .kebab-menu {
+        display: block;
+        
+        &__content {
+          a, button {
+            display: flex !important;
+          }
+        }
+      }
+    }
+    
+    &__mobile {
+      // Masquer uniquement les liens directs dans la navbar mobile
+      > a {
+        display: none !important;
+      }
+      
+      // Afficher uniquement le kebab-menu mobile et son contenu
+      .kebab-menu.mobile-kebab {
+        display: block;
+        
+        .kebab-menu__content {
+          a, button {
+            display: flex !important;
+          }
+        }
+      }
+    }
+  }
+}

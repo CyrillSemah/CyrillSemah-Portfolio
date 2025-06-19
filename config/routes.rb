@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  # Configuration Devise pour l'administrateur unique
+  devise_for :admin_users, controllers: {
+    sessions: 'admin_users/sessions',
+    passwords: 'admin_users/passwords'
+  }, skip: [:registrations]
+  
+  # Redirection de /admin vers la page de connexion admin
   # Routes pour les projets (partie publique)
   get "/projets", to: "projects#index", as: :projets
   get "/projets/:id", to: "projects#show", as: :projet
@@ -10,6 +17,12 @@ Rails.application.routes.draw do
   
   # Routes pour les expériences professionnelles, formations et compétences (CRUD protégé par authentification)
   namespace :admin do
+    # Route racine pour l'admin
+    root to: 'professional_experiences#index'
+    
+    # Route pour le profil administrateur
+    resource :profile, only: [:edit, :update], controller: 'profile'
+    
     resources :projects do
       collection do
         get :choose_type
@@ -40,9 +53,8 @@ Rails.application.routes.draw do
     resources :soft_skills
   end
   
-  # Routes pour l'administration
-  get "/admin", to: "admin#login", as: :admin_login
-  post "/admin/authenticate", to: "admin#authenticate", as: :admin_authenticate
+  # Redirection vers la page de connexion Devise
+  get "/admin", to: redirect('/admin_users/sign_in'), as: :admin
   
   # Routes pour l'authentification
   get "/auth/:provider/callback", to: "sessions#create"
