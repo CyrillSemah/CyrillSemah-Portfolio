@@ -1,22 +1,16 @@
 <div class="admin-experience-container">
   <div class="container">
-    <div class="admin-nav">
-      <ul class="admin-nav__list">
-        <li class="admin-nav__item">
-          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
-        </li>
-        <li class="admin-nav__item">
-          <%= link_to "Formations", admin_educations_path %>
-        </li>
-        <li class="admin-nav__item active">
-          <%= link_to "Compétences", admin_skills_path %>
-        </li>
-      </ul>
-    </div>
+    <%= render 'admin/shared/admin_nav' %>
     
     <div class="experience-list">
       <div class="experience-list__header">
         <h2>Détails de la compétence</h2>
+        <%= link_to admin_skills_path, class: "animated-action-button" do %>
+          <div class="icon-container">
+            <i class="fas fa-arrow-left"></i>
+          </div>
+          <span class="button-text">Retour à la liste</span>
+        <% end %>
       </div>
     </div>
     
@@ -47,7 +41,6 @@
           </div>
           
           <div class="experience-list__item-actions">
-            <%= link_to "Retour à la liste", admin_skills_path, class: "btn btn-view" %>
             <%= link_to "Modifier", edit_admin_skill_path(@skill), class: "btn btn-edit" %>
             <%= link_to "Supprimer", "#", 
                 class: "btn btn-delete btn-delete-skill",

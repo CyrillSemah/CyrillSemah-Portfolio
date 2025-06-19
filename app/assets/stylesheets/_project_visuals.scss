@@ -1,0 +1,260 @@
+// Styles pour les visuels de projets
+@import 'variables';
+
+.mb-3 {
+  margin-bottom: $spacing-sm;
+}
+
+// Suppression du soulignement du titre
+.project-visuals h3, .project-detail__section h3 {
+  border-bottom: none;
+  text-decoration: none;
+  padding-bottom: 0;
+}
+
+// Masquer tous les h4 dans les visuels
+.visual-item h4 {
+  display: none !important;
+}
+
+// Force l'alignement du badge à droite
+.visual-item .mb-3,
+.project-visuals .mb-3,
+.project-detail__section .mb-3,
+div[style*="display: flex; justify-content: space-between; align-items: center;"] {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+}
+
+// Assurer que le titre et le badge sont sur la même ligne
+.visual-item h3 {
+  margin-bottom: 0 !important;
+  display: inline-block !important;
+}
+
+// Style pour le badge
+.badge.bg-primary {
+  border-radius: 50px;
+  padding: 0.1rem 0.8rem;
+  display: inline-block !important;
+  white-space: nowrap !important;
+  margin-left: 10px !important;
+  flex-shrink: 0 !important;
+}
+
+// Styles communs pour les visuels
+.project-visuals {
+  margin-top: $spacing-lg;
+}
+
+// Style pour l'image principale
+.project-detail__main-image, .project-image, .visual-image, .visual-standard > div {
+  background-color: #f8f9fa;
+  border-radius: $border-radius-lg;
+  padding: $spacing-md;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80%;
+  margin-bottom: $spacing-md;
+  flex-direction: column;
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  h4 {
+    align-self: flex-start;
+    margin-bottom: $spacing-sm;
+    border-bottom: none;
+    text-decoration: none;
+    padding-bottom: 0;
+  }
+}
+
+// Styles spécifiques pour l'affichage côte à côte
+.row {
+  .col-md-6 {
+    .visual-image {
+      max-width: 100%;
+    }
+  }
+}
+
+// Styles pour le slider
+.visual-slider {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80%;
+  margin-bottom: $spacing-md;
+  
+  .slider-container {
+    position: relative;
+    background-color: #f8f9fa;
+    border-radius: $border-radius-lg;
+    padding: $spacing-md;
+    overflow: hidden;
+    
+    .slider-before, .slider-after {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    .slider-after {
+      position: absolute;
+      top: $spacing-md;
+      left: $spacing-md;
+      width: 50%;
+      clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+    }
+    
+    .slider-handle {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 4px;
+      height: 100%;
+      background-color: $color-blue;
+      cursor: ew-resize;
+      transform: translateX(-50%);
+      
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: $color-blue;
+        border: 3px solid white;
+      }
+    }
+  }
+}
+
+// Styles pour les visuels individuels
+.visual-item {
+  margin-bottom: $spacing-xl;
+  
+  .visual-company {
+    font-size: 1.3rem;
+    color: $color-dark;
+    margin-bottom: $spacing-sm;
+  }
+  
+  .visual-description {
+    color: $color-gray-dark;
+    margin-bottom: $spacing-md;
+  }
+  
+  .visual-images {
+    // Styles pour les visuels de type "before_after"
+    .visual-standard, .row {
+      margin-bottom: $spacing-md;
+      
+      h4 {
+        font-size: 1.1rem;
+        color: $color-dark;
+        margin-bottom: $spacing-xs;
+      }
+    }
+    
+    // Styles pour le slider
+    .visual-slider {
+      position: relative;
+      margin-bottom: $spacing-md;
+      
+      .slider-container {
+        position: relative;
+        overflow: hidden;
+        
+        .slider-handle {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 4px;
+          background-color: white;
+          cursor: ew-resize;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+          z-index: 10;
+          left: 50%;
+        }
+      }
+    }
+    
+    // Styles pour les visuels de type "single"
+    .visual-single {
+      max-width: 800px;
+      margin: 0 auto;
+      
+      img {
+        width: 100%;
+        height: auto;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+  }
+}
+
+// Styles pour les badges de type d'affichage
+.badge {
+  &.bg-primary {
+    background-color: $color-blue !important;
+    color: white !important;
+  }
+}
+
+// Styles pour la vue admin
+.project-detail {
+  &__main-image {
+    max-width: 800px;
+    margin-bottom: $spacing-md;
+    
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: $border-radius-md;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  &__before-after {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    
+    &-item {
+      flex: 1;
+      min-width: 300px;
+      position: relative;
+      
+      h4 {
+        margin-bottom: $spacing-xs;
+        font-size: 1.1rem;
+      }
+      
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: $border-radius-md;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+      
+      // Suppression de l'overlay de comparaison et de l'icône de loupe
+    }
+  }
+}

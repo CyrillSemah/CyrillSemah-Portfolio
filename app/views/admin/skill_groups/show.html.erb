@@ -1,34 +1,30 @@
 <div class="admin-experience-container">
   <div class="container">
     <!-- Menu de navigation admin -->
-    <div class="admin-nav">
-      <ul class="admin-nav__list">
-        <li class="admin-nav__item">
-          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
-        </li>
-        <li class="admin-nav__item">
-          <%= link_to "Formations", admin_educations_path %>
-        </li>
-        <li class="admin-nav__item active">
-          <%= link_to "Compétences", admin_skills_path %>
-        </li>
-      </ul>
-    </div>
+    <%= render 'admin/shared/admin_nav' %>
     
     <div class="experience-list">
       <div class="experience-list__header">
         <h2>Détails du groupe de compétences</h2>
-        <%= link_to "Retour aux compétences", admin_skills_path, class: "btn btn-secondary" %>
+        <%= link_to admin_skills_path, class: "animated-action-button" do %>
+          <div class="icon-container">
+            <i class="fas fa-arrow-left"></i>
+          </div>
+          <span class="button-text">Retour aux compétences</span>
+        <% end %>
       </div>
     </div>
     
     <div class="experience-detail">
       <div class="experience-detail__content">
-        <div class="experience-detail__info">
+        <div class="skill-group-title-band">
           <h3><%= @skill_group.name %></h3>
-          
+        </div>
+        
+        <div class="experience-detail__info">
+          <%# Le h3 a été déplacé dans la skill-group-title-band %>
           <% if @skill_group.description.present? %>
-            <div class="experience-detail__description">
+            <div class="description-section">
               <h4>Description</h4>
               <p><%= simple_format(@skill_group.description) %></p>
             </div>
@@ -69,7 +65,6 @@
           </div>
           
           <div class="experience-list__item-actions">
-            <%= link_to "Retour à la liste", admin_skill_groups_path, class: "btn btn-view" %>
             <%= link_to "Modifier", edit_admin_skill_group_path(@skill_group), class: "btn btn-edit" %>
             <%= link_to "Supprimer", "#", 
                 class: "btn btn-delete btn-delete-skill-group",

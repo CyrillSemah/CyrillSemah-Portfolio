@@ -1,7 +1,12 @@
 <section class="section section-project-detail">
   <div class="container">
-    <div class="section-project-detail__header">
-      <h1><%= @project.title %></h1>
+    <div class="section-project-detail__header <%= @project.development? ? 'header-development' : 'header-retouche' %>">
+      <div class="d-flex justify-content-between align-items-center">
+        <h1><%= @project.title %></h1>
+        <span class="badge <%= @project.development? ? 'badge-primary' : 'badge-success' %>">
+          <%= @project.development? ? 'Développement' : 'Retouche & Création' %>
+        </span>
+      </div>
       <div class="project-technologies">
         <% @project.technologies.split(',').each do |tech| %>
           <span class="technology-tag"><%= tech.strip %></span>
@@ -10,39 +15,384 @@
     </div>
     
     <div class="section-project-detail__content">
-      <div class="project-image">
-        <% if @project.image.attached? %>
-          <%= image_tag @project.image, alt: @project.title %>
-        <% else %>
-          <div class="project-placeholder large">
-            <i class="fas fa-code"></i>
+      <% if @project.development? %>
+        <!-- Affichage pour les projets de développement -->
+        <div class="project-image">
+          <% if @project.image.attached? %>
+            <%= image_tag @project.image, alt: @project.title, class: "img-fluid rounded" %>
+          <% else %>
+            <div class="project-placeholder large">
+              <i class="fas fa-code"></i>
+            </div>
+          <% end %>
+        </div>
+        
+        <div class="project-description mt-4">
+          <%= simple_format(@project.description) %>
+        </div>
+        
+        <% if @project.development_images.attached? %>
+          <div class="project-gallery mt-4">
+            <h3>Galerie d'images</h3>
+            <div class="row">
+              <% @project.development_images.each do |image| %>
+                <div class="col-md-4 mb-3">
+                  <%= image_tag image, alt: "#{@project.title} - Image", class: "img-fluid rounded" %>
+                </div>
+              <% end %>
+            </div>
           </div>
         <% end %>
-      </div>
-      
-      <div class="project-description">
-        <%= simple_format(@project.description) %>
-      </div>
-      
-      <div class="project-links">
-        <% if @project.github_url.present? %>
-          <%= link_to @project.github_url, target: "_blank", class: "btn btn-outline btn-with-icon" do %>
-            <i class="fab fa-github"></i> Voir sur GitHub
-          <% end %>
-        <% end %>
         
-        <% if @project.live_url.present? %>
-          <%= link_to @project.live_url, target: "_blank", class: "btn btn-primary btn-with-icon" do %>
-            <i class="fas fa-external-link-alt"></i> Voir la démo
+        <div class="project-links mt-4">
+          <% if @project.github_url.present? %>
+            <%= link_to @project.github_url, target: "_blank", class: "btn btn-outline btn-with-icon" do %>
+              <i class="fab fa-github"></i> Voir sur GitHub
+            <% end %>
           <% end %>
+          
+          <% if @project.live_url.present? %>
+            <%= link_to @project.live_url, target: "_blank", class: "btn btn-primary btn-with-icon" do %>
+              <i class="fas fa-external-link-alt"></i> Voir la démo
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <!-- Affichage pour les projets de retouche & création -->
+        <div class="project-description mb-4">
+          <%= simple_format(@project.description) %>
+        </div>
+        
+        <% if @project.project_visuals.any? %>
+          <div class="project-visuals">
+            <% if @project.project_visuals.count == 1 && @project.project_visuals.first.visual_type == ProjectVisual::VISUAL_TYPE_SINGLE %>
+              <% visual = @project.project_visuals.first %>
+              <div class="visual-item mb-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h3 style="margin-bottom: 0;">Visuels du projet</h3>
+                  <span class="badge bg-primary text-white"><%= visual.display_type.humanize %></span>
+                </div>
+                
+                <% if visual.description.present? %>
+                  <p class="visual-description mb-3"><%= visual.description %></p>
+                <% end %>
+                
+                <div class="visual-images">
+                  <!-- Affichage d'une seule image -->
+                  <div class="visual-single project-detail__main-image">
+                    <%= image_tag visual.image, alt: "Image", class: "img-fluid rounded shadow-sm" if visual.image.attached? %>
+                  </div>
+                </div>
+              </div>
+            <% else %>
+              <% @project.project_visuals.ordered.each do |visual| %>
+                <div class="visual-item mb-5">
+                  <% if visual.company.present? && visual.company != "Autre" %>
+                    <h3 class="visual-company"><%= visual.company %></h3>
+                  <% end %>
+                  
+                  <% if visual.description.present? %>
+                    <p class="visual-description mb-3"><%= visual.description %></p>
+                  <% end %>
+                  
+                  <div class="visual-images">
+                    <% if visual.visual_type == "before_after" %>
+                      <% if visual.display_type == "side_by_side" %>
+                        <!-- Affichage côte à côte -->
+                        <div>
+                          <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 style="margin-bottom: 0;">Visuels du projet</h3>
+                            <span class="badge bg-primary text-white">Côte à côte</span>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="visual-image">
+
+                                <%= image_tag visual.before_image, alt: "Avant", class: "img-fluid rounded shadow-sm" if visual.before_image.attached? %>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="visual-image">
+
+                                <%= image_tag visual.after_image, alt: "Après", class: "img-fluid rounded shadow-sm" if visual.after_image.attached? %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <% elsif visual.display_type == "slider" %>
+                        <!-- Affichage avec slider -->
+                        <div class="visual-slider">
+                          <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 style="margin-bottom: 0;">Visuels du projet</h3>
+                            <span class="badge bg-primary text-white">Slider</span>
+                          </div>
+                          <div id="slider-container-<%= visual.id %>" class="slider-container">
+                            <%= image_tag visual.before_image, alt: "Avant", class: "img-fluid rounded slider-before" if visual.before_image.attached? %>
+                            <%= image_tag visual.after_image, alt: "Après", class: "img-fluid rounded slider-after" if visual.after_image.attached? %>
+                            <div class="slider-handle"></div>
+                          </div>
+                          
+                          <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                              const container = document.getElementById('slider-container-<%= visual.id %>');
+                              const handle = container.querySelector('.slider-handle');
+                              const afterImage = container.querySelector('.slider-after');
+                              let isDragging = false;
+                              
+                              // Fonction pour démarrer le glissement
+                              function startDrag(e) {
+                                e.preventDefault();
+                                isDragging = true;
+                              }
+                              
+                              // Fonction pour arrêter le glissement
+                              function stopDrag() {
+                                isDragging = false;
+                              }
+                              
+                              // Fonction pour gérer le glissement
+                              function drag(e) {
+                                if (!isDragging) return;
+                                
+                                let containerRect = container.getBoundingClientRect();
+                                let containerWidth = containerRect.width;
+                                
+                                // Gérer à la fois les événements souris et tactiles
+                                let clientX = e.clientX;
+                                if (e.type === "touchmove") {
+                                  clientX = e.touches[0].clientX;
+                                }
+                                
+                                let position = (clientX - containerRect.left) / containerWidth * 100;
+                                
+                                // Limiter la position entre 0% et 100%
+                                position = Math.max(0, Math.min(100, position));
+                                
+                                // Mettre à jour la position du curseur
+                                handle.style.left = `${position}%`;
+                                
+                                // Mettre à jour le clip-path de l'image "après"
+                                afterImage.style.clipPath = `polygon(0 0, ${position}% 0, ${position}% 100%, 0 100%)`;
+                              }
+                              
+                              // Ajouter les écouteurs d'événements
+                              handle.addEventListener('mousedown', startDrag);
+                              document.addEventListener('mouseup', stopDrag);
+                              document.addEventListener('mousemove', drag);
+                              
+                              // Support tactile
+                              handle.addEventListener('touchstart', startDrag);
+                              document.addEventListener('touchend', stopDrag);
+                              document.addEventListener('touchmove', drag);
+                            });
+                          </script>
+                        </div>
+                      <% else %>
+                        <!-- Affichage standard -->
+                        <div class="visual-standard">
+                          <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 style="margin-bottom: 0;">Visuels du projet</h3>
+                            <span class="badge bg-primary text-white">Standard</span>
+                          </div>
+                          <div class="mb-3">
+
+                            <%= image_tag visual.before_image, alt: "Avant", class: "img-fluid rounded shadow-sm" if visual.before_image.attached? %>
+                          </div>
+                          <div>
+
+                            <%= image_tag visual.after_image, alt: "Après", class: "img-fluid rounded shadow-sm" if visual.after_image.attached? %>
+                          </div>
+                        </div>
+                      <% end %>
+                    <% else %>
+                      <!-- Affichage d'une seule image -->
+                      <div class="visual-single project-detail__main-image">
+                        <%= image_tag visual.image, alt: "Image", class: "img-fluid rounded shadow-sm" if visual.image.attached? %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="alert alert-info">
+            <p>Aucun visuel n'est disponible pour ce projet.</p>
+          </div>
         <% end %>
-      </div>
+      <% end %>
     </div>
     
-    <div class="section-project-detail__footer">
+    <div class="section-project-detail__footer mt-4">
       <%= link_to projets_path, class: "btn btn-back" do %>
         <i class="fas fa-arrow-left"></i> Retour aux projets
       <% end %>
     </div>
   </div>
 </section>
+
+<% if @project.retouche_creation? && @project.project_visuals.any? %>
+  <% content_for :scripts do %>
+    <script>
+      // Script pour supprimer le titre "Visuel 1" et corriger l'alignement du badge
+      document.addEventListener('DOMContentLoaded', function() {
+        // Supprimer tous les éléments contenant le texte "Visuel 1"
+        document.querySelectorAll('h4').forEach(function(element) {
+          if (element.textContent.includes('Visuel 1')) {
+            element.style.display = 'none';
+          }
+        });
+        
+        // Corriger l'alignement du badge
+        const badges = document.querySelectorAll('.badge.bg-primary.text-white');
+        badges.forEach(function(badge) {
+          const parent = badge.parentElement;
+          if (parent) {
+            parent.style.display = 'flex';
+            parent.style.justifyContent = 'space-between';
+            parent.style.alignItems = 'center';
+          }
+        });
+        
+        // Script pour initialiser les sliders avant/après
+        const sliders = document.querySelectorAll('.slider-container');
+        
+        sliders.forEach(function(slider) {
+          const handle = slider.querySelector('.slider-handle');
+          let isDragging = false;
+          
+          // Position initiale du slider à 50%
+          handle.style.left = '50%';
+          slider.querySelector('.slider-after').style.clipPath = 'inset(0 0 0 50%)';
+          
+          // Fonction pour mettre à jour la position du slider
+          function updateSliderPosition(x) {
+            const sliderRect = slider.getBoundingClientRect();
+            let position = (x - sliderRect.left) / sliderRect.width * 100;
+            
+            // Limiter la position entre 0 et 100%
+            position = Math.max(0, Math.min(100, position));
+            
+            // Mettre à jour la position du handle et le clip-path
+            handle.style.left = `${position}%`;
+            slider.querySelector('.slider-after').style.clipPath = `inset(0 0 0 ${position}%)`;
+          }
+          
+          // Événements pour le glisser-déposer
+          handle.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            e.preventDefault();
+          });
+          
+          document.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+              updateSliderPosition(e.clientX);
+            }
+          });
+          
+          document.addEventListener('mouseup', function() {
+            isDragging = false;
+          });
+          
+          // Support tactile
+          handle.addEventListener('touchstart', function(e) {
+            isDragging = true;
+          });
+          
+          document.addEventListener('touchmove', function(e) {
+            if (isDragging) {
+              updateSliderPosition(e.touches[0].clientX);
+            }
+          });
+          
+          document.addEventListener('touchend', function() {
+            isDragging = false;
+          });
+          
+          // Clic sur le slider
+          slider.addEventListener('click', function(e) {
+            updateSliderPosition(e.clientX);
+          });
+        });
+      });
+    </script>
+  <% end %>
+  
+  <% content_for :styles do %>
+    <style>
+      /* Styles pour le slider avant/après */
+      .slider-container {
+        position: relative;
+        overflow: hidden;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+      
+      .slider-before,
+      .slider-after {
+        display: block;
+        width: 100%;
+      }
+      
+      .slider-after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        clip-path: inset(0 0 0 50%);
+      }
+      
+      .slider-handle {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 4px;
+        background: #fff;
+        cursor: ew-resize;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      }
+      
+      .slider-handle::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 30px;
+        height: 30px;
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      }
+      
+      .slider-handle::after {
+        content: '\2194'; /* Flèche bidirectionnelle */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 16px;
+        color: #333;
+      }
+      
+      /* Styles pour les visuels */
+      .visual-item {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 2rem;
+      }
+      
+      .visual-company {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #333;
+      }
+      
+      .visual-description {
+        font-style: italic;
+        color: #666;
+      }
+    </style>
+  <% end %>
+<% end %>

@@ -1,4 +1,4 @@
-<div class="admin-education-container">
+<div class="admin-projects-container">
   <div class="container">
     <!-- Menu de navigation admin -->
     <div class="admin-nav">
@@ -21,13 +21,13 @@
       </ul>
     </div>
     
-    <div class="education-list">
-      <div class="education-list__header">
+    <div class="projects-list">
+      <div class="projects-list__header">
         <h2>Mes projets</h2>
         <div class="header-actions">
-          <%= link_to new_admin_project_path, class: "animated-action-button" do %>
+          <%= link_to choose_type_admin_projects_path, class: "animated-action-button" do %>
             <div class="icon-container">
-              <i class="fas fa-plus-circle"></i>
+              <i class="fas fa-plus"></i>
             </div>
             <span class="button-text">Ajouter un projet</span>
           <% end %>
@@ -40,54 +40,256 @@
         </div>
       <% end %>
       
-      <div class="education-list__content">
-    <% if @projects.any? %>
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Titre</th>
-              <th>Technologies</th>
-              <th>Position</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @projects.each do |project| %>
-              <tr>
-                <td class="image-cell">
-                  <% if project.image.attached? %>
-                    <%= image_tag project.image.variant(resize_to_limit: [100, 100]), alt: project.title %>
-                  <% else %>
-                    <div class="placeholder-image">
-                      <i class="fas fa-code"></i>
-                    </div>
+      <div class="projects-list__content">
+        <div class="admin-card">
+          <% if @projects.any? %>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Titre</th>
+                    <th>Type</th>
+                    <th>Technologies</th>
+                    <th>Position</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @projects.each do |project| %>
+                    <tr class="<%= project.development? ? 'project-development' : 'project-retouche' %>">
+                      <td class="image-cell">
+                        <% if project.development? %>
+                          <% if project.image.attached? %>
+                            <%= image_tag project.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                          <% else %>
+                            <div class="placeholder-image">
+                              <i class="fas fa-code"></i>
+                            </div>
+                          <% end %>
+                        <% else %>
+                          <% # Pour les projets de type Retouche & Création %>
+                          <% if project.project_visuals.any? %>
+                            <% # Chercher d'abord un visuel de type before_after pour afficher l'image après %>
+                            <% before_after_visual = project.project_visuals.find { |v| v.visual_type == 'before_after' && v.after_image.attached? } %>
+                            <% if before_after_visual %>
+                              <% if before_after_visual.after_image.content_type.start_with?('image/') %>
+                                <%= image_tag before_after_visual.after_image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                              <% else %>
+                                <div class="pdf-icon" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 4px;">
+                                  <i class="far fa-file-pdf" style="font-size: 40px; color: #dc3545;"></i>
+                                </div>
+                              <% end %>
+                            <% else %>
+                              <% # Sinon chercher un visuel de type single %>
+                              <% single_visual = project.project_visuals.find { |v| v.visual_type == 'single' && v.image.attached? } %>
+                              <% if single_visual %>
+                                <% if single_visual.image.content_type.start_with?('image/') %>
+                                  <%= image_tag single_visual.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                                <% else %>
+                                  <div class="pdf-icon" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 4px;">
+                                  <i class="far fa-file-pdf" style="font-size: 40px; color: #dc3545;"></i>
+                                </div>
+                                <% end %>
+                              <% elsif project.image.attached? %>
+                                <% if project.image.content_type.start_with?('image/') %>
+                                  <%= image_tag project.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                                <% else %>
+                                  <div class="pdf-icon" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 4px;">
+                                  <i class="far fa-file-pdf" style="font-size: 40px; color: #dc3545;"></i>
+                                </div>
+                                <% end %>
+                              <% else %>
+                                <div class="placeholder-image">
+                                  <i class="fas fa-paint-brush"></i>
+                                </div>
+                              <% end %>
+                            <% end %>
+                          <% elsif project.image.attached? %>
+                            <%= image_tag project.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                          <% else %>
+                            <div class="placeholder-image">
+                              <i class="fas fa-paint-brush"></i>
+                            </div>
+                          <% end %>
+                        <% end %>
+                      </td>
+                      <td><%= project.title %></td>
+                      <td>
+                        <span class="project-type-badge <%= project.development? ? 'type-development' : 'type-retouche' %>">
+                          <% if project.development? %>
+                            <span class="badge-icon">&lt;/&gt;</span> Développement
+                          <% else %>
+                            <span class="badge-icon"><i class="fas fa-paint-brush"></i></span> Retouche & Création
+                          <% end %>
+                        </span>
+                      </td>
+                      <td class="tech-badges-cell">
+                        <div class="tech-badges">
+                          <% tech_array = project.technologies.split(',').map(&:strip) %>
+                          <% first_line = tech_array.take(3) %>
+                          <% second_line = tech_array.size > 3 ? tech_array[3..5] : [] %>
+                          <% third_line = tech_array.size > 6 ? tech_array[6..8] : [] %>
+                          <% remaining = tech_array.size > 9 ? tech_array.size - 9 : 0 %>
+                          
+                          <div class="tech-badges-row">
+                            <% first_line.each do |tech| %>
+                              <span class="tech-badge"><%= tech %></span>
+                            <% end %>
+                          </div>
+                          
+                          <% if second_line.any? %>
+                            <div class="tech-badges-row">
+                              <% second_line.each do |tech| %>
+                                <span class="tech-badge"><%= tech %></span>
+                              <% end %>
+                            </div>
+                          <% end %>
+                          
+                          <% if third_line.any? %>
+                            <div class="tech-badges-row">
+                              <% third_line.each do |tech| %>
+                                <span class="tech-badge"><%= tech %></span>
+                              <% end %>
+                              <% if remaining > 0 %>
+                                <span class="tech-badge tech-badge-more">+<%= remaining %></span>
+                              <% end %>
+                            </div>
+                          <% elsif remaining > 0 %>
+                            <div class="tech-badges-row">
+                              <span class="tech-badge tech-badge-more">+<%= remaining %></span>
+                            </div>
+                          <% end %>
+                        </div>
+                      </td>
+                      <td class="position-cell"><%= project.position %></td>
+                      <td class="actions-cell">
+                        <div class="action-buttons">
+                          <%= link_to admin_project_path(project), class: "action-button view" do %>
+                            <i class="fas fa-eye"></i>
+                          <% end %>
+                          <%= link_to edit_admin_project_path(project), class: "action-button edit" do %>
+                            <i class="fas fa-edit"></i>
+                          <% end %>
+                          <%= link_to "#", 
+                                      data: { delete_url: admin_project_path(project) },
+                                      class: "action-button delete btn-delete-project" do %>
+                            <i class="fas fa-trash"></i>
+                          <% end %>
+                        </div>
+                      </td>
+                    </tr>
                   <% end %>
-                </td>
-                <td><%= project.title %></td>
-                <td><%= project.technologies %></td>
-                <td><%= project.position %></td>
-                <td class="actions-cell">
-                  <%= link_to edit_admin_project_path(project), class: "btn btn-sm btn-outline-primary" do %>
-                    <i class="fas fa-edit"></i>
-                  <% end %>
-                  <%= link_to admin_project_path(project), method: :delete, data: { confirm: 'Êtes-vous sûr de vouloir supprimer ce projet ?' }, class: "btn btn-sm btn-outline-danger" do %>
-                    <i class="fas fa-trash"></i>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    <% else %>
-      <div class="empty-state">
-        <p>Aucun projet n'a encore été ajouté.</p>
-        <p>Cliquez sur "Nouveau projet" pour commencer.</p>
-      </div>
-    <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% else %>
+            <div class="empty-state" style="margin: 0; padding: 40px 20px; background-color: #f8f9fa; border-radius: 12px;">
+              <div class="empty-icon">
+                <i class="fas fa-laptop-code"></i>
+              </div>
+              <h3>Aucun projet n'a encore été ajouté</h3>
+              <p>Créez votre premier projet pour personnaliser la page des projets de votre portfolio.</p>
+              <%= link_to choose_type_admin_projects_path, class: "btn btn-primary" do %>
+                <i class="fas fa-plus"></i> Créer un projet
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<%= render 'shared/delete_confirmation_modal' %>
+
+<% content_for :styles do %>
+  <style>
+    /* Styles pour la liste des projets */
+    .admin-table {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 0;
+    }
+    
+    .table thead th {
+      background-color: #f8f9fa;
+      border-bottom: 2px solid #e9ecef;
+      color: #495057;
+      font-weight: 600;
+      padding: 12px 15px;
+    }
+    
+    .table tbody tr {
+      transition: background-color 0.2s;
+    }
+    
+    .table tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .table tbody td {
+      padding: 12px 15px;
+      vertical-align: middle;
+      border-top: 1px solid #e9ecef;
+    }
+    
+    .image-cell {
+      width: 100px;
+    }
+    
+    .image-cell img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .placeholder-image {
+      width: 80px;
+      height: 80px;
+      background-color: #e9ecef;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .placeholder-image i {
+      font-size: 24px;
+      color: #6c757d;
+    }
+    
+    .project-type-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .type-development {
+      background-color: #e3f2fd;
+      color: #0d47a1;
+    }
+    
+    .type-retouche {
+      background-color: #e8f5e9;
+      color: #1b5e20;
+    }
+    
+    .actions-cell {
+      width: 120px;
+      text-align: right;
+    }
+    
+    .actions-cell .btn {
+      margin-left: 5px;
+    }
+    
+    /* Styles supprimés car ils sont maintenant définis dans _admin_header_icon.scss */
+    /* .empty-state et .empty-state p sont maintenant gérés globalement */
+  </style>
+<% end %>

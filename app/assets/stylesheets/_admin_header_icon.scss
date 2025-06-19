@@ -19,13 +19,14 @@
   box-shadow: 0 4px 8px rgba(43, 63, 138, 0.2);
 }
 
-// Style pour l'état vide
+// Style global pour l'état vide - utilisé dans toute l'application
 .empty-state {
   text-align: center;
   padding: 40px 20px;
   background-color: #f8f9fa;
   border-radius: 12px;
-  margin-top: 20px;
+  margin: 0 !important; // Force la suppression des marges
+  box-shadow: none !important; // Supprime les ombres potentielles
 }
 
 .empty-icon {
