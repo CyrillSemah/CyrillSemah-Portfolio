@@ -1,0 +1,33 @@
+<div class="admin-login-container">
+  <div class="admin-login-form">
+    <h1>Mot de passe oublié</h1>
+    
+    <% if flash[:alert] %>
+      <div class="alert alert-danger">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+    
+    <% if flash[:notice] %>
+      <div class="alert alert-success">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    
+    <p>Entrez votre adresse e-mail principale ou votre email de secours pour recevoir les instructions de réinitialisation de mot de passe.</p>
+    
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "admin_users/shared/error_messages", resource: resource %>
+
+      <div class="form-group">
+        <%= f.label :email, "Adresse e-mail" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true, placeholder: "Votre email principal ou email de secours" %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Envoyer les instructions", class: "btn btn-primary" %>
+        <%= link_to "Retour à la connexion", new_session_path(resource_name), class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,5 +1,4 @@
-class Admin::EducationsController < ApplicationController
-  before_action :authenticate_admin!
+class Admin::EducationsController < Admin::BaseController
   before_action :set_education, only: [:show, :edit, :update, :destroy]
   
   def index
