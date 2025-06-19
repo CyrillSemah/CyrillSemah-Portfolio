@@ -42,6 +42,11 @@ class Project < ApplicationRecord
     project_type == RETOUCHE_CREATION
   end
   
+  # Utiliser la position comme identifiant dans les URLs
+  def to_param
+    position.to_s
+  end
+  
   # Accepte les attributs imbriqués pour les visuels de projet
   accepts_nested_attributes_for :project_visuals, allow_destroy: true, reject_if: :all_blank
   

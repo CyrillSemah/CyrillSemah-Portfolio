@@ -46,6 +46,28 @@
             <p><%= simple_format(@project.description) %></p>
           </div>
           
+          <% if @project.retouche_creation? && @project.project_visuals.any? && @project.project_visuals.first.professional_experience.present? %>
+          <div class="project-detail__section">
+            <h3>Entreprise</h3>
+            <div class="d-flex align-items-center">
+              <% if @project.project_visuals.first.professional_experience.logo.attached? %>
+                <%= image_tag @project.project_visuals.first.professional_experience.logo.variant(resize_to_limit: [100, 70]), alt: @project.project_visuals.first.professional_experience.company_name, style: "margin-right: 15px;" %>
+              <% end %>
+              <p class="mb-0"><strong><%= @project.project_visuals.first.professional_experience.company_name %></strong></p>
+            </div>
+          </div>
+          <% elsif @project.retouche_creation? && @project.project_visuals.any? && @project.project_visuals.first.company_name.present? %>
+          <div class="project-detail__section">
+            <h3>Entreprise</h3>
+            <div class="d-flex align-items-center">
+              <% if @project.project_visuals.first.company_logo.attached? %>
+                <%= image_tag @project.project_visuals.first.company_logo.variant(resize_to_limit: [100, 70]), alt: @project.project_visuals.first.company_name, style: "margin-right: 15px;" %>
+              <% end %>
+              <p class="mb-0"><strong><%= @project.project_visuals.first.company_name %></strong></p>
+            </div>
+          </div>
+          <% end %>
+          
           <div class="project-detail__section">
             <h3>Technologies</h3>
             <div class="tech-badges">

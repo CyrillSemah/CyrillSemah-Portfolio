@@ -73,14 +73,32 @@
                             <% # Chercher d'abord un visuel de type before_after pour afficher l'image après %>
                             <% before_after_visual = project.project_visuals.find { |v| v.visual_type == 'before_after' && v.after_image.attached? } %>
                             <% if before_after_visual %>
-                              <%= image_tag before_after_visual.after_image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                              <% if before_after_visual.after_image.content_type.start_with?('image/') %>
+                                <%= image_tag before_after_visual.after_image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                              <% else %>
+                                <div class="pdf-icon" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 4px;">
+                                  <i class="far fa-file-pdf" style="font-size: 40px; color: #dc3545;"></i>
+                                </div>
+                              <% end %>
                             <% else %>
                               <% # Sinon chercher un visuel de type single %>
                               <% single_visual = project.project_visuals.find { |v| v.visual_type == 'single' && v.image.attached? } %>
                               <% if single_visual %>
-                                <%= image_tag single_visual.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                                <% if single_visual.image.content_type.start_with?('image/') %>
+                                  <%= image_tag single_visual.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                                <% else %>
+                                  <div class="pdf-icon" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 4px;">
+                                  <i class="far fa-file-pdf" style="font-size: 40px; color: #dc3545;"></i>
+                                </div>
+                                <% end %>
                               <% elsif project.image.attached? %>
-                                <%= image_tag project.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                                <% if project.image.content_type.start_with?('image/') %>
+                                  <%= image_tag project.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                                <% else %>
+                                  <div class="pdf-icon" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 4px;">
+                                  <i class="far fa-file-pdf" style="font-size: 40px; color: #dc3545;"></i>
+                                </div>
+                                <% end %>
                               <% else %>
                                 <div class="placeholder-image">
                                   <i class="fas fa-paint-brush"></i>
