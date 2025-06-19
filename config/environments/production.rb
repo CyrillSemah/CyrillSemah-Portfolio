@@ -58,16 +58,16 @@ Rails.application.configure do
   # Activer l'envoi d'emails
   config.action_mailer.perform_deliveries = true
 
-  # Définir l'hôte pour les liens dans les emails (remplacer par votre domaine réel)
-  config.action_mailer.default_url_options = { host: ENV['APP_HOST'] || 'votre-portfolio.herokuapp.com' }
+  # Définir l'hôte pour les liens dans les emails (utiliser la variable d'environnement APP_HOST)
+  config.action_mailer.default_url_options = { host: ENV['APP_HOST'] || 'cyrillsemah.com' }
 
-  # Configuration pour l'envoi d'emails via SendGrid (service recommandé pour Heroku)
+  # Configuration pour l'envoi d'emails via SMTP
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address:              'smtp.gmail.com',
     port:                 587,
-    domain:               'gmail.com',
-    user_name:            'cyrillsemah@gmail.com',
+    domain:               'cyrillsemah.com',
+    user_name:            ENV['GMAIL_USERNAME'],
     password:             ENV['GMAIL_PASSWORD'],
     authentication:       'plain',
     enable_starttls_auto: true

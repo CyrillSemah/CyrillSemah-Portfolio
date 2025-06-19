@@ -1,5 +1,4 @@
-class Admin::SkillsController < ApplicationController
-  before_action :authenticate_admin!
+class Admin::SkillsController < Admin::BaseController
   before_action :set_skill, only: [:show, :edit, :update, :destroy]
   
   def index

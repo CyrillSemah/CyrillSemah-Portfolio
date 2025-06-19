@@ -1,7 +1,7 @@
-<nav class="navbar <%= admin? ? 'admin-mode' : '' %>">
+<nav class="navbar <%= request.path.start_with?('/admin') ? 'admin-mode' : '' %>">
   <div class="container">
     <div class="navbar__logo">
-      <a href="<%= root_path %>" style="display: flex; align-items: center; text-decoration: none;">
+      <a href="<%= request.path.start_with?('/admin') ? admin_root_path : root_path %>" style="display: flex; align-items: center; text-decoration: none;">
         <%= image_tag "LogoCS.png", alt: "Logo Cyrill Semah" %>
         <div class="logo-text" style="display: inline-block; white-space: nowrap;">
           <span class="text-original">Portfolio.</span>
@@ -11,7 +11,33 @@
     </div>
     
     <div class="navbar__links">
-      <% if !request.path.start_with?('/admin') || !admin? %>
+      <% if request.path.start_with?('/admin') %>
+        <!-- En mode admin, afficher uniquement le kebab-menu -->
+        <% if admin_user_signed_in? %>
+          <div class="kebab-menu">
+            <button class="kebab-menu__button" onclick="toggleKebabMenu(this, event)">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </button>
+            <div class="kebab-menu__content">
+              <%= link_to admin_professional_experiences_path, class: "menu-item btn-view" do %>
+                <i class="fas fa-cog"></i>
+                <span>Admin</span>
+              <% end %>
+              <%= link_to edit_admin_profile_path, class: "menu-item btn-view" do %>
+                <i class="fas fa-user-cog"></i>
+                <span>Mon profil</span>
+              <% end %>
+              <%= button_to destroy_admin_user_session_path, method: :delete, class: "menu-item btn-delete", form_class: "kebab-form-button" do %>
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Déconnexion</span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <!-- Mode normal (non-admin) -->
         <a href="#home" class="<%= current_page?(root_path) ? 'active' : '' %>">Accueil</a>
         <a href="#xp-pro" class="<%= params[:anchor] == 'xp-pro' ? 'active' : '' %>">XP Pro</a>
         <a href="#education" class="<%= params[:anchor] == 'education' ? 'active' : '' %>">Formation</a>
@@ -19,29 +45,30 @@
         <a href="#" class="js-projects-link">Projets</a>
         <div class="navbar__separator"></div>
         <a href="#" class="js-contact-modal" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1.5rem; background-color: #2b3f8a; color: white; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s ease; font-weight: 500; font-size: 1rem; text-decoration: none; height: 38px; line-height: 1;">Contact</a>
-      <% end %>
-      
-      <% if admin? && (request.path.start_with?('/admin') || current_page?(root_path)) %>
-        <% if request.path.start_with?('/admin') %>
-          <div class="navbar__separator"></div>
-        <% end %>
-        <div class="kebab-menu">
-          <button class="kebab-menu__button" onclick="toggleKebabMenu(this, event)">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-          </button>
-          <div class="kebab-menu__content">
-            <%= link_to admin_professional_experiences_path, class: "menu-item btn-view" do %>
-              <i class="fas fa-cog"></i>
-              <span>Admin</span>
-            <% end %>
-            <%= button_to logout_path, method: :delete, class: "menu-item btn-delete", form_class: "kebab-form-button" do %>
-              <i class="fas fa-sign-out-alt"></i>
-              <span>Déconnexion</span>
-            <% end %>
+        
+        <% if admin_user_signed_in? %>
+          <div class="kebab-menu">
+            <button class="kebab-menu__button" onclick="toggleKebabMenu(this, event)">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </button>
+            <div class="kebab-menu__content">
+              <%= link_to admin_professional_experiences_path, class: "menu-item btn-view" do %>
+                <i class="fas fa-cog"></i>
+                <span>Admin</span>
+              <% end %>
+              <%= link_to edit_admin_profile_path, class: "menu-item btn-view" do %>
+                <i class="fas fa-user-cog"></i>
+                <span>Mon profil</span>
+              <% end %>
+              <%= button_to destroy_admin_user_session_path, method: :delete, class: "menu-item btn-delete", form_class: "kebab-form-button" do %>
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Déconnexion</span>
+              <% end %>
+            </div>
           </div>
-        </div>
+        <% end %>
       <% end %>
     </div>
     
@@ -55,33 +82,63 @@
   </div>
   
   <div class="navbar__mobile">
-    <% if !request.path.start_with?('/admin') || !admin? %>
+    <% if request.path.start_with?('/admin') %>
+      <!-- En mode admin mobile, n'afficher que le kebab-menu -->
+      <% if admin_user_signed_in? %>
+        <div class="kebab-menu mobile-kebab">
+          <button class="kebab-menu__button" onclick="toggleKebabMenu(this, event)">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </button>
+          <div class="kebab-menu__content">
+            <%= link_to admin_professional_experiences_path, class: "menu-item btn-view" do %>
+              <i class="fas fa-cog"></i>
+              <span>Admin</span>
+            <% end %>
+            <%= link_to edit_admin_profile_path, class: "menu-item btn-view" do %>
+              <i class="fas fa-user-cog"></i>
+              <span>Mon profil</span>
+            <% end %>
+            <%= button_to destroy_admin_user_session_path, method: :delete, class: "menu-item btn-delete", form_class: "kebab-form-button" do %>
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Déconnexion</span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <!-- Mode normal mobile (non-admin) -->
       <a href="#home" class="<%= current_page?(root_path) ? 'active' : '' %>">Accueil</a>
       <a href="#xp-pro" class="<%= params[:anchor] == 'xp-pro' ? 'active' : '' %>">XP Pro</a>
       <a href="#education" class="<%= params[:anchor] == 'education' ? 'active' : '' %>">Formation</a>
       <a href="#skills" class="<%= params[:anchor] == 'skills' ? 'active' : '' %>">Skills</a>
       <a href="<%= projets_path %>" class="<%= current_page?(projets_path) ? 'active' : '' %>">Projets</a>
       <a href="#" class="js-contact-modal" style="display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1.5rem; background-color: #2b3f8a; color: white; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s ease; font-weight: 500; font-size: 1rem; text-decoration: none; margin-top: 1.5rem; height: 38px; line-height: 1;">Contact</a>
-    <% end %>
-    
-    <% if admin? && (request.path.start_with?('/admin') || current_page?(root_path)) %>
-      <div class="kebab-menu mobile-kebab">
-        <button class="kebab-menu__button" onclick="toggleKebabMenu(this, event)">
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-        </button>
-        <div class="kebab-menu__content">
-          <%= link_to admin_professional_experiences_path, class: "menu-item btn-view" do %>
-            <i class="fas fa-cog"></i>
-            <span>Admin</span>
-          <% end %>
-          <%= button_to logout_path, method: :delete, class: "menu-item btn-delete", form_class: "kebab-form-button" do %>
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Déconnexion</span>
-          <% end %>
+      
+      <% if admin_user_signed_in? %>
+        <div class="kebab-menu mobile-kebab">
+          <button class="kebab-menu__button" onclick="toggleKebabMenu(this, event)">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </button>
+          <div class="kebab-menu__content">
+            <%= link_to admin_professional_experiences_path, class: "menu-item btn-view" do %>
+              <i class="fas fa-cog"></i>
+              <span>Admin</span>
+            <% end %>
+            <%= link_to edit_admin_profile_path, class: "menu-item btn-view" do %>
+              <i class="fas fa-user-cog"></i>
+              <span>Mon profil</span>
+            <% end %>
+            <%= button_to destroy_admin_user_session_path, method: :delete, class: "menu-item btn-delete", form_class: "kebab-form-button" do %>
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Déconnexion</span>
+            <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 </nav>

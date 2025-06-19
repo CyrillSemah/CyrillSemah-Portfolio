@@ -1,5 +1,4 @@
-class Admin::SkillGroupsController < ApplicationController
-  before_action :authenticate_admin!
+class Admin::SkillGroupsController < Admin::BaseController
   before_action :set_skill_group, only: [:show, :edit, :update, :destroy]
   
   def index

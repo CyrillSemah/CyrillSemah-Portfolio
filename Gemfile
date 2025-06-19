@@ -44,6 +44,9 @@ gem "sassc-rails"
 # Active Storage validations
 gem "active_storage_validations"
 
+# Authentification
+gem "devise"
+
 # Authentification OAuth
 gem "omniauth"
 gem "omniauth-google-oauth2"

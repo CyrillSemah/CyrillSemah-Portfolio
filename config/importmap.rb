@@ -13,3 +13,4 @@ pin "notifications", to: "notifications.js", preload: true
 pin "tag_cloud", to: "tag_cloud.js", preload: true
 pin "skill_cards", to: "skill_cards.js", preload: true
 pin "skill_cards_direct", to: "skill_cards_direct.js", preload: true
+pin "kebab_menu", to: "kebab_menu.js", preload: true
