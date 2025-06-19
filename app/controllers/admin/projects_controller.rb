@@ -64,7 +64,15 @@ class Admin::ProjectsController < Admin::BaseController
     Rails.logger.debug "Params reçus: #{params.inspect}"
     Rails.logger.debug "project_params: #{project_params.inspect}"
     
-    if @project.update(project_params)
+    # Créer une copie des paramètres pour pouvoir les modifier
+    update_params = project_params.dup
+    
+    # Ne pas supprimer les images du carrousel si aucune nouvelle image n'est téléchargée
+    if params[:project][:development_images].nil? || params[:project][:development_images].all?(&:blank?)
+      update_params = update_params.except(:development_images)
+    end
+    
+    if @project.update(update_params)
       redirect_to admin_projects_path, notice: 'Projet mis à jour avec succès.'
     else
       render :edit

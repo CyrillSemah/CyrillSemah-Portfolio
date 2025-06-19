@@ -21,7 +21,11 @@
           <div class="d-flex align-items-center">
             <h2><%= @project.title %></h2>
             <span class="project-type-badge <%= @project.development? ? 'type-development' : 'type-retouche' %>">
-              <%= @project.development? ? 'Développement' : 'Retouche & Création' %>
+              <% if @project.development? %>
+                <span class="badge-icon">&lt;/&gt;</span> Développement
+              <% else %>
+                <span class="badge-icon"><i class="fas fa-paint-brush"></i></span> Retouche & Création
+              <% end %>
             </span>
           </div>
           <div class="header-actions">
@@ -141,11 +145,6 @@
                               <h4>Avant</h4>
                               <% if visual.before_image.attached? %>
                                 <%= image_tag visual.before_image %>
-                                <div class="comparison-overlay">
-                                  <div class="comparison-icon">
-                                    <i class="fas fa-search-plus"></i>
-                                  </div>
-                                </div>
                               <% else %>
                                 <div class="alert alert-warning">Image avant non disponible</div>
                               <% end %>
@@ -154,11 +153,6 @@
                               <h4>Après</h4>
                               <% if visual.after_image.attached? %>
                                 <%= image_tag visual.after_image %>
-                                <div class="comparison-overlay">
-                                  <div class="comparison-icon">
-                                    <i class="fas fa-search-plus"></i>
-                                  </div>
-                                </div>
                               <% else %>
                                 <div class="alert alert-warning">Image après non disponible</div>
                               <% end %>
