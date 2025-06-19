@@ -30,6 +30,13 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
+  
+  # Configure les URLs pour ActiveStorage
+  config.active_storage.routes_prefix = '/rails/active_storage'
+  
+  # Définir les options d'URL pour ActiveStorage
+  config.active_storage.resolve_model_to_route = :rails_storage_redirect
+  Rails.application.routes.default_url_options = { host: 'localhost', port: 3000 }
 
   # Activer les erreurs d'envoi d'emails pour voir les problèmes
   config.action_mailer.raise_delivery_errors = true

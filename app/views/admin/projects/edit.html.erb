@@ -1,96 +1,622 @@
-<div class="admin-education-container">
+<div class="admin-experience-container">
   <div class="container">
     <!-- Menu de navigation admin -->
-    <div class="admin-nav">
-      <ul class="admin-nav__list">
-        <li class="admin-nav__item">
-          <%= link_to "Page d'accueil", admin_home_sections_path %>
-        </li>
-        <li class="admin-nav__item">
-          <%= link_to "Expériences professionnelles", admin_professional_experiences_path %>
-        </li>
-        <li class="admin-nav__item">
-          <%= link_to "Formations", admin_educations_path %>
-        </li>
-        <li class="admin-nav__item">
-          <%= link_to "Compétences", admin_skills_path %>
-        </li>
-        <li class="admin-nav__item active">
-          <%= link_to "Projets", admin_projects_path %>
-        </li>
-      </ul>
-    </div>
-    
-    <div class="education-form">
-      <div class="education-form__header">
-        <h2>Modifier le projet</h2>
-        <%= link_to admin_projects_path, class: "btn-back" do %>
-          <i class="fas fa-arrow-left"></i> Retour à la liste
-        <% end %>
-      </div>
-  
-  <div class="admin-content">
-    <%= form_with(model: [:admin, @project], local: true, html: { class: 'form', multipart: true }) do |form| %>
-      <% if @project.errors.any? %>
-        <div class="alert alert-danger">
-          <h2><%= pluralize(@project.errors.count, "erreur") %> :</h2>
-          <ul>
-            <% @project.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
+    <%= render 'admin/shared/admin_nav' %>
+
+    <div class="content-section">
+      <div class="content-header">
+        <div>
+          <h2>
+            <% if @project.development? %>
+              Modifier le projet de développement
+            <% else %>
+              Modifier le projet de retouche & création
             <% end %>
-          </ul>
+          </h2>
+          <p class="subtitle">
+            Modifiez les informations de votre projet.
+          </p>
         </div>
-      <% end %>
-      
-      <div class="form-group">
-        <%= form.label :title, "Titre" %>
-        <%= form.text_field :title, class: 'form-control' %>
-      </div>
-      
-      <div class="form-group">
-        <%= form.label :technologies, "Technologies (séparées par des virgules)" %>
-        <%= form.text_field :technologies, class: 'form-control', placeholder: "Ruby on Rails, JavaScript, PostgreSQL" %>
-      </div>
-      
-      <div class="form-group">
-        <%= form.label :description, "Description" %>
-        <%= form.text_area :description, class: 'form-control', rows: 6 %>
-      </div>
-      
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <%= form.label :github_url, "URL GitHub" %>
-          <%= form.url_field :github_url, class: 'form-control', placeholder: "https://github.com/username/project" %>
-        </div>
-        
-        <div class="form-group col-md-6">
-          <%= form.label :live_url, "URL Démo" %>
-          <%= form.url_field :live_url, class: 'form-control', placeholder: "https://example.com" %>
+        <div class="header-actions">
+          <%= link_to admin_projects_path, class: "animated-action-button" do %>
+            <div class="icon-container">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+            <span class="button-text">Retour à la liste</span>
+          <% end %>
         </div>
       </div>
-      
-      <div class="form-group">
-        <%= form.label :position, "Position" %>
-        <%= form.number_field :position, class: 'form-control' %>
-      </div>
-      
-      <div class="form-group">
-        <%= form.label :image, "Image du projet" %>
-        
-        <% if @project.image.attached? %>
-          <div class="current-image mb-3">
-            <%= image_tag @project.image.variant(resize_to_limit: [300, 200]), alt: @project.title %>
-            <p class="text-muted">Image actuelle</p>
+
+      <div class="form-content" data-controller="project-form">
+      <%= form_with(model: [:admin, @project], local: true, html: { class: 'form', multipart: true }) do |form| %>
+        <% if @project.errors.any? %>
+          <div class="alert alert-danger">
+            <h2><%= pluralize(@project.errors.count, "erreur") %> :</h2>
+            <ul>
+              <% @project.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
           </div>
         <% end %>
-        
-        <%= form.file_field :image, class: 'form-control-file', direct_upload: true %>
+
+        <%= form.hidden_field :project_type %>
+
+        <!-- Champs communs aux deux types de projets -->
+        <div class="experience-list__group mb-4">
+          <div class="experience-list__group-header">
+            <h3 class="mb-0">Informations générales du projet</h3>
+          </div>
+          <div class="experience-list__group-items">
+            <div class="experience-list__item">
+              <div class="experience-list__item-body">
+                <div class="form-group">
+                  <%= form.label :title, "Titre" %>
+                  <%= form.text_field :title, class: 'form-control' %>
+                </div>
+
+                <div class="form-group">
+                  <%= form.label :technologies, "Technologies (séparées par des virgules)" %>
+                  <%= form.text_field :technologies, class: 'form-control', placeholder: "Ruby on Rails, JavaScript, PostgreSQL" %>
+                </div>
+
+                <div class="form-group">
+                  <%= form.label :description, "Description" %>
+                  <%= form.text_area :description, class: 'form-control', rows: 6 %>
+                </div>
+
+                <div class="form-group">
+                  <%= form.label :position, "Position" %>
+                  <%= form.number_field :position, class: 'form-control' %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          
+          <!-- Champs spécifiques au type Développement -->
+          <% if @project.development? %>
+            <div class="experience-list__group mb-4">
+              <div class="experience-list__group-header">
+                <h3 class="mb-0">Informations spécifiques au projet de développement</h3>
+              </div>
+              <div class="experience-list__group-items">
+                <div class="experience-list__item">
+                  <div class="experience-list__item-body">
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <%= form.label :github_url, "URL GitHub (optionnel)" %>
+                        <%= form.url_field :github_url, class: 'form-control', placeholder: "https://github.com/username/project" %>
+                      </div>
+                      
+                      <div class="form-group col-md-6">
+                        <%= form.label :live_url, "URL Démo (optionnel)" %>
+                        <%= form.url_field :live_url, class: 'form-control', placeholder: "https://example.com" %>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group">
+                      <%= form.label :image, "Image principale du projet" %>
+                      
+                      <% if @project.image.attached? %>
+                        <div class="current-image mb-3">
+                          <%= image_tag @project.image.variant(resize_to_limit: [300, 200]), alt: @project.title %>
+                          <p class="text-muted">Image actuelle</p>
+                        </div>
+                      <% end %>
+                      
+                      <%= form.file_field :image, class: 'form-control-file', direct_upload: true %>
+                    </div>
+                    
+                    <div class="form-group">
+                      <%= form.label :development_images, "Images additionnelles (carrousel)" %>
+                      
+                      <% if @project.development_images.attached? %>
+                        <div class="current-development-images-container mb-3">
+                          <p class="text-muted mb-2">Images actuelles du carrousel :</p>
+                          <div class="current-development-images-list">
+                            <% @project.development_images_attachments.each_with_index do |attachment, index| %>
+                              <% image_blob = attachment.blob %>
+                              <div class="development-image-item" id="development_attachment_<%= attachment.id %>">
+                                <%= image_tag image_blob.variant(resize_to_limit: [150, 100]), alt: "#{@project.title} - Image Carrousel #{index + 1}", class: "carousel-thumbnail" %>
+                                <div class="actions-cell">
+                                  <div class="action-buttons">
+                                    <button type="button" class="action-button view btn-view-image" data-attachment-id="<%= attachment.id %>" data-project-id="<%= @project.id %>" data-image-url="<%= url_for(image_blob) %>">
+                                      <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button type="button" class="action-button edit btn-modify-image" data-attachment-id="<%= attachment.id %>" data-project-id="<%= @project.id %>">
+                                      <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button" class="action-button delete btn-delete-image" data-attachment-id="<%= attachment.id %>" data-project-id="<%= @project.id %>">
+                                      <i class="fas fa-trash"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            <% end %>
+                          </div>
+                        </div>
+                      <% end %>
+                      
+                      <%= form.file_field :development_images, multiple: true, class: 'form-control-file', direct_upload: true %>
+                      <small class="form-text text-muted">Vous pouvez sélectionner plusieurs images pour le carrousel. Les nouvelles images seront ajoutées aux existantes.</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          
+          <!-- Champs spécifiques au type Retouche & Création -->
+          <% if @project.retouche_creation? %>
+            <div class="experience-list__group mb-4">
+              <div class="experience-list__group-header">
+                <h3 class="mb-0">Informations spécifiques au projet de retouche & création</h3>
+              </div>
+              <div class="experience-list__group-items">
+                <div class="experience-list__item">
+                  <div class="experience-list__item-body">
+                    <%= form.fields_for :project_visuals do |visual_form| %>
+                      <div class="visual-form-container mb-4 p-3 border rounded" id="visual-form-container">
+                        <%= visual_form.hidden_field :position, value: 0 %>
+                          
+                          <div class="form-group">
+                            <%= visual_form.label :professional_experience_id, "Entreprise", id: "label-professional-experience-#{visual_form.object.id || 'new'}" %>
+                            <%= visual_form.select :professional_experience_id, 
+                                options_for_select(@companies.map { |c| [c.company_name, c.id] } + [["Autre", "Autre"]], 
+                                visual_form.object.professional_experience_id || (visual_form.object.company_name.present? ? "Autre" : nil)), 
+                                { include_blank: "Sélectionnez une entreprise" }, 
+                                { class: 'form-control', id: "company-selector-#{visual_form.object.id || 'new'}" } %>
+                            
+                            <!-- Prévisualisation du logo de l'entreprise sélectionnée -->
+                            <div class="company-logo-preview mt-3" data-company-selector-target="logoPreview" style="display: none;">
+                              <% if visual_form.object.professional_experience_id.present? && visual_form.object.professional_experience.logo.attached? %>
+                                <%= image_tag visual_form.object.professional_experience.logo.variant(resize_to_limit: [150, 100]), alt: "Logo entreprise" %>
+                              <% elsif visual_form.object.company_logo.attached? %>
+                                <% if visual_form.object.company_logo.content_type == 'image/svg+xml' %>
+                                  <%= image_tag visual_form.object.company_logo, style: 'max-width: 150px; max-height: 100px;', alt: "Logo entreprise" %>
+                                <% else %>
+                                  <%= image_tag visual_form.object.company_logo.variant(resize_to_limit: [150, 100]), alt: "Logo entreprise" %>
+                                <% end %>
+                              <% end %>
+                            </div>
+                            
+                            <!-- Affichage du nom de l'entreprise pour les entreprises "Autre" -->
+                            <div class="company-name-preview mt-2" style="display: none;">
+                              <% if visual_form.object.professional_experience_id == 'Autre' && visual_form.object.company_name.present? %>
+                                <p class="text-muted"><%= visual_form.object.company_name %></p>
+                              <% end %>
+                            </div>
+                            </div>
+                            
+                            <div class="other-company-fields mt-3" style="<%= visual_form.object.professional_experience_id.nil? && visual_form.object.company_name.present? ? '' : 'display: none;' %>" id="other-company-fields-<%= visual_form.object.id || 'new' %>">
+                              <div class="form-group">
+                                <%= visual_form.label :company_name, "Nom de l'entreprise", id: "label-company-name-#{visual_form.object.id || 'new'}" %>
+                                <%= visual_form.text_field :company_name, class: 'form-control', placeholder: "Nom de l'entreprise", data: { "company-selector-target": "companyNameField" }, id: "company-name-#{visual_form.object.id || 'new'}" %>
+                              </div>
+                              
+                              <div class="form-group">
+                                <%= visual_form.label :company_logo, "Logo de l'entreprise", id: "label-company-logo-#{visual_form.object.id || 'new'}" %>
+                               
+                                <% if visual_form.object.company_logo.attached? %>
+                                  <div class="current-image mb-3">
+                                    <% if visual_form.object.company_logo.content_type == 'image/svg+xml' %>
+                                      <%= image_tag visual_form.object.company_logo, style: 'max-width: 150px; max-height: 100px;', alt: "Logo entreprise" %>
+                                    <% else %>
+                                      <%= image_tag visual_form.object.company_logo.variant(resize_to_limit: [150, 100]), alt: "Logo entreprise" %>
+                                    <% end %>
+                                    <p class="text-muted">Logo actuel</p>
+                                    <p class="text-muted small">Format: <%= visual_form.object.company_logo.filename %></p>
+                                  </div>
+                                <% end %>
+
+                                <%= visual_form.file_field :company_logo, class: 'form-control-file', direct_upload: true, data: { "company-selector-target": "companyLogoField" }, id: "company-logo-#{visual_form.object.id || 'new'}" %>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="form-group">
+                            <%= visual_form.label :description, "Description", id: "label-description-#{visual_form.object.id || 'new'}" %>
+                            <%= visual_form.text_area :description, class: 'form-control', rows: 3, id: "description-#{visual_form.object.id || 'new'}" %>
+                          </div>
+                          
+                          <div class="form-row">
+                            <div class="form-group col-md-6">
+                              <%= visual_form.label :visual_type, "Type de visuel", id: "label-visual-type-#{visual_form.object.id || 'new'}" %>
+                              <% selected_visual_type = visual_form.object.persisted? ? visual_form.object.visual_type : nil %>
+                              <%= visual_form.select :visual_type, 
+                                  options_for_select(
+                                    [["Sélectionner un type de visuel", ""]] + 
+                                    [["Single", ProjectVisual::VISUAL_TYPE_SINGLE], ["Before after", ProjectVisual::VISUAL_TYPE_BEFORE_AFTER]],
+                                    selected_visual_type
+                                  ), 
+                                  { include_blank: false },
+                                  class: 'form-control', 
+                                  data: { action: "change->project-form#toggleVisualType", "project-form-target": "visualType" }, 
+                                  id: "visual-type-#{visual_form.object.id || 'new'}" %>
+                            </div>
+                            
+                            <div class="form-group col-md-6">
+                              <%= visual_form.label :display_type, "Méthode d'affichage", id: "label-display-type-#{visual_form.object.id || 'new'}" %>
+                              <%= visual_form.select :display_type, 
+                                  options_for_select(
+                                    [["Standard", ProjectVisual::DISPLAY_TYPE_STANDARD], ["Slider", ProjectVisual::DISPLAY_TYPE_SLIDER], ["Side by side", ProjectVisual::DISPLAY_TYPE_SIDE_BY_SIDE]],
+                                    visual_form.object.display_type || ProjectVisual::DISPLAY_TYPE_STANDARD
+                                  ), 
+                                  { include_blank: false },
+                                  class: 'form-control', 
+                                  data: { "project-form-target": "displayType" }, 
+                                  id: "display-type-#{visual_form.object.id || 'new'}" %>
+                            </div>
+                          </div>
+                          
+                          <div class="visual-images mt-3" data-project-form-target="visualImages">
+                            <!-- Groupe pour le mode single -->
+                            <div class="form-group col-md-12" data-project-form-target="imageGroup" style="display: none;">
+                              <%= visual_form.label :image, "Image du projet", for: "image-#{visual_form.object.id}", id: "label-image-#{visual_form.object.id}" %>
+                              <%= visual_form.file_field :image, class: 'form-control-file', direct_upload: true, id: "image-#{visual_form.object.id}" %>
+                              <% if visual_form.object.image.attached? %>
+                                <div class="current-image mt-2">
+                                  <% begin %>
+                                    <%= image_tag visual_form.object.image.variant(resize_to_limit: [300, 200]), class: 'img-thumbnail' %>
+                                  <% rescue => e %>
+                                    <p class="text-danger">Erreur d'affichage de l'image: <%= e.message %></p>
+                                    <p>Image présente mais non affichable</p>
+                                  <% end %>
+                                </div>
+                              <% end %>
+                            </div>
+                            
+                            <!-- Groupes pour le mode before_after -->
+                            <div class="form-row" id="before-after-container">
+                              <div class="form-group col-md-6 before-image-group" data-project-form-target="beforeImageGroup" style="display: none;">
+                                <%= visual_form.label :before_image, "Image avant", for: "before-image-#{visual_form.object.id}", id: "label-before-image-#{visual_form.object.id}" %>
+                                <%= visual_form.file_field :before_image, class: 'form-control-file', direct_upload: true, id: "before-image-#{visual_form.object.id}" %>
+                                <% if visual_form.object.before_image.attached? %>
+                                  <div class="current-image mt-2">
+                                    <% begin %>
+                                      <%= image_tag visual_form.object.before_image.variant(resize_to_limit: [300, 200]), class: 'img-thumbnail' %>
+                                    <% rescue => e %>
+                                      <p class="text-danger">Erreur d'affichage de l'image: <%= e.message %></p>
+                                      <p>Image présente mais non affichable</p>
+                                    <% end %>
+                                  </div>
+                                <% end %>
+                              </div>
+                              
+                              <div class="form-group col-md-6 after-image-group" data-project-form-target="afterImageGroup" style="display: none;">
+                                <%= visual_form.label :after_image, "Image après", for: "after-image-#{visual_form.object.id}", id: "label-after-image-#{visual_form.object.id}" %>
+                                <%= visual_form.file_field :after_image, class: 'form-control-file', direct_upload: true, id: "after-image-#{visual_form.object.id}" %>
+                                <% if visual_form.object.after_image.attached? %>
+                                  <div class="current-image mt-2">
+                                    <% begin %>
+                                      <%= image_tag visual_form.object.after_image.variant(resize_to_limit: [300, 200]), class: 'img-thumbnail' %>
+                                    <% rescue => e %>
+                                      <p class="text-danger">Erreur d'affichage de l'image: <%= e.message %></p>
+                                      <p>Image présente mais non affichable</p>
+                                    <% end %>
+                                  </div>
+                                <% end %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          
+          <div class="experience-list__item-actions">
+            <%= link_to "Annuler", admin_projects_path, class: "btn btn-view" %>
+            <%= form.submit "Mettre à jour le projet", class: "btn btn-edit" %>
+          </div>
+        <% end %>
       </div>
-      
-      <div class="form-actions">
-        <%= form.submit "Mettre à jour le projet", class: "btn btn-primary" %>
-        <%= link_to "Annuler", admin_projects_path, class: "btn btn-outline" %>
-      </div>
-    <% end %>
+    </div>
   </div>
 </div>
+</div>
+
+<%= render 'shared/image_preview_modal' %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Fonction pour gérer l'affichage des champs selon le type visuel
+    function updateVisualFields(select) {
+      if (!select) return;
+      
+      const container = select.closest('.visual-form-container') || document.querySelector('.form-content');
+      if (!container) {
+        console.error('Conteneur parent non trouvé');
+        return;
+      }
+      
+      const type = select.value;
+      console.log('Mise à jour des champs pour le type:', type);
+      
+      // Trouver les groupes d'images
+      const imageGroup = container.querySelector('[data-project-form-target="imageGroup"]');
+      const beforeImageGroup = container.querySelector('[data-project-form-target="beforeImageGroup"]');
+      const afterImageGroup = container.querySelector('[data-project-form-target="afterImageGroup"]');
+      
+      console.log('Groupes trouvés:', {
+        imageGroup: !!imageGroup,
+        beforeImageGroup: !!beforeImageGroup,
+        afterImageGroup: !!afterImageGroup
+      });
+      
+      if (type === '<%= ProjectVisual::VISUAL_TYPE_SINGLE %>') {
+        // Mode single - afficher uniquement imageGroup
+        if (imageGroup) {
+          imageGroup.style.display = 'block';
+          // Rendre le champ obligatoire si pas d'image existante
+          const imageField = imageGroup.querySelector('input[type="file"]');
+          const hasExistingImage = imageGroup.querySelector('.current-image') !== null;
+          if (imageField) imageField.required = !hasExistingImage;
+        }
+        if (beforeImageGroup) {
+          beforeImageGroup.style.display = 'none';
+          // Rendre le champ non obligatoire
+          const beforeField = beforeImageGroup.querySelector('input[type="file"]');
+          if (beforeField) beforeField.required = false;
+        }
+        if (afterImageGroup) {
+          afterImageGroup.style.display = 'none';
+          // Rendre le champ non obligatoire
+          const afterField = afterImageGroup.querySelector('input[type="file"]');
+          if (afterField) afterField.required = false;
+        }
+      } else if (type === '<%= ProjectVisual::VISUAL_TYPE_BEFORE_AFTER %>') {
+        // Mode before_after - afficher beforeImageGroup et afterImageGroup
+        if (imageGroup) {
+          imageGroup.style.display = 'none';
+          // Rendre le champ non obligatoire
+          const imageField = imageGroup.querySelector('input[type="file"]');
+          if (imageField) imageField.required = false;
+        }
+        if (beforeImageGroup) {
+          beforeImageGroup.style.display = 'block';
+          // Rendre le champ obligatoire si pas d'image existante
+          const beforeField = beforeImageGroup.querySelector('input[type="file"]');
+          const hasExistingBeforeImage = beforeImageGroup.querySelector('.current-image') !== null;
+          if (beforeField) beforeField.required = !hasExistingBeforeImage;
+        }
+        if (afterImageGroup) {
+          afterImageGroup.style.display = 'block';
+          // Rendre le champ obligatoire si pas d'image existante
+          const afterField = afterImageGroup.querySelector('input[type="file"]');
+          const hasExistingAfterImage = afterImageGroup.querySelector('.current-image') !== null;
+          if (afterField) afterField.required = !hasExistingAfterImage;
+        }
+      } else {
+        // Aucun type sélectionné ou type non reconnu - tout masquer et rendre non obligatoire
+        if (imageGroup) {
+          imageGroup.style.display = 'none';
+          const imageField = imageGroup.querySelector('input[type="file"]');
+          if (imageField) imageField.required = false;
+        }
+        if (beforeImageGroup) {
+          beforeImageGroup.style.display = 'none';
+          const beforeField = beforeImageGroup.querySelector('input[type="file"]');
+          if (beforeField) beforeField.required = false;
+        }
+        if (afterImageGroup) {
+          afterImageGroup.style.display = 'none';
+          const afterField = afterImageGroup.querySelector('input[type="file"]');
+          if (afterField) afterField.required = false;
+        }
+      }
+    }
+    
+    // Trouver tous les sélecteurs de type visuel
+    const visualTypeSelects = document.querySelectorAll('select[data-project-form-target="visualType"]');
+    console.log('Nombre de sélecteurs de type visuel trouvés:', visualTypeSelects.length);
+    
+    // Appliquer la logique à chaque sélecteur
+    visualTypeSelects.forEach(function(select) {
+      // S'assurer qu'une valeur est sélectionnée par défaut si vide
+      if (!select.value) {
+        // Sélectionner 'single' par défaut
+        select.value = 'single';
+      }
+      
+      // Initialiser l'état
+      updateVisualFields(select);
+      
+      // Ajouter l'écouteur d'événements pour les changements
+      select.addEventListener('change', function(event) {
+        updateVisualFields(event.target);
+      });
+      
+      console.log('Écouteur ajouté à', select.id || 'select sans id');
+    });
+    
+    // Sélectionner les éléments nécessaires pour la gestion des entreprises
+    const companySelectors = document.querySelectorAll('[id^="company-selector-"]');
+
+    // Pour chaque selecteur d'entreprise
+    companySelectors.forEach((selector, index) => {
+      const formContainer = selector.closest('.visual-form-container');
+      const otherFieldsContainer = formContainer.querySelector('.other-company-fields');
+      const companyNameField = formContainer.querySelector('input[id^="company-name-"]');
+      const companyLogoField = formContainer.querySelector('input[id^="company-logo-"]');
+      const logoPreview = formContainer.querySelector('.company-logo-preview');
+      const companyNamePreview = formContainer.querySelector('.company-name-preview');
+
+      // Fonction pour gérer l'affichage des éléments
+      function toggleOtherFields() {
+        const selectedValue = this.value;
+        const isOtherSelected = selectedValue === "Autre";
+        
+        // Afficher/masquer les champs "Autre"
+        if (otherFieldsContainer) {
+          otherFieldsContainer.style.display = isOtherSelected ? "block" : "none";
+          
+          // Gérer le champ du nom de l'entreprise
+          if (companyNameField) {
+            if (isOtherSelected) {
+              companyNameField.required = true;
+              // Afficher le nom de l'entreprise si présent
+              if (companyNameField.value) {
+                if (companyNamePreview) {
+                  companyNamePreview.style.display = "block";
+                  companyNamePreview.innerHTML = `<p class="text-muted">${companyNameField.value}</p>`;
+                }
+              }
+            } else {
+              companyNameField.required = false;
+              companyNameField.value = "";
+            }
+          }
+
+          // Gérer le champ du logo
+          if (companyLogoField) {
+            if (isOtherSelected) {
+              companyLogoField.style.display = "block";
+              // Afficher le logo si présent
+              if (companyLogoField.value) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                  if (logoPreview) {
+                    logoPreview.innerHTML = `
+                      <img src="${e.target.result}" alt="Logo entreprise"
+                           style="max-width: 150px; max-height: 100px;" />
+                    `;
+                    logoPreview.style.display = "block";
+                  }
+                };
+                reader.readAsDataURL(companyLogoField.files[0]);
+              }
+            } else {
+              companyLogoField.style.display = "none";
+              // Réinitialiser le champ de fichier
+              companyLogoField.value = "";
+              // Masquer le logo si présent
+              if (logoPreview) {
+                logoPreview.style.display = "none";
+                logoPreview.innerHTML = "";
+              }
+            }
+          }
+        }
+
+        // Afficher/masquer le nom de l'entreprise "Autre"
+        if (companyNamePreview) {
+          companyNamePreview.style.display = isOtherSelected ? "block" : "none";
+          // Mettre à jour le contenu du nom
+          const companyName = companyNameField ? companyNameField.value : '';
+          companyNamePreview.innerHTML = companyName ? `<p class="text-muted">${companyName}</p>` : '';
+        }
+
+        // Mettre à jour le style du selecteur
+        this.classList.toggle("form-control", !isOtherSelected);
+        this.classList.toggle("form-control-plaintext", isOtherSelected);
+
+        // Mettre à jour l'accessibilité du label
+        const label = document.querySelector(`label[for="${this.id}"]`);
+        if (label) {
+          label.style.display = isOtherSelected ? "none" : "block";
+        }
+      }
+
+      // Gérer le changement de sélection
+      selector.addEventListener('change', toggleOtherFields);
+
+      // Initialiser l'état en fonction de la valeur actuelle
+      // Si c'est une entreprise "Autre" et qu'il y a un nom présent, forcer la sélection de "Autre"
+      if (visual_form.object.company_name && visual_form.object.company_name.length > 0) {
+        this.value = 'Autre';
+      }
+      toggleOtherFields.call(selector);
+
+      // Prévisualisation du logo lors du changement de fichier
+      if (companyLogoField) {
+        companyLogoField.addEventListener('change', function() {
+          if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              if (logoPreview) {
+                logoPreview.innerHTML = `
+                  <img src="${e.target.result}" alt="Logo entreprise"
+                       style="max-width: 150px; max-height: 100px;" />
+                `;
+                logoPreview.style.display = "block";
+              }
+            };
+            reader.readAsDataURL(this.files[0]);
+          }
+        });
+      }
+
+      // Mettre à jour le nom de l'entreprise quand le champ change
+      if (companyNameField) {
+        companyNameField.addEventListener('input', function() {
+          if (companyNamePreview) {
+            companyNamePreview.style.display = "block";
+            companyNamePreview.innerHTML = `<p class="text-muted">${this.value}</p>`;
+          }
+        });
+      }
+
+      // Initialiser l'affichage du nom de l'entreprise
+      if (companyNamePreview && companyNameField) {
+        // Forcer l'affichage du nom si c'est une entreprise "Autre"
+        if (visual_form.object.company_name && visual_form.object.company_name.length > 0) {
+          companyNamePreview.style.display = "block";
+          companyNamePreview.innerHTML = `<p class="text-muted">${visual_form.object.company_name}</p>`;
+        } else {
+          companyNamePreview.style.display = "none";
+          companyNamePreview.innerHTML = "";
+        }
+      }
+    });
+  });
+</script>
+
+<% content_for :styles do %>
+  <style>
+    .card-header {
+      border-radius: 0.25rem 0.25rem 0 0;
+    }
+    
+    .form-actions {
+      margin-top: 2rem;
+    }
+    
+    .visual-form-container {
+      background-color: #f8f9fa;
+      position: relative;
+    }
+    
+    .current-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+    }
+    
+    .image-preview {
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      padding: 5px;
+      text-align: center;
+    }
+    
+    .image-preview img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+<% end %>
+
+<% content_for :scripts do %>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialisation du contrôleur Stimulus pour le formulaire de projet
+      // (sera implémenté plus tard)
+    });
+  </script>
+<% end %>
+</div> <!-- Fermeture de admin-experience-container -->

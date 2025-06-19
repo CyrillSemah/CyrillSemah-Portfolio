@@ -28,7 +28,7 @@
         <div class="header-actions">
           <%= link_to new_admin_home_section_path, class: "animated-action-button" do %>
             <div class="icon-container">
-              <i class="fas fa-plus-circle"></i>
+              <i class="fas fa-plus"></i>
             </div>
             <span class="button-text">Ajouter une section</span>
           <% end %>
@@ -54,23 +54,6 @@
             <div class="home-section-cards">
               <% @home_sections.each do |section| %>
                 <div class="home-section-card <%= 'active-card' if section.active? %>">
-                  <div class="home-section-card__actions">
-                    <% unless section.active? %>
-                      <%= link_to activate_admin_home_section_path(section), class: "action-button activate-button" do %>
-                        <i class="fas fa-check"></i>
-                      <% end %>
-                    <% end %>
-                    <%= link_to admin_home_section_path(section), class: "action-button view-button" do %>
-                      <i class="fas fa-eye"></i>
-                    <% end %>
-                    <%= link_to edit_admin_home_section_path(section), class: "action-button edit-button" do %>
-                      <i class="fas fa-edit"></i>
-                    <% end %>
-                    <%= link_to "#", class: "action-button delete-button btn-delete-section", data: { delete_url: admin_home_section_path(section) } do %>
-                      <i class="fas fa-trash-alt"></i>
-                    <% end %>
-                  </div>
-                  
                   <div class="home-section-card__header">
                     <div class="section-logo">
                       <% if section.home_image&.image? %>
@@ -80,7 +63,27 @@
                       <% end %>
                     </div>
                     <div class="section-info">
-                      <div class="section-title <%= section.active? ? 'active-title' : '' %>"><%= section.title %></div>
+                      <div class="section-title-container">
+                        <div class="section-title <%= section.active? ? 'active-title' : '' %>"><%= section.title %></div>
+                        <div class="actions-cell">
+                          <div class="action-buttons">
+                            <% unless section.active? %>
+                              <%= link_to activate_admin_home_section_path(section), class: "action-button activate" do %>
+                                <i class="fas fa-check"></i>
+                              <% end %>
+                            <% end %>
+                            <%= link_to admin_home_section_path(section), class: "action-button view" do %>
+                              <i class="fas fa-eye"></i>
+                            <% end %>
+                            <%= link_to edit_admin_home_section_path(section), class: "action-button edit" do %>
+                              <i class="fas fa-edit"></i>
+                            <% end %>
+                            <%= link_to "#", class: "action-button delete btn-delete-section", data: { delete_url: admin_home_section_path(section) } do %>
+                              <i class="fas fa-trash"></i>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
                       <div class="section-meta">
                         <span class="status-badge <%= section.active? ? 'active' : 'inactive' %>">
                           <%= section.active? ? 'Active' : 'Inactive' %>
@@ -97,7 +100,7 @@
           </div>
         </div>
       <% else %>
-        <div class="empty-state">
+        <div class="empty-state" style="margin: 0; padding: 40px 20px; background-color: #f8f9fa; border-radius: 12px;">
           <div class="empty-icon">
             <i class="fas fa-home"></i>
           </div>

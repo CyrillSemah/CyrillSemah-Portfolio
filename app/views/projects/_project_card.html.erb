@@ -1,0 +1,43 @@
+<div class="project-card <%= project.project_type %>">
+  <div class="project-card__badge">
+    <span class="badge <%= project.development? ? 'badge-primary' : 'badge-success' %>">
+      <%= project.development? ? 'Développement' : 'Retouche & Création' %>
+    </span>
+  </div>
+  
+  <div class="project-card__image">
+    <% if project.image.attached? %>
+      <%= image_tag project.image, alt: project.title %>
+    <% else %>
+      <div class="project-placeholder">
+        <i class="fas <%= project.development? ? 'fa-code' : 'fa-paint-brush' %>"></i>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="project-card__content">
+    <h3 class="project-card__title"><%= project.title %></h3>
+    
+    <div class="project-card__technologies">
+      <% project.technologies.split(',').each do |tech| %>
+        <span class="technology-tag"><%= tech.strip %></span>
+      <% end %>
+    </div>
+    
+    <p class="project-card__description"><%= truncate(project.description, length: 150) %></p>
+    
+    <div class="project-card__actions">
+      <%= link_to "Voir détails", projet_path(project), class: "btn btn-primary" %>
+      
+      <% if project.development? %>
+        <% if project.github_url.present? %>
+          <%= link_to "GitHub", project.github_url, target: "_blank", class: "btn btn-outline" %>
+        <% end %>
+        
+        <% if project.live_url.present? %>
+          <%= link_to "Démo", project.live_url, target: "_blank", class: "btn btn-outline" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

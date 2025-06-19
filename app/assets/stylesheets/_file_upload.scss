@@ -1,0 +1,133 @@
+// Styles spécifiques pour les champs de type fichier et les zones de prévisualisation
+@import 'variables';
+
+// Container pour les champs de type fichier
+.file-upload-container {
+  position: relative;
+  margin-bottom: $spacing-md;
+  
+  input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: $spacing-sm;
+    border: 1px solid #ddd;
+    border-radius: $border-radius-sm;
+    background-color: #f8f9fa;
+    color: $color-dark;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: $transition-fast;
+    
+    &::-webkit-file-upload-button {
+      background-color: $color-blue;
+      color: white;
+      border: none;
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $border-radius-sm;
+      margin-right: $spacing-sm;
+      cursor: pointer;
+      transition: $transition-fast;
+      
+      &:hover {
+        background-color: darken($color-blue, 10%);
+      }
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: $color-blue;
+      box-shadow: 0 0 0 2px rgba($color-blue, 0.2);
+    }
+  }
+}
+
+// Styles pour la prévisualisation du logo
+.logo-preview {
+  margin-top: $spacing-md;
+  display: flex;
+  justify-content: center;
+  
+  img {
+    max-width: 120px;
+    max-height: 120px;
+    border: 1px solid #ddd;
+    border-radius: $border-radius-sm;
+    padding: $spacing-xs;
+    object-fit: contain;
+  }
+  
+  .no-logo {
+    width: 120px;
+    height: 120px;
+    border: 1px dashed #ddd;
+    border-radius: $border-radius-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba($color-dark, 0.7);
+    font-size: 0.9rem;
+    background-color: #f8f9fa;
+    font-weight: 500;
+  }
+}
+
+// Styles pour les informations sur les fichiers actuels
+.current-file {
+  margin-top: $spacing-sm;
+  padding: $spacing-sm;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: $border-radius-sm;
+  
+  .current-file-name {
+    font-weight: 500;
+    color: $color-dark;
+    margin-bottom: $spacing-xs;
+  }
+  
+  .file-delete-option {
+    display: flex;
+    align-items: center;
+    
+    input[type="checkbox"] {
+      margin-right: $spacing-xs;
+    }
+    
+    label {
+      margin-bottom: 0;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// Styles pour les images actuelles
+.current-image {
+  margin-bottom: $spacing-md;
+  text-align: center;
+  
+  .preview-image {
+    max-width: 200px;
+    max-height: 200px;
+    border: 1px solid #ddd;
+    border-radius: $border-radius-sm;
+    padding: $spacing-xs;
+    object-fit: contain;
+  }
+  
+  p {
+    margin-top: $spacing-xs;
+    font-size: 0.9rem;
+    color: rgba($color-dark, 0.7);
+  }
+}
+
+// Correction spécifique pour le texte "Aucun fichier choisi"
+input[type="file"]::after {
+  content: attr(value);
+  position: absolute;
+  left: 120px; // Ajuster selon la taille du bouton
+  top: 0;
+  padding: $spacing-sm;
+  color: $color-dark;
+  pointer-events: none;
+}

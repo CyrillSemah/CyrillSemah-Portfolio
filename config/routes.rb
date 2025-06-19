@@ -10,7 +10,16 @@ Rails.application.routes.draw do
   
   # Routes pour les expériences professionnelles, formations et compétences (CRUD protégé par authentification)
   namespace :admin do
-    resources :projects
+    resources :projects do
+      collection do
+        get :choose_type
+      end
+      member do
+        post :add_visual
+        delete 'delete_development_image/:image_id', to: 'projects#delete_development_image', as: :delete_development_image
+        patch 'replace_development_image/:image_id', to: 'projects#replace_development_image', as: :replace_development_image
+      end
+    end
     resources :home_sections do
       member do
         match :activate, via: [:get, :post]
@@ -21,9 +30,13 @@ Rails.application.routes.draw do
         post :sort
       end
     end
-    resources :professional_experiences
-    resources :educations
     resources :skills
+    resources :professional_experiences do
+      member do
+        get :logo
+      end
+    end
+    resources :educations
     resources :soft_skills
   end
   

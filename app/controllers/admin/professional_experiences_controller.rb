@@ -1,6 +1,6 @@
 class Admin::ProfessionalExperiencesController < ApplicationController
   before_action :authenticate_admin!
-  before_action :set_professional_experience, only: [:show, :edit, :update, :destroy]
+  before_action :set_professional_experience, only: [:show, :edit, :update, :destroy, :logo]
   
   def index
     @professional_experiences = ProfessionalExperience.ordered_by_date
@@ -35,8 +35,32 @@ class Admin::ProfessionalExperiencesController < ApplicationController
   end
   
   def destroy
-    @professional_experience.destroy
-    redirect_to admin_professional_experiences_path, notice: "L'expérience professionnelle a été supprimée avec succès."
+    begin
+      # Trouver tous les project_visuals qui référencent cette expérience professionnelle
+      project_visuals = ProjectVisual.where(professional_experience_id: @professional_experience.id)
+      
+      # Supprimer la référence à l'expérience professionnelle dans ces project_visuals
+      project_visuals.update_all(professional_experience_id: nil) if project_visuals.any?
+      
+      # Maintenant on peut supprimer l'expérience professionnelle
+      if @professional_experience.destroy
+        redirect_to admin_professional_experiences_path, notice: "L'expérience professionnelle a été supprimée avec succès."
+      else
+        redirect_to admin_professional_experiences_path, alert: "Erreur lors de la suppression de l'expérience professionnelle."
+      end
+    rescue => e
+      redirect_to admin_professional_experiences_path, alert: "Erreur lors de la suppression: #{e.message}"
+    end
+  end
+  
+  # Endpoint pour récupérer le logo d'une entreprise
+  def logo
+    if @professional_experience.logo.attached?
+      logo_url = rails_blob_path(@professional_experience.logo, only_path: true)
+      render json: { success: true, logo_url: logo_url, company_name: @professional_experience.company_name }
+    else
+      render json: { success: false, message: "Aucun logo disponible pour cette entreprise" }
+    end
   end
   
   private

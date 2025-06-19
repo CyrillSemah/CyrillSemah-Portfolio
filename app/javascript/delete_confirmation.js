@@ -1,7 +1,7 @@
 // Gestion de la modale de confirmation de suppression
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('deleteConfirmationModal');
-  const deleteButtons = document.querySelectorAll('.btn-delete-experience, .btn-delete-education, .btn-delete-skill, .btn-delete-skill-group, .btn-delete-soft-skill');
+  const deleteButtons = document.querySelectorAll('.btn-delete-experience, .btn-delete-education, .btn-delete-skill, .btn-delete-skill-group, .btn-delete-soft-skill, .btn-delete-project');
   const cancelButton = document.getElementById('cancelDeleteBtn');
   const confirmButton = document.getElementById('confirmDeleteBtn');
   const closeModalButton = document.querySelector('.delete-confirmation-modal .close-modal');
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Ouvrir la modale lors du clic sur un bouton de suppression
   function setupDeleteButtons() {
-    document.querySelectorAll('.btn-delete-experience, .btn-delete-education, .btn-delete-skill, .btn-delete-skill-group, .btn-delete-soft-skill, .btn-delete-section').forEach(button => {
+    document.querySelectorAll('.btn-delete-experience, .btn-delete-education, .btn-delete-skill, .btn-delete-skill-group, .btn-delete-soft-skill, .btn-delete-section, .btn-delete-project').forEach(button => {
       // Supprimer les écouteurs d'événements existants pour éviter les doublons
       button.removeEventListener('click', handleDeleteButtonClick);
       // Ajouter le nouvel écouteur d'événements
@@ -47,6 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
       // Section d'accueil
       if (warningMessage) warningMessage.textContent = 'Êtes-vous sûr de vouloir supprimer cette section d\'accueil ?';
       if (warningDetails) warningDetails.textContent = 'Les informations de cette section d\'accueil seront définitivement supprimées et ne pourront pas être récupérées.';
+    } else if (this.classList.contains('btn-delete-project')) {
+      // Projet
+      if (warningMessage) warningMessage.textContent = 'Êtes-vous sûr de vouloir supprimer ce projet ?';
+      if (warningDetails) warningDetails.textContent = 'Les informations de ce projet seront définitivement supprimées et ne pourront pas être récupérées.';
     } else {
       // Expérience ou autre
       if (warningMessage) warningMessage.textContent = 'Êtes-vous sûr de vouloir supprimer cette expérience ?';
