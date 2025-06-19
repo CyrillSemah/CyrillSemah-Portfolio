@@ -85,6 +85,9 @@ class Admin::ProjectsController < Admin::BaseController
 
   def destroy
     begin
+      # Récupérer la position du projet à supprimer pour réorganiser ensuite
+      position_to_delete = @project.position
+      
       # Supprimer d'abord les visuels associés pour éviter les problèmes de dépendances
       @project.project_visuals.destroy_all if @project.project_visuals.any?
       
@@ -94,6 +97,9 @@ class Admin::ProjectsController < Admin::BaseController
       
       # Maintenant supprimer le projet lui-même
       if Project.where(id: @project.id).delete_all > 0
+        # Réorganiser les positions des projets restants
+        reindex_project_positions(position_to_delete)
+        
         redirect_to admin_projects_path, notice: 'Projet supprimé avec succès.'
       else
         redirect_to admin_projects_path, alert: 'Impossible de supprimer ce projet.'
@@ -235,7 +241,11 @@ class Admin::ProjectsController < Admin::BaseController
   private
   
   def set_project
-    @project = Project.find(params[:id])
+    # Rechercher le projet par position plutôt que par ID
+    @project = Project.find_by(position: params[:id])
+    
+    # Si le projet n'est pas trouvé par position, essayer de le trouver par ID (pour la compatibilité)
+    @project = Project.find(params[:id]) if @project.nil?
   end
   
   def project_params
@@ -295,5 +305,16 @@ class Admin::ProjectsController < Admin::BaseController
   # Récupération des entreprises pour les menus déroulants
   def set_companies
     @companies = ProfessionalExperience.order(:company_name).distinct
+  end
+  
+  # Méthode pour réindexer les positions des projets après une suppression
+  def reindex_project_positions(deleted_position)
+    # Récupérer tous les projets qui ont une position supérieure à celle du projet supprimé
+    projects_to_update = Project.where('position > ?', deleted_position).order(position: :asc)
+    
+    # Décaler chaque projet d'une position vers le haut
+    projects_to_update.each do |project|
+      project.update_column(:position, project.position - 1)
+    end
   end
 end
