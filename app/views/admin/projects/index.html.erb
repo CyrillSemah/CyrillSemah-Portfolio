@@ -59,18 +59,51 @@
                   <% @projects.each do |project| %>
                     <tr class="<%= project.development? ? 'project-development' : 'project-retouche' %>">
                       <td class="image-cell">
-                        <% if project.image.attached? %>
-                          <%= image_tag project.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                        <% if project.development? %>
+                          <% if project.image.attached? %>
+                            <%= image_tag project.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                          <% else %>
+                            <div class="placeholder-image">
+                              <i class="fas fa-code"></i>
+                            </div>
+                          <% end %>
                         <% else %>
-                          <div class="placeholder-image">
-                            <i class="fas fa-<%= project.development? ? 'code' : 'paint-brush' %>"></i>
-                          </div>
+                          <% # Pour les projets de type Retouche & Création %>
+                          <% if project.project_visuals.any? %>
+                            <% # Chercher d'abord un visuel de type before_after pour afficher l'image après %>
+                            <% before_after_visual = project.project_visuals.find { |v| v.visual_type == 'before_after' && v.after_image.attached? } %>
+                            <% if before_after_visual %>
+                              <%= image_tag before_after_visual.after_image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                            <% else %>
+                              <% # Sinon chercher un visuel de type single %>
+                              <% single_visual = project.project_visuals.find { |v| v.visual_type == 'single' && v.image.attached? } %>
+                              <% if single_visual %>
+                                <%= image_tag single_visual.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                              <% elsif project.image.attached? %>
+                                <%= image_tag project.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                              <% else %>
+                                <div class="placeholder-image">
+                                  <i class="fas fa-paint-brush"></i>
+                                </div>
+                              <% end %>
+                            <% end %>
+                          <% elsif project.image.attached? %>
+                            <%= image_tag project.image.variant(resize_to_limit: [80, 80]), alt: project.title %>
+                          <% else %>
+                            <div class="placeholder-image">
+                              <i class="fas fa-paint-brush"></i>
+                            </div>
+                          <% end %>
                         <% end %>
                       </td>
                       <td><%= project.title %></td>
                       <td>
                         <span class="project-type-badge <%= project.development? ? 'type-development' : 'type-retouche' %>">
-                          <%= project.development? ? 'Développement' : 'Retouche & Création' %>
+                          <% if project.development? %>
+                            <span class="badge-icon">&lt;/&gt;</span> Développement
+                          <% else %>
+                            <span class="badge-icon"><i class="fas fa-paint-brush"></i></span> Retouche & Création
+                          <% end %>
                         </span>
                       </td>
                       <td class="tech-badges-cell">
