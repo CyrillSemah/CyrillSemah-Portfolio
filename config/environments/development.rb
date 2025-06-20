@@ -47,20 +47,24 @@ Rails.application.configure do
   # Set localhost to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
   
-  # Configuration pour l'envoi d'emails en développement avec SMTP
-  config.action_mailer.delivery_method = :smtp
+  # Configuration pour visualiser les emails dans le navigateur en développement
+  config.action_mailer.delivery_method = :file
   config.action_mailer.perform_deliveries = true
+  config.action_mailer.file_settings = { :location => Rails.root.join('tmp/mail') }
   
-  # Configuration SMTP
-  config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: "cyrillsemah.com",
-    authentication: "plain",
-    enable_starttls_auto: true,
-    user_name: ENV["GMAIL_USERNAME"],
-    password: ENV["GMAIL_PASSWORD"]
-  }
+  # Commentaire sur la configuration SMTP pour Gmail (nécessite des variables d'environnement)
+  # Pour utiliser SMTP, décommentez ces lignes et définissez les variables d'environnement
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   address: "smtp.gmail.com",
+  #   port: 587,
+  #   domain: "gmail.com",
+  #   authentication: "plain",
+  #   enable_starttls_auto: true,
+  #   user_name: ENV["GMAIL_USERNAME"],
+  #   password: ENV["GMAIL_PASSWORD"],
+  #   openssl_verify_mode: "none"
+  # }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

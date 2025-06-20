@@ -3,6 +3,8 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+/tmp/mail/*
+!/tmp/mail/.keep
 /public/assets
 .byebug_history
 *.rbc

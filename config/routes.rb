@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
+  # Route de test pour l'envoi d'email de verrouillage
+  get 'admin/test_lock_email', to: 'admin/test_mailer#test_lock_email'
   # Configuration Devise pour l'administrateur unique
   devise_for :admin_users, controllers: {
     sessions: 'admin_users/sessions',
     passwords: 'admin_users/passwords'
   }, skip: [:registrations]
+  
+  # Route de test pour l'envoi d'emails
+  get 'admin/test_email', to: 'admin_users/test_mailer#test_account_locked'
   
   # Redirection de /admin vers la page de connexion admin
   # Routes pour les projets (partie publique)

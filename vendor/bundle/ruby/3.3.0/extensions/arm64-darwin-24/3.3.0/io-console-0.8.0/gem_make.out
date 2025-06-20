@@ -16,16 +16,16 @@ checking for ttyname_r()... yes
 creating Makefile
 
 current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/io-console-0.8.0/ext/io/console
-make DESTDIR\= sitearchdir\=./.gem.20250603-65575-kj987j sitelibdir\=./.gem.20250603-65575-kj987j clean
+make DESTDIR\= sitearchdir\=./.gem.20250620-2071-auwk5l sitelibdir\=./.gem.20250620-2071-auwk5l clean
 
 current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/io-console-0.8.0/ext/io/console
-make DESTDIR\= sitearchdir\=./.gem.20250603-65575-kj987j sitelibdir\=./.gem.20250603-65575-kj987j
+make DESTDIR\= sitearchdir\=./.gem.20250620-2071-auwk5l sitelibdir\=./.gem.20250620-2071-auwk5l
 compiling console.c
 linking shared-object io/console.bundle
 
 current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/io-console-0.8.0/ext/io/console
-make DESTDIR\= sitearchdir\=./.gem.20250603-65575-kj987j sitelibdir\=./.gem.20250603-65575-kj987j install
-/usr/bin/install -c -m 0755 console.bundle ./.gem.20250603-65575-kj987j/io
+make DESTDIR\= sitearchdir\=./.gem.20250620-2071-auwk5l sitelibdir\=./.gem.20250620-2071-auwk5l install
+/usr/bin/install -c -m 0755 console.bundle ./.gem.20250620-2071-auwk5l/io
 
 current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/io-console-0.8.0/ext/io/console
-make DESTDIR\= sitearchdir\=./.gem.20250603-65575-kj987j sitelibdir\=./.gem.20250603-65575-kj987j clean
+make DESTDIR\= sitearchdir\=./.gem.20250620-2071-auwk5l sitelibdir\=./.gem.20250620-2071-auwk5l clean
