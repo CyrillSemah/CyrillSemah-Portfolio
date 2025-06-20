@@ -16,6 +16,7 @@
 /db/development_structure.sql
 /storage/*
 /.env
+.cursor/
 
 # === macOS ===
 .DS_Store
@@ -27,3 +28,4 @@ yarn-error.log
 # === Bundler ===
 /vendor/bundle
 .env
+.env.example
