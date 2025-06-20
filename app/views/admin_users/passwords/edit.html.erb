@@ -19,9 +19,8 @@
       <%= f.hidden_field :reset_password_token %>
 
       <div class="form-group">
-        <%= f.label :password, "Nouveau mot de passe" %>
-        <% if @minimum_password_length %>
-          <small>(<%= @minimum_password_length %> caractères minimum)</small>
+        <%= f.label :password do %>
+          Nouveau mot de passe <small>(<%= @minimum_password_length || 6 %> caractères minimum)</small>
         <% end %>
         <%= f.password_field :password, autofocus: true, autocomplete: "new-password", required: true %>
       </div>
@@ -32,8 +31,8 @@
       </div>
 
       <div class="form-actions">
-        <%= f.submit "Changer mon mot de passe", class: "btn btn-primary" %>
-        <%= link_to "Retour à la connexion", new_session_path(resource_name), class: "btn btn-secondary" %>
+        <%= link_to "Page connexion", new_session_path(resource_name), class: "btn btn-secondary" %>
+        <%= f.submit "Enregistrer", class: "btn btn-primary" %>
       </div>
     <% end %>
   </div>

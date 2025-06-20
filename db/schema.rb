@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_19_161342) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_20_112047) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -56,8 +56,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_19_161342) do
     t.string "backup_email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
+    t.string "current_sign_in_user_agent"
+    t.string "current_sign_in_location"
+    t.string "last_sign_in_user_agent"
+    t.string "last_sign_in_location"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_admin_users_on_unlock_token", unique: true
   end
 
   create_table "admins", force: :cascade do |t|
@@ -108,6 +116,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_19_161342) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "cv_file"
+  end
+
+  create_table "login_attempts", force: :cascade do |t|
+    t.string "ip_address", null: false
+    t.integer "failed_attempts", default: 0, null: false
+    t.datetime "last_attempt_at"
+    t.datetime "locked_until"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ip_address"], name: "index_login_attempts_on_ip_address", unique: true
   end
 
   create_table "professional_experiences", force: :cascade do |t|

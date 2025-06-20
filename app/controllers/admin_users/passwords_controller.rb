@@ -45,7 +45,8 @@ class AdminUsers::PasswordsController < Devise::PasswordsController
       if email.present?
         flash.now[:alert] = "Aucun compte administrateur n'a été trouvé avec cette adresse email."
       end
-      respond_with(resource)
+      # Rendre la vue new au lieu d'utiliser respond_with qui cause l'erreur
+      render :new
     end
   end
   

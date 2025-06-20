@@ -3,16 +3,16 @@ current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0
 creating Makefile
 
 current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/stringio-3.1.6/ext/stringio
-make DESTDIR\= sitearchdir\=./.gem.20250603-65575-aqmmhv sitelibdir\=./.gem.20250603-65575-aqmmhv clean
+make DESTDIR\= sitearchdir\=./.gem.20250620-2071-yj4c4n sitelibdir\=./.gem.20250620-2071-yj4c4n clean
 
 current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/stringio-3.1.6/ext/stringio
-make DESTDIR\= sitearchdir\=./.gem.20250603-65575-aqmmhv sitelibdir\=./.gem.20250603-65575-aqmmhv
+make DESTDIR\= sitearchdir\=./.gem.20250620-2071-yj4c4n sitelibdir\=./.gem.20250620-2071-yj4c4n
 compiling stringio.c
 linking shared-object stringio.bundle
 
 current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/stringio-3.1.6/ext/stringio
-make DESTDIR\= sitearchdir\=./.gem.20250603-65575-aqmmhv sitelibdir\=./.gem.20250603-65575-aqmmhv install
-/usr/bin/install -c -m 0755 stringio.bundle ./.gem.20250603-65575-aqmmhv
+make DESTDIR\= sitearchdir\=./.gem.20250620-2071-yj4c4n sitelibdir\=./.gem.20250620-2071-yj4c4n install
+/usr/bin/install -c -m 0755 stringio.bundle ./.gem.20250620-2071-yj4c4n
 
 current directory: /Users/cyrillsemah/Projets/PortFolio/vendor/bundle/ruby/3.3.0/gems/stringio-3.1.6/ext/stringio
-make DESTDIR\= sitearchdir\=./.gem.20250603-65575-aqmmhv sitelibdir\=./.gem.20250603-65575-aqmmhv clean
+make DESTDIR\= sitearchdir\=./.gem.20250620-2071-yj4c4n sitelibdir\=./.gem.20250620-2071-yj4c4n clean

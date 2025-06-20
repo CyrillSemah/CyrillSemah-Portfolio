@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      border-radius: 5px 5px 0 0;
+    }
+    .content {
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-top: none;
+      border-radius: 0 0 5px 5px;
+    }
+    .warning {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+    .info {
+      background-color: #f8f9fa;
+      padding: 10px;
+      border-left: 4px solid #3498db;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Alerte de sécurité</h1>
+  </div>
+  
+  <div class="content">
+    <p>Bonjour,</p>
+    
+    <p>Nous avons détecté une <span class="warning">tentative de connexion échouée</span> à votre compte administrateur.</p>
+    
+    <div class="info">
+      <p><strong>Détails de la tentative :</strong></p>
+      <ul>
+        <li><strong>Date et heure :</strong> <%= @time.strftime("%d/%m/%Y à %H:%M:%S") %></li>
+        <li><strong>Adresse IP :</strong> <%= @ip_address %></li>
+        <li><strong>Nombre de tentatives échouées :</strong> <%= @attempts_count %></li>
+        <li><strong>Tentatives restantes avant verrouillage :</strong> <%= @remaining_attempts %></li>
+      </ul>
+    </div>
+    
+    <p>Si cette tentative de connexion ne provient pas de vous, nous vous recommandons de :</p>
+    <ol>
+      <li>Changer immédiatement votre mot de passe</li>
+      <li>Vérifier les activités récentes sur votre compte</li>
+      <li>Contacter l'administrateur système si nécessaire</li>
+    </ol>
+    
+    <p class="warning">Attention : Après 5 tentatives de connexion échouées, votre compte sera automatiquement verrouillé pendant 5 minutes.</p>
+    
+    <p>Cordialement,<br>L'équipe de sécurité</p>
+  </div>
+</body>
+</html>

@@ -25,8 +25,8 @@
       </div>
 
       <div class="form-actions">
-        <%= f.submit "Envoyer les instructions", class: "btn btn-primary" %>
-        <%= link_to "Retour à la connexion", new_session_path(resource_name), class: "btn btn-secondary" %>
+        <%= link_to "Page connexion", new_session_path(resource_name), class: "btn btn-secondary" %>
+        <%= f.submit "Envoyer", class: "btn btn-primary" %>
       </div>
     <% end %>
   </div>
