@@ -1,6 +1,0 @@
-Toujours utiliser Rails 7 sauf indication contraire
-Préférer modale + AJAX pour les formulaires à choix conditionnels
-Gros boutons pour les ajouts, petits pour les actions (modifier, supprimer)
-Les projets développement s’affichent en carrousel sauf indication contraire
-Afficher les projets Retouche avec 3 options Avant/Après : côte à côte, hover, slider
-Notifier par mail uniquement sur soumission de formulaire public
