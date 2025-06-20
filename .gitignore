@@ -26,3 +26,4 @@ yarn-error.log
 
 # === Bundler ===
 /vendor/bundle
+.env
